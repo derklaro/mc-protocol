@@ -1,4 +1,4 @@
-# Snapshot 22w19a (1.19), Protocol 84 (1073741908), Release Protocol: 759
+# Snapshot 1.19-pre1 (1.19), Protocol 85 (1073741909), Release Protocol: 759
 ## Handshaking (Server -> Client)
 
 
@@ -586,25 +586,30 @@
 | float| angle|
 | BlockPos| pos|
 
-#### 0x4B - Set Display Objective Packet
+#### 0x4B - Set Display Chat Preview Packet
+| Type | Name |
+| -------------| -------------|
+| boolean| enabled|
+
+#### 0x4C - Set Display Objective Packet
 | Type | Name |
 | -------------| -------------|
 | int| slot|
 | String| objective name|
 
-#### 0x4C - Set Entity Data Packet
+#### 0x4D - Set Entity Data Packet
 | Type | Name |
 | -------------| -------------|
 | List| packed items|
 | int| id|
 
-#### 0x4D - Set Entity Link Packet
+#### 0x4E - Set Entity Link Packet
 | Type | Name |
 | -------------| -------------|
 | int| source id|
 | int| dest id|
 
-#### 0x4E - Set Entity Motion Packet
+#### 0x4F - Set Entity Motion Packet
 | Type | Name |
 | -------------| -------------|
 | int| id|
@@ -612,27 +617,27 @@
 | int| xa|
 | int| za|
 
-#### 0x4F - Set Equipment Packet
+#### 0x50 - Set Equipment Packet
 | Type | Name |
 | -------------| -------------|
 | int| entity|
 | List| slots|
 
-#### 0x50 - Set Experience Packet
+#### 0x51 - Set Experience Packet
 | Type | Name |
 | -------------| -------------|
 | int| total experience|
 | float| experience progress|
 | int| experience level|
 
-#### 0x51 - Set Health Packet
+#### 0x52 - Set Health Packet
 | Type | Name |
 | -------------| -------------|
 | int| food|
 | float| health|
 | float| saturation|
 
-#### 0x52 - Set Objective Packet
+#### 0x53 - Set Objective Packet
 | Type | Name |
 | -------------| -------------|
 | String| objective name|
@@ -640,13 +645,13 @@
 | Component| display name|
 | int| method|
 
-#### 0x53 - Set Passengers Packet
+#### 0x54 - Set Passengers Packet
 | Type | Name |
 | -------------| -------------|
 | int| vehicle|
 | int[]| passengers|
 
-#### 0x54 - Set Player Team Packet
+#### 0x55 - Set Player Team Packet
 | Type | Name |
 | -------------| -------------|
 | String| name|
@@ -654,7 +659,7 @@
 | int| method|
 | Collection| players|
 
-#### 0x55 - Set Score Packet
+#### 0x56 - Set Score Packet
 | Type | Name |
 | -------------| -------------|
 | String| objective name|
@@ -662,35 +667,35 @@
 | int| score|
 | String| owner|
 
-#### 0x56 - Set Simulation Distance Packet
+#### 0x57 - Set Simulation Distance Packet
 | Type | Name |
 | -------------| -------------|
 | int| simulation distance|
 
-#### 0x57 - Set Subtitle Text Packet
+#### 0x58 - Set Subtitle Text Packet
 | Type | Name |
 | -------------| -------------|
 | Component| text|
 
-#### 0x58 - Set Time Packet
+#### 0x59 - Set Time Packet
 | Type | Name |
 | -------------| -------------|
 | long| day time|
 | long| game time|
 
-#### 0x59 - Set Title Text Packet
+#### 0x5A - Set Title Text Packet
 | Type | Name |
 | -------------| -------------|
 | Component| text|
 
-#### 0x5A - Set Titles Animation Packet
+#### 0x5B - Set Titles Animation Packet
 | Type | Name |
 | -------------| -------------|
 | int| fade out|
 | int| fade in|
 | int| stay|
 
-#### 0x5B - Sound Entity Packet
+#### 0x5C - Sound Entity Packet
 | Type | Name |
 | -------------| -------------|
 | long| seed|
@@ -700,7 +705,7 @@
 | int| id|
 | float| pitch|
 
-#### 0x5C - Sound Packet
+#### 0x5D - Sound Packet
 | Type | Name |
 | -------------| -------------|
 | int| y|
@@ -712,38 +717,38 @@
 | SoundEvent| sound|
 | float| volume|
 
-#### 0x5D - Stop Sound Packet
+#### 0x5E - Stop Sound Packet
 | Type | Name |
 | -------------| -------------|
 | ResourceLocation| name|
 | SoundSource| source|
 
-#### 0x5E - System Chat Packet
+#### 0x5F - System Chat Packet
 | Type | Name |
 | -------------| -------------|
 | Component| content|
 | int| type id|
 
-#### 0x5F - Tab List Packet
+#### 0x60 - Tab List Packet
 | Type | Name |
 | -------------| -------------|
 | Component| footer|
 | Component| header|
 
-#### 0x60 - Tag Query Packet
+#### 0x61 - Tag Query Packet
 | Type | Name |
 | -------------| -------------|
 | CompoundTag| tag|
 | int| transaction id|
 
-#### 0x61 - Take Item Entity Packet
+#### 0x62 - Take Item Entity Packet
 | Type | Name |
 | -------------| -------------|
 | int| player id|
 | int| amount|
 | int| item id|
 
-#### 0x62 - Teleport Entity Packet
+#### 0x63 - Teleport Entity Packet
 | Type | Name |
 | -------------| -------------|
 | boolean| on ground|
@@ -754,7 +759,7 @@
 | double| z|
 | int| id|
 
-#### 0x63 - Update Advancements Packet
+#### 0x64 - Update Advancements Packet
 | Type | Name |
 | -------------| -------------|
 | Set| removed|
@@ -762,13 +767,13 @@
 | boolean| reset|
 | Map| progress|
 
-#### 0x64 - Update Attributes Packet
+#### 0x65 - Update Attributes Packet
 | Type | Name |
 | -------------| -------------|
 | int| entity id|
 | List| attributes|
 
-#### 0x65 - Update Mob Effect Packet
+#### 0x66 - Update Mob Effect Packet
 | Type | Name |
 | -------------| -------------|
 | byte| effect amplifier|
@@ -778,12 +783,12 @@
 | MobEffect| effect|
 | FactorData| factor data|
 
-#### 0x66 - Update Recipes Packet
+#### 0x67 - Update Recipes Packet
 | Type | Name |
 | -------------| -------------|
 | List| recipes|
 
-#### 0x67 - Update Tags Packet
+#### 0x68 - Update Tags Packet
 | Type | Name |
 | -------------| -------------|
 | Map| tags|
@@ -812,6 +817,7 @@
 | -------------| -------------|
 | Instant| time stamp|
 | String| command|
+| boolean| signed preview|
 | ArgumentSignatures| argument signatures|
 
 #### 0x04 - Chat Packet
@@ -1227,6 +1233,3 @@
 | -------------| -------------|
 | FriendlyByteBuf| data|
 | int| transaction id|
-
-
-
