@@ -1,4 +1,4 @@
-# Snapshot 1.19-pre1 (1.19), Protocol 85 (1073741909), Release Protocol: 759
+# Snapshot 1.19-pre3 (1.19), Protocol 87 (1073741911), Release Protocol: 759
 ## Handshaking (Server -> Client)
 
 
@@ -296,6 +296,7 @@
 | ResourceKey| dimension|
 | int| player id|
 | Set| levels|
+| Optional| last death location|
 | int| simulation distance|
 | boolean| is debug|
 | boolean| show death screen|
@@ -499,6 +500,7 @@
 | GameType| player game type|
 | ResourceKey| dimension|
 | boolean| keep all player data|
+| Optional| last death location|
 
 #### 0x3C - Rotate Head Packet
 | Type | Name |
@@ -1233,3 +1235,6 @@
 | -------------| -------------|
 | FriendlyByteBuf| data|
 | int| transaction id|
+
+
+
