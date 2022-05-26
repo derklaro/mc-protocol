@@ -19,7 +19,7 @@
 #### 0x00 - Add Entity Packet
 | Type | Name |
 | -------------| -------------|
-| EntityType| type|
+| EntityType<?>| type|
 | UUID| uuid|
 | int| ya|
 | byte| x rot|
@@ -62,7 +62,7 @@
 #### 0x04 - Award Stats Packet
 | Type | Name |
 | -------------| -------------|
-| Object2IntMap| stats|
+| Object2IntMap<Stat<?>>| stats|
 
 #### 0x05 - Block Changed Ack Packet
 | Type | Name |
@@ -80,7 +80,7 @@
 | Type | Name |
 | -------------| -------------|
 | CompoundTag| tag|
-| BlockEntityType| type|
+| BlockEntityType<?>| type|
 | BlockPos| pos|
 
 #### 0x08 - Block Event Packet
@@ -129,7 +129,7 @@
 #### 0x0F - Commands Packet
 | Type | Name |
 | -------------| -------------|
-| List| entries|
+| List<Entry>| entries|
 | int| root index|
 
 #### 0x10 - Container Close Packet
@@ -141,7 +141,7 @@
 | Type | Name |
 | -------------| -------------|
 | int| state id|
-| List| items|
+| List<ItemStack>| items|
 | ItemStack| carried item|
 | int| container id|
 
@@ -203,7 +203,7 @@
 | double| x|
 | double| y|
 | float| knockback x|
-| List| to blow|
+| List<BlockPos>| to blow|
 | float| knockback y|
 | float| knockback z|
 
@@ -291,12 +291,12 @@
 | GameType| game type|
 | boolean| is flat|
 | int| max players|
-| ResourceKey| dimension type|
+| ResourceKey<DimensionType>| dimension type|
 | int| chunk radius|
-| ResourceKey| dimension|
+| ResourceKey<Level>| dimension|
 | int| player id|
-| Set| levels|
-| Optional| last death location|
+| Set<ResourceKey<Level>>| levels|
+| Optional<GlobalPos>| last death location|
 | int| simulation distance|
 | boolean| is debug|
 | boolean| show death screen|
@@ -307,7 +307,7 @@
 | MapPatch| color patch|
 | boolean| locked|
 | int| map id|
-| List| decorations|
+| List<MapDecoration>| decorations|
 | byte| scale|
 
 #### 0x25 - Merchant Offers Packet
@@ -377,7 +377,7 @@
 | Type | Name |
 | -------------| -------------|
 | int| container id|
-| MenuType| type|
+| MenuType<?>| type|
 | Component| title|
 
 #### 0x2C - Open Sign Editor Packet
@@ -410,7 +410,7 @@
 | Type | Name |
 | -------------| -------------|
 | ChatSender| sender|
-| Optional| unsigned content|
+| Optional<Component>| unsigned content|
 | Instant| time stamp|
 | SaltSignaturePair| salt signature|
 | Component| signed content|
@@ -436,7 +436,7 @@
 #### 0x34 - Player Info Packet
 | Type | Name |
 | -------------| -------------|
-| List| entries|
+| List<PlayerUpdate>| entries|
 | Action| action|
 
 #### 0x35 - Player Look At Packet
@@ -459,15 +459,15 @@
 | float| x rot|
 | double| y|
 | boolean| dismount vehicle|
-| Set| relative arguments|
+| Set<RelativeArgument>| relative arguments|
 | float| y rot|
 
 #### 0x37 - Recipe Packet
 | Type | Name |
 | -------------| -------------|
 | RecipeBookSettings| book settings|
-| List| recipes|
-| List| to highlight|
+| List<ResourceLocation>| recipes|
+| List<ResourceLocation>| to highlight|
 | State| state|
 
 #### 0x38 - Remove Entities Packet
@@ -496,11 +496,11 @@
 | GameType| previous player game type|
 | boolean| is debug|
 | boolean| is flat|
-| ResourceKey| dimension type|
+| ResourceKey<DimensionType>| dimension type|
 | GameType| player game type|
-| ResourceKey| dimension|
+| ResourceKey<Level>| dimension|
 | boolean| keep all player data|
-| Optional| last death location|
+| Optional<GlobalPos>| last death location|
 
 #### 0x3C - Rotate Head Packet
 | Type | Name |
@@ -525,8 +525,8 @@
 | Type | Name |
 | -------------| -------------|
 | boolean| previews chat|
-| Optional| icon base64|
-| Optional| motd|
+| Optional<String>| icon base64|
+| Optional<Component>| motd|
 
 #### 0x40 - Set Action Bar Text Packet
 | Type | Name |
@@ -602,7 +602,7 @@
 #### 0x4D - Set Entity Data Packet
 | Type | Name |
 | -------------| -------------|
-| List| packed items|
+| List<DataItem<?>>| packed items|
 | int| id|
 
 #### 0x4E - Set Entity Link Packet
@@ -623,7 +623,7 @@
 | Type | Name |
 | -------------| -------------|
 | int| entity|
-| List| slots|
+| List<Pair<EquipmentSlot, ItemStack>>| slots|
 
 #### 0x51 - Set Experience Packet
 | Type | Name |
@@ -657,9 +657,9 @@
 | Type | Name |
 | -------------| -------------|
 | String| name|
-| Optional| parameters|
+| Optional<Parameters>| parameters|
 | int| method|
-| Collection| players|
+| Collection<String>| players|
 
 #### 0x56 - Set Score Packet
 | Type | Name |
@@ -764,16 +764,16 @@
 #### 0x64 - Update Advancements Packet
 | Type | Name |
 | -------------| -------------|
-| Set| removed|
-| Map| added|
+| Set<ResourceLocation>| removed|
+| Map<ResourceLocation, Builder>| added|
 | boolean| reset|
-| Map| progress|
+| Map<ResourceLocation, AdvancementProgress>| progress|
 
 #### 0x65 - Update Attributes Packet
 | Type | Name |
 | -------------| -------------|
 | int| entity id|
-| List| attributes|
+| List<AttributeSnapshot>| attributes|
 
 #### 0x66 - Update Mob Effect Packet
 | Type | Name |
@@ -788,12 +788,12 @@
 #### 0x67 - Update Recipes Packet
 | Type | Name |
 | -------------| -------------|
-| List| recipes|
+| List<Recipe<?>>| recipes|
 
 #### 0x68 - Update Tags Packet
 | Type | Name |
 | -------------| -------------|
-| Map| tags|
+| Map<ResourceKey<? extends Registry<?>>, NetworkPayload>| tags|
 
 
 ## Play (Client -> Server)
@@ -871,7 +871,7 @@
 | int| container id|
 | ClickType| click type|
 | ItemStack| carried item|
-| Int2ObjectMap| changed slots|
+| Int2ObjectMap<ItemStack>| changed slots|
 | int| button num|
 | int| state id|
 | int| slot num|
@@ -890,9 +890,9 @@
 #### 0x0D - Edit Book Packet
 | Type | Name |
 | -------------| -------------|
-| Optional| title|
+| Optional<String>| title|
 | int| slot|
-| List| pages|
+| List<String>| pages|
 
 #### 0x0E - Entity Tag Query
 | Type | Name |
@@ -1068,8 +1068,8 @@
 #### 0x26 - Set Beacon Packet
 | Type | Name |
 | -------------| -------------|
-| Optional| secondary|
-| Optional| primary|
+| Optional<MobEffect>| secondary|
+| Optional<MobEffect>| primary|
 
 #### 0x27 - Set Carried Item Packet
 | Type | Name |
@@ -1221,14 +1221,14 @@
 #### 0x00 - Hello Packet
 | Type | Name |
 | -------------| -------------|
-| Optional| public key|
+| Optional<Data>| public key|
 | String| name|
 
 #### 0x01 - Key Packet
 | Type | Name |
 | -------------| -------------|
 | byte[]| keybytes|
-| Either| nonce or salt signature|
+| Either<byte[], SaltSignaturePair>| nonce or salt signature|
 
 #### 0x02 - Custom Query Packet
 | Type | Name |
