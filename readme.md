@@ -1,4 +1,4 @@
-# Release 1.19, Protocol 759
+# Snapshot 22w24a (1.19.1), Protocol 92 (1073741916), Release Protocol: 759
 ## Handshaking (Server -> Client)
 
 
