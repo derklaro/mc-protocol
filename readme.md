@@ -1,4 +1,4 @@
-# Snapshot 22w24a (1.19.1), Protocol 92 (1073741916), Release Protocol: 759
+# Snapshot 1.19.1-pre1 (1.19.1), Protocol 93 (1073741917), Release Protocol: 760
 ## Handshaking (Server -> Client)
 
 
