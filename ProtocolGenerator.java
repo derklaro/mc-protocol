@@ -31,14 +31,14 @@ import net.minecraft.network.protocol.PacketFlow;
 
 public class ProtocolGenerator {
 
-  // pull changes from remote and create tag for new minecraft version:
+	// pull changes from remote and create tag for new minecraft version:
 	// git fetch && git pull && git tag -a 1.19-pre5 -m "1.19-pre5" && git push --tags
 
-  // install remapped client jar into local repository:
+	// install remapped client jar into local repository:
 	// mvn install:install-file -Dfile=client.jar -DgroupId=net.minecraft -DartifactId=client -Dversion=1.19-pre1 -Dpackaging=jar -DgeneratePom=true
 
-  // launcher meta: https://piston-meta.mojang.com/mc/game/version_manifest_v2.json
-  // remapper: https://github.com/FabricMC/Enigma
+	// launcher meta: https://piston-meta.mojang.com/mc/game/version_manifest_v2.json
+	// remapper: https://github.com/FabricMC/Enigma
 
 	public static void main(String[] args) throws IOException {
 		// begin the markdown formatting
