@@ -1,4 +1,4 @@
-# Snapshot 1.19.1-rc1 (1.19.1), Protocol 94 (1073741918), Release Protocol: 760
+# Snapshot 1.19.1-pre2 (1.19.1), Protocol 95 (1073741919), Release Protocol: 760
 ## Handshaking (Server -> Client)
 
 
@@ -729,7 +729,7 @@
 | Type | Name |
 | -------------| -------------|
 | Component| content|
-| int| type id|
+| boolean| overlay|
 
 #### 0x60 - Tab List Packet
 | Type | Name |
@@ -1221,6 +1221,7 @@
 #### 0x00 - Hello Packet
 | Type | Name |
 | -------------| -------------|
+| Optional\<UUID\>| profile id|
 | Optional\<Data\>| public key|
 | String| name|
 
