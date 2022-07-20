@@ -1,4 +1,4 @@
-# Snapshot 1.19.1-pre5 (1.19.1), Protocol 98 (1073741922), Release Protocol: 760
+# Snapshot 1.19.1-pre6 (1.19.1), Protocol 99 (1073741923), Release Protocol: 760
 ## Handshaking (Server -> Client)
 
 
