@@ -1,4 +1,4 @@
-# Snapshot 1.19.1-pre6 (1.19.1), Protocol 99 (1073741923), Release Protocol: 760
+# Snapshot 1.19.1-rc2 (1.19.1), Protocol 100 (1073741924), Release Protocol: 760
 ## Handshaking (Server -> Client)
 
 
@@ -541,6 +541,7 @@
 | boolean| previews chat|
 | Optional\<String\>| icon base64|
 | Optional\<Component\>| motd|
+| boolean| enforces secure chat|
 
 #### 0x43 - Set Action Bar Text Packet
 | Type | Name |
