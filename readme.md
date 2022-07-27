@@ -1,4 +1,4 @@
-# Snapshot 1.19.1-rc3 (1.19.1), Protocol 101 (1073741925), Release Protocol: 760
+# Release 1.19.1, Protocol 760
 ## Handshaking (Server -> Client)
 
 
