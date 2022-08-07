@@ -1,4 +1,4 @@
-# Snapshot 1.19.2-rc1 (1.19.2), Protocol 102 (1073741926), Release Protocol: 760
+# Release 1.19.2, Protocol 760
 ## Handshaking (Server -> Client)
 
 
