@@ -1,4 +1,4 @@
-# Snapshot 22w42a (1.19.3), Protocol 104 (1073741928), Release Protocol: 761
+# Snapshot 22w43a (1.19.3), Protocol 105 (1073741929), Release Protocol: 761
 ## Handshaking (Server -> Client)
 
 
@@ -614,7 +614,7 @@
 #### 0x4F - Set Entity Data Packet
 | Type | Name |
 | -------------| -------------|
-| List\<DataItem\<?\>\>| packed items|
+| List\<DataValue\<?\>\>| packed items|
 | int| id|
 
 #### 0x50 - Set Entity Link Packet
@@ -1050,51 +1050,56 @@
 | -------------| -------------|
 | int| id|
 
-#### 0x20 - Recipe Book Change Settings Packet
+#### 0x20 - Chat Session Update Packet
+| Type | Name |
+| -------------| -------------|
+| Data| chat session|
+
+#### 0x21 - Recipe Book Change Settings Packet
 | Type | Name |
 | -------------| -------------|
 | RecipeBookType| book type|
 | boolean| is open|
 | boolean| is filtering|
 
-#### 0x21 - Recipe Book Seen Recipe Packet
+#### 0x22 - Recipe Book Seen Recipe Packet
 | Type | Name |
 | -------------| -------------|
 | ResourceLocation| recipe|
 
-#### 0x22 - Rename Item Packet
+#### 0x23 - Rename Item Packet
 | Type | Name |
 | -------------| -------------|
 | String| name|
 
-#### 0x23 - Resource Pack Packet
+#### 0x24 - Resource Pack Packet
 | Type | Name |
 | -------------| -------------|
 | Action| action|
 
-#### 0x24 - Seen Advancements Packet
+#### 0x25 - Seen Advancements Packet
 | Type | Name |
 | -------------| -------------|
 | Action| action|
 | ResourceLocation| tab|
 
-#### 0x25 - Select Trade Packet
+#### 0x26 - Select Trade Packet
 | Type | Name |
 | -------------| -------------|
 | int| item|
 
-#### 0x26 - Set Beacon Packet
+#### 0x27 - Set Beacon Packet
 | Type | Name |
 | -------------| -------------|
 | Optional\<MobEffect\>| secondary|
 | Optional\<MobEffect\>| primary|
 
-#### 0x27 - Set Carried Item Packet
+#### 0x28 - Set Carried Item Packet
 | Type | Name |
 | -------------| -------------|
 | int| slot|
 
-#### 0x28 - Set Command Block Packet
+#### 0x29 - Set Command Block Packet
 | Type | Name |
 | -------------| -------------|
 | boolean| automatic|
@@ -1104,20 +1109,20 @@
 | boolean| track output|
 | boolean| conditional|
 
-#### 0x29 - Set Command Minecart Packet
+#### 0x2A - Set Command Minecart Packet
 | Type | Name |
 | -------------| -------------|
 | boolean| track output|
 | int| entity|
 | String| command|
 
-#### 0x2A - Set Creative Mode Slot Packet
+#### 0x2B - Set Creative Mode Slot Packet
 | Type | Name |
 | -------------| -------------|
 | int| slot num|
 | ItemStack| item stack|
 
-#### 0x2B - Set Jigsaw Block Packet
+#### 0x2C - Set Jigsaw Block Packet
 | Type | Name |
 | -------------| -------------|
 | BlockPos| pos|
@@ -1127,7 +1132,7 @@
 | ResourceLocation| name|
 | ResourceLocation| pool|
 
-#### 0x2C - Set Structure Block Packet
+#### 0x2D - Set Structure Block Packet
 | Type | Name |
 | -------------| -------------|
 | UpdateType| update type|
@@ -1145,30 +1150,30 @@
 | Mirror| mirror|
 | boolean| ignore entities|
 
-#### 0x2D - Sign Update Packet
+#### 0x2E - Sign Update Packet
 | Type | Name |
 | -------------| -------------|
 | BlockPos| pos|
 | String[]| lines|
 
-#### 0x2E - Swing Packet
+#### 0x2F - Swing Packet
 | Type | Name |
 | -------------| -------------|
 | InteractionHand| hand|
 
-#### 0x2F - Teleport To Entity Packet
+#### 0x30 - Teleport To Entity Packet
 | Type | Name |
 | -------------| -------------|
 | UUID| uuid|
 
-#### 0x30 - Use Item On Packet
+#### 0x31 - Use Item On Packet
 | Type | Name |
 | -------------| -------------|
 | InteractionHand| hand|
 | BlockHitResult| block hit|
 | int| sequence|
 
-#### 0x31 - Use Item Packet
+#### 0x32 - Use Item Packet
 | Type | Name |
 | -------------| -------------|
 | int| sequence|
@@ -1213,8 +1218,8 @@
 | Type | Name |
 | -------------| -------------|
 | String| server id|
-| byte[]| nonce|
 | byte[]| public key|
+| byte[]| challenge|
 
 #### 0x02 - Game Profile Packet
 | Type | Name |
@@ -1241,13 +1246,12 @@
 | -------------| -------------|
 | Optional\<UUID\>| profile id|
 | String| name|
-| Data| chat session|
 
 #### 0x01 - Key Packet
 | Type | Name |
 | -------------| -------------|
 | byte[]| keybytes|
-| Either\<byte[], SaltSignaturePair\>| nonce or salt signature|
+| byte[]| encrypted challenge|
 
 #### 0x02 - Custom Query Packet
 | Type | Name |
