@@ -1,4 +1,4 @@
-# Snapshot 1.19.3-pre1 (1.19.3), Protocol 109 (1073741933), Release Protocol: 761
+# Snapshot 1.19.3-pre3 (1.19.3), Protocol 111 (1073741935), Release Protocol: 761
 ## Handshaking (Server -> Client)
 
 
@@ -172,41 +172,29 @@
 | ResourceLocation| identifier|
 | FriendlyByteBuf| data|
 
-#### 0x16 - Custom Sound Packet
-| Type | Name |
-| -------------| -------------|
-| SoundSource| source|
-| float| pitch|
-| int| z|
-| int| y|
-| ResourceLocation| name|
-| int| x|
-| long| seed|
-| float| volume|
-
-#### 0x17 - Delete Chat Packet
+#### 0x16 - Delete Chat Packet
 | Type | Name |
 | -------------| -------------|
 | Packed| message signature|
 
-#### 0x18 - Disconnect Packet
+#### 0x17 - Disconnect Packet
 | Type | Name |
 | -------------| -------------|
 | Component| reason|
 
-#### 0x19 - Disguised Chat Packet
+#### 0x18 - Disguised Chat Packet
 | Type | Name |
 | -------------| -------------|
 | Component| message|
 | BoundNetwork| chat type|
 
-#### 0x1A - Entity Event Packet
+#### 0x19 - Entity Event Packet
 | Type | Name |
 | -------------| -------------|
 | int| entity id|
 | byte| event id|
 
-#### 0x1B - Explode Packet
+#### 0x1A - Explode Packet
 | Type | Name |
 | -------------| -------------|
 | double| z|
@@ -218,26 +206,26 @@
 | float| knockback y|
 | float| knockback z|
 
-#### 0x1C - Forget Level Chunk Packet
+#### 0x1B - Forget Level Chunk Packet
 | Type | Name |
 | -------------| -------------|
 | int| z|
 | int| x|
 
-#### 0x1D - Game Event Packet
+#### 0x1C - Game Event Packet
 | Type | Name |
 | -------------| -------------|
 | float| param|
 | Type| event|
 
-#### 0x1E - Horse Screen Open Packet
+#### 0x1D - Horse Screen Open Packet
 | Type | Name |
 | -------------| -------------|
 | int| container id|
 | int| entity id|
 | int| size|
 
-#### 0x1F - Initialize Border Packet
+#### 0x1E - Initialize Border Packet
 | Type | Name |
 | -------------| -------------|
 | int| new absolute max size|
@@ -249,12 +237,12 @@
 | int| warning time|
 | double| new center z|
 
-#### 0x20 - Keep Alive Packet
+#### 0x1F - Keep Alive Packet
 | Type | Name |
 | -------------| -------------|
 | long| id|
 
-#### 0x21 - Level Chunk With Light Packet
+#### 0x20 - Level Chunk With Light Packet
 | Type | Name |
 | -------------| -------------|
 | int| z|
@@ -262,7 +250,7 @@
 | ClientboundLightUpdatePacketData| light data|
 | ClientboundLevelChunkPacketData| chunk data|
 
-#### 0x22 - Level Event Packet
+#### 0x21 - Level Event Packet
 | Type | Name |
 | -------------| -------------|
 | boolean| global event|
@@ -270,7 +258,7 @@
 | BlockPos| pos|
 | int| data|
 
-#### 0x23 - Level Particles Packet
+#### 0x22 - Level Particles Packet
 | Type | Name |
 | -------------| -------------|
 | float| max speed|
@@ -284,14 +272,14 @@
 | float| y dist|
 | float| x dist|
 
-#### 0x24 - Light Update Packet
+#### 0x23 - Light Update Packet
 | Type | Name |
 | -------------| -------------|
 | int| x|
 | int| z|
 | ClientboundLightUpdatePacketData| light data|
 
-#### 0x25 - Login Packet
+#### 0x24 - Login Packet
 | Type | Name |
 | -------------| -------------|
 | Frozen| registry holder|
@@ -312,7 +300,7 @@
 | boolean| is debug|
 | boolean| show death screen|
 
-#### 0x26 - Map Item Data Packet
+#### 0x25 - Map Item Data Packet
 | Type | Name |
 | -------------| -------------|
 | MapPatch| color patch|
@@ -321,7 +309,7 @@
 | List\<MapDecoration\>| decorations|
 | byte| scale|
 
-#### 0x27 - Merchant Offers Packet
+#### 0x26 - Merchant Offers Packet
 | Type | Name |
 | -------------| -------------|
 | MerchantOffers| offers|
@@ -331,7 +319,7 @@
 | boolean| can restock|
 | int| container id|
 
-#### 0x28 - Pos
+#### 0x27 - Pos
 | Type | Name |
 | -------------| -------------|
 | short| xa|
@@ -344,7 +332,7 @@
 | short| za|
 | byte| y rot|
 
-#### 0x29 - Pos Rot
+#### 0x28 - Pos Rot
 | Type | Name |
 | -------------| -------------|
 | short| xa|
@@ -357,7 +345,7 @@
 | short| za|
 | byte| y rot|
 
-#### 0x2A - Rot
+#### 0x29 - Rot
 | Type | Name |
 | -------------| -------------|
 | short| xa|
@@ -370,7 +358,7 @@
 | short| za|
 | byte| y rot|
 
-#### 0x2B - Move Vehicle Packet
+#### 0x2A - Move Vehicle Packet
 | Type | Name |
 | -------------| -------------|
 | double| x|
@@ -379,35 +367,35 @@
 | double| z|
 | float| y rot|
 
-#### 0x2C - Open Book Packet
+#### 0x2B - Open Book Packet
 | Type | Name |
 | -------------| -------------|
 | InteractionHand| hand|
 
-#### 0x2D - Open Screen Packet
+#### 0x2C - Open Screen Packet
 | Type | Name |
 | -------------| -------------|
 | int| container id|
 | MenuType\<?\>| type|
 | Component| title|
 
-#### 0x2E - Open Sign Editor Packet
+#### 0x2D - Open Sign Editor Packet
 | Type | Name |
 | -------------| -------------|
 | BlockPos| pos|
 
-#### 0x2F - Ping Packet
+#### 0x2E - Ping Packet
 | Type | Name |
 | -------------| -------------|
 | int| id|
 
-#### 0x30 - Place Ghost Recipe Packet
+#### 0x2F - Place Ghost Recipe Packet
 | Type | Name |
 | -------------| -------------|
 | int| container id|
 | ResourceLocation| recipe|
 
-#### 0x31 - Player Abilities Packet
+#### 0x30 - Player Abilities Packet
 | Type | Name |
 | -------------| -------------|
 | boolean| invulnerable|
@@ -417,7 +405,7 @@
 | boolean| is flying|
 | boolean| can fly|
 
-#### 0x32 - Player Chat Packet
+#### 0x31 - Player Chat Packet
 | Type | Name |
 | -------------| -------------|
 | UUID| sender|
@@ -428,35 +416,35 @@
 | Packed| body|
 | int| index|
 
-#### 0x33 - Player Combat End Packet
+#### 0x32 - Player Combat End Packet
 | Type | Name |
 | -------------| -------------|
 | int| killer id|
 | int| duration|
 
-#### 0x34 - Player Combat Enter Packet
+#### 0x33 - Player Combat Enter Packet
 | Type | Name |
 | -------------| -------------|
 
-#### 0x35 - Player Combat Kill Packet
+#### 0x34 - Player Combat Kill Packet
 | Type | Name |
 | -------------| -------------|
 | Component| message|
 | int| killer id|
 | int| player id|
 
-#### 0x36 - Player Info Remove Packet
+#### 0x35 - Player Info Remove Packet
 | Type | Name |
 | -------------| -------------|
 | List\<UUID\>| profile ids|
 
-#### 0x37 - Player Info Update Packet
+#### 0x36 - Player Info Update Packet
 | Type | Name |
 | -------------| -------------|
 | List\<Entry\>| entries|
 | EnumSet\<Action\>| actions|
 
-#### 0x38 - Player Look At Packet
+#### 0x37 - Player Look At Packet
 | Type | Name |
 | -------------| -------------|
 | Anchor| to anchor|
@@ -467,7 +455,7 @@
 | double| x|
 | int| entity|
 
-#### 0x39 - Player Position Packet
+#### 0x38 - Player Position Packet
 | Type | Name |
 | -------------| -------------|
 | double| z|
@@ -479,7 +467,7 @@
 | Set\<RelativeArgument\>| relative arguments|
 | float| y rot|
 
-#### 0x3A - Recipe Packet
+#### 0x39 - Recipe Packet
 | Type | Name |
 | -------------| -------------|
 | RecipeBookSettings| book settings|
@@ -487,18 +475,18 @@
 | List\<ResourceLocation\>| to highlight|
 | State| state|
 
-#### 0x3B - Remove Entities Packet
+#### 0x3A - Remove Entities Packet
 | Type | Name |
 | -------------| -------------|
 | IntList| entity ids|
 
-#### 0x3C - Remove Mob Effect Packet
+#### 0x3B - Remove Mob Effect Packet
 | Type | Name |
 | -------------| -------------|
 | int| entity id|
 | MobEffect| effect|
 
-#### 0x3D - Resource Pack Packet
+#### 0x3C - Resource Pack Packet
 | Type | Name |
 | -------------| -------------|
 | String| url|
@@ -506,7 +494,7 @@
 | boolean| required|
 | Component| prompt|
 
-#### 0x3E - Respawn Packet
+#### 0x3D - Respawn Packet
 | Type | Name |
 | -------------| -------------|
 | long| seed|
@@ -519,13 +507,13 @@
 | boolean| keep all player data|
 | Optional\<GlobalPos\>| last death location|
 
-#### 0x3F - Rotate Head Packet
+#### 0x3E - Rotate Head Packet
 | Type | Name |
 | -------------| -------------|
 | byte| y head rot|
 | int| entity id|
 
-#### 0x40 - Section Blocks Update Packet
+#### 0x3F - Section Blocks Update Packet
 | Type | Name |
 | -------------| -------------|
 | boolean| suppress light updates|
@@ -533,97 +521,97 @@
 | BlockState[]| states|
 | short[]| positions|
 
-#### 0x41 - Select Advancements Tab Packet
+#### 0x40 - Select Advancements Tab Packet
 | Type | Name |
 | -------------| -------------|
 | ResourceLocation| tab|
 
-#### 0x42 - Server Data Packet
+#### 0x41 - Server Data Packet
 | Type | Name |
 | -------------| -------------|
 | Optional\<String\>| icon base64|
 | Optional\<Component\>| motd|
 | boolean| enforces secure chat|
 
-#### 0x43 - Set Action Bar Text Packet
+#### 0x42 - Set Action Bar Text Packet
 | Type | Name |
 | -------------| -------------|
 | Component| text|
 
-#### 0x44 - Set Border Center Packet
+#### 0x43 - Set Border Center Packet
 | Type | Name |
 | -------------| -------------|
 | double| new center z|
 | double| new center x|
 
-#### 0x45 - Set Border Lerp Size Packet
+#### 0x44 - Set Border Lerp Size Packet
 | Type | Name |
 | -------------| -------------|
 | double| new size|
 | long| lerp time|
 | double| old size|
 
-#### 0x46 - Set Border Size Packet
+#### 0x45 - Set Border Size Packet
 | Type | Name |
 | -------------| -------------|
 | double| size|
 
-#### 0x47 - Set Border Warning Delay Packet
+#### 0x46 - Set Border Warning Delay Packet
 | Type | Name |
 | -------------| -------------|
 | int| warning delay|
 
-#### 0x48 - Set Border Warning Distance Packet
+#### 0x47 - Set Border Warning Distance Packet
 | Type | Name |
 | -------------| -------------|
 | int| warning blocks|
 
-#### 0x49 - Set Camera Packet
+#### 0x48 - Set Camera Packet
 | Type | Name |
 | -------------| -------------|
 | int| camera id|
 
-#### 0x4A - Set Carried Item Packet
+#### 0x49 - Set Carried Item Packet
 | Type | Name |
 | -------------| -------------|
 | int| slot|
 
-#### 0x4B - Set Chunk Cache Center Packet
+#### 0x4A - Set Chunk Cache Center Packet
 | Type | Name |
 | -------------| -------------|
 | int| x|
 | int| z|
 
-#### 0x4C - Set Chunk Cache Radius Packet
+#### 0x4B - Set Chunk Cache Radius Packet
 | Type | Name |
 | -------------| -------------|
 | int| radius|
 
-#### 0x4D - Set Default Spawn Position Packet
+#### 0x4C - Set Default Spawn Position Packet
 | Type | Name |
 | -------------| -------------|
 | float| angle|
 | BlockPos| pos|
 
-#### 0x4E - Set Display Objective Packet
+#### 0x4D - Set Display Objective Packet
 | Type | Name |
 | -------------| -------------|
 | int| slot|
 | String| objective name|
 
-#### 0x4F - Set Entity Data Packet
+#### 0x4E - Set Entity Data Packet
 | Type | Name |
 | -------------| -------------|
 | List\<DataValue\<?\>\>| packed items|
 | int| id|
 
-#### 0x50 - Set Entity Link Packet
+#### 0x4F - Set Entity Link Packet
 | Type | Name |
 | -------------| -------------|
 | int| source id|
 | int| dest id|
 
-#### 0x51 - Set Entity Motion Packet
+#### 0x50 - Set Entity Motion Packet
 | Type | Name |
 | -------------| -------------|
 | int| id|
@@ -631,27 +619,27 @@
 | int| xa|
 | int| za|
 
-#### 0x52 - Set Equipment Packet
+#### 0x51 - Set Equipment Packet
 | Type | Name |
 | -------------| -------------|
 | int| entity|
 | List\<Pair\<EquipmentSlot, ItemStack\>\>| slots|
 
-#### 0x53 - Set Experience Packet
+#### 0x52 - Set Experience Packet
 | Type | Name |
 | -------------| -------------|
 | int| total experience|
 | float| experience progress|
 | int| experience level|
 
-#### 0x54 - Set Health Packet
+#### 0x53 - Set Health Packet
 | Type | Name |
 | -------------| -------------|
 | int| food|
 | float| health|
 | float| saturation|
 
-#### 0x55 - Set Objective Packet
+#### 0x54 - Set Objective Packet
 | Type | Name |
 | -------------| -------------|
 | String| objective name|
@@ -659,13 +647,13 @@
 | Component| display name|
 | int| method|
 
-#### 0x56 - Set Passengers Packet
+#### 0x55 - Set Passengers Packet
 | Type | Name |
 | -------------| -------------|
 | int| vehicle|
 | int[]| passengers|
 
-#### 0x57 - Set Player Team Packet
+#### 0x56 - Set Player Team Packet
 | Type | Name |
 | -------------| -------------|
 | String| name|
@@ -673,7 +661,7 @@
 | int| method|
 | Collection\<String\>| players|
 
-#### 0x58 - Set Score Packet
+#### 0x57 - Set Score Packet
 | Type | Name |
 | -------------| -------------|
 | String| objective name|
@@ -681,35 +669,35 @@
 | int| score|
 | String| owner|
 
-#### 0x59 - Set Simulation Distance Packet
+#### 0x58 - Set Simulation Distance Packet
 | Type | Name |
 | -------------| -------------|
 | int| simulation distance|
 
-#### 0x5A - Set Subtitle Text Packet
+#### 0x59 - Set Subtitle Text Packet
 | Type | Name |
 | -------------| -------------|
 | Component| text|
 
-#### 0x5B - Set Time Packet
+#### 0x5A - Set Time Packet
 | Type | Name |
 | -------------| -------------|
 | long| day time|
 | long| game time|
 
-#### 0x5C - Set Title Text Packet
+#### 0x5B - Set Title Text Packet
 | Type | Name |
 | -------------| -------------|
 | Component| text|
 
-#### 0x5D - Set Titles Animation Packet
+#### 0x5C - Set Titles Animation Packet
 | Type | Name |
 | -------------| -------------|
 | int| fade out|
 | int| fade in|
 | int| stay|
 
-#### 0x5E - Sound Entity Packet
+#### 0x5D - Sound Entity Packet
 | Type | Name |
 | -------------| -------------|
 | long| seed|
@@ -719,7 +707,7 @@
 | int| id|
 | float| pitch|
 
-#### 0x5F - Sound Packet
+#### 0x5E - Sound Packet
 | Type | Name |
 | -------------| -------------|
 | int| y|
@@ -728,41 +716,41 @@
 | float| pitch|
 | int| z|
 | long| seed|
-| SoundEvent| sound|
+| Holder\<SoundEvent\>| sound|
 | float| volume|
 
-#### 0x60 - Stop Sound Packet
+#### 0x5F - Stop Sound Packet
 | Type | Name |
 | -------------| -------------|
 | ResourceLocation| name|
 | SoundSource| source|
 
-#### 0x61 - System Chat Packet
+#### 0x60 - System Chat Packet
 | Type | Name |
 | -------------| -------------|
 | Component| content|
 | boolean| overlay|
 
-#### 0x62 - Tab List Packet
+#### 0x61 - Tab List Packet
 | Type | Name |
 | -------------| -------------|
 | Component| footer|
 | Component| header|
 
-#### 0x63 - Tag Query Packet
+#### 0x62 - Tag Query Packet
 | Type | Name |
 | -------------| -------------|
 | CompoundTag| tag|
 | int| transaction id|
 
-#### 0x64 - Take Item Entity Packet
+#### 0x63 - Take Item Entity Packet
 | Type | Name |
 | -------------| -------------|
 | int| player id|
 | int| amount|
 | int| item id|
 
-#### 0x65 - Teleport Entity Packet
+#### 0x64 - Teleport Entity Packet
 | Type | Name |
 | -------------| -------------|
 | boolean| on ground|
@@ -773,7 +761,7 @@
 | double| z|
 | int| id|
 
-#### 0x66 - Update Advancements Packet
+#### 0x65 - Update Advancements Packet
 | Type | Name |
 | -------------| -------------|
 | Set\<ResourceLocation\>| removed|
@@ -781,18 +769,18 @@
 | boolean| reset|
 | Map\<ResourceLocation, AdvancementProgress\>| progress|
 
-#### 0x67 - Update Attributes Packet
+#### 0x66 - Update Attributes Packet
 | Type | Name |
 | -------------| -------------|
 | int| entity id|
 | List\<AttributeSnapshot\>| attributes|
 
-#### 0x68 - Update Enabled Features Packet
+#### 0x67 - Update Enabled Features Packet
 | Type | Name |
 | -------------| -------------|
 | Set\<ResourceLocation\>| features|
 
-#### 0x69 - Update Mob Effect Packet
+#### 0x68 - Update Mob Effect Packet
 | Type | Name |
 | -------------| -------------|
 | byte| effect amplifier|
@@ -802,12 +790,12 @@
 | MobEffect| effect|
 | FactorData| factor data|
 
-#### 0x6A - Update Recipes Packet
+#### 0x69 - Update Recipes Packet
 | Type | Name |
 | -------------| -------------|
 | List\<Recipe\<?\>\>| recipes|
 
-#### 0x6B - Update Tags Packet
+#### 0x6A - Update Tags Packet
 | Type | Name |
 | -------------| -------------|
 | Map\<ResourceKey\<? extends Registry\<?\>\>, NetworkPayload\>| tags|
