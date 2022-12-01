@@ -1,4 +1,4 @@
-# Snapshot 1.19.3-pre3 (1.19.3), Protocol 111 (1073741935), Release Protocol: 761
+# Snapshot 1.19.3-rc1 (1.19.3), Protocol 112 (1073741936), Release Protocol: 761
 ## Handshaking (Server -> Client)
 
 
@@ -701,7 +701,7 @@
 | Type | Name |
 | -------------| -------------|
 | long| seed|
-| SoundEvent| sound|
+| Holder\<SoundEvent\>| sound|
 | float| volume|
 | SoundSource| source|
 | int| id|
