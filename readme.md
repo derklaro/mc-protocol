@@ -1,4 +1,4 @@
-# Snapshot 1.19.3-rc1 (1.19.3), Protocol 112 (1073741936), Release Protocol: 761
+# Release 1.19.3, Protocol 761
 ## Handshaking (Server -> Client)
 
 
@@ -502,9 +502,9 @@
 | boolean| is debug|
 | boolean| is flat|
 | ResourceKey\<DimensionType\>| dimension type|
+| byte| data to keep|
 | GameType| player game type|
 | ResourceKey\<Level\>| dimension|
-| boolean| keep all player data|
 | Optional\<GlobalPos\>| last death location|
 
 #### 0x3E - Rotate Head Packet
