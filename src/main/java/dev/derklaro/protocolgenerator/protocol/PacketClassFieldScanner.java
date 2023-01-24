@@ -22,4 +22,34 @@
  * THE SOFTWARE.
  */
 
-rootProject.name = "mc-protocol-generator"
+package dev.derklaro.protocolgenerator.protocol;
+
+import java.lang.reflect.Modifier;
+import lombok.NonNull;
+
+final class PacketClassFieldScanner {
+
+  private final Class<?> packetClass;
+  private final PacketClassInfo baseInfo;
+
+  public PacketClassFieldScanner(@NonNull Class<?> packetClass, @NonNull PacketClassInfo baseInfo) {
+    this.packetClass = packetClass;
+    this.baseInfo = baseInfo;
+  }
+
+  public void scanAndRegisterClassFields() {
+    // walk up the class tree
+    var currentClass = this.packetClass;
+    do {
+      var fields = currentClass.getDeclaredFields();
+      for (var field : fields) {
+        var fieldModifiers = field.getModifiers();
+        if (!Modifier.isStatic(fieldModifiers)) {
+          var fieldInfo = PacketClassInfo.FieldInfo.ofReflectField(field);
+          this.baseInfo.registerField(fieldInfo);
+        }
+      }
+
+    } while ((currentClass = currentClass.getSuperclass()) != Object.class);
+  }
+}

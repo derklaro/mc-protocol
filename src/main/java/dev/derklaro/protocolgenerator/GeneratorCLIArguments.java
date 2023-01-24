@@ -25,11 +25,21 @@
 package dev.derklaro.protocolgenerator;
 
 import dev.derklaro.protocolgenerator.cli.CliArgParser;
+import dev.derklaro.protocolgenerator.manifest.McManifestVersion;
 import lombok.NonNull;
+import net.sourceforge.argparse4j.impl.type.EnumStringArgumentType;
 
 final class GeneratorCLIArguments {
 
-  public static void registerDefaultArguments(@NonNull CliArgParser argParser) {
+  private GeneratorCLIArguments() {
+    throw new UnsupportedOperationException();
+  }
 
+  public static void registerDefaultArguments(@NonNull CliArgParser argParser) {
+    // argument to set the version type to fetch
+    argParser.registerArgument("-vt", "--version-type")
+      .setDefault(McManifestVersion.VersionType.SNAPSHOT)
+      .help("Sets the argument type to download and parse the protocol of")
+      .type(EnumStringArgumentType.forEnum(McManifestVersion.VersionType.class));
   }
 }

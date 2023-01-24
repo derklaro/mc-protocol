@@ -22,31 +22,8 @@
  * THE SOFTWARE.
  */
 
-package dev.derklaro.protocolgenerator.version;
+package com.mojang.serialization;
 
-import com.google.gson.JsonDeserializationContext;
-import com.google.gson.JsonDeserializer;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonParseException;
-import java.lang.reflect.Type;
-import java.time.OffsetDateTime;
-import java.time.format.DateTimeFormatter;
-import lombok.NonNull;
+public interface Keyable {
 
-final class ISO8601DateTimeDeserializer implements JsonDeserializer<OffsetDateTime> {
-
-  public static final ISO8601DateTimeDeserializer DESERIALIZER = new ISO8601DateTimeDeserializer();
-
-  private ISO8601DateTimeDeserializer() {
-  }
-
-  @Override
-  public @NonNull OffsetDateTime deserialize(
-    @NonNull JsonElement json,
-    @NonNull Type typeOfT,
-    @NonNull JsonDeserializationContext context
-  ) throws JsonParseException {
-    var dateTimeString = json.getAsString();
-    return OffsetDateTime.parse(dateTimeString, DateTimeFormatter.ISO_OFFSET_DATE_TIME);
-  }
 }

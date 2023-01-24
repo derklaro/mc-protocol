@@ -22,23 +22,8 @@
  * THE SOFTWARE.
  */
 
-package dev.derklaro.protocolgenerator.version;
+package com.mojang.authlib;
 
-import com.google.common.base.Enums;
-import lombok.NonNull;
-import net.sourceforge.argparse4j.inf.Argument;
-import net.sourceforge.argparse4j.inf.ArgumentParser;
-import net.sourceforge.argparse4j.inf.ArgumentParserException;
-import net.sourceforge.argparse4j.inf.ArgumentType;
+public class GameProfile {
 
-public class McVersionTypeParser implements ArgumentType<McVersion.VersionType> {
-
-  @Override
-  public @NonNull McVersion.VersionType convert(
-    @NonNull ArgumentParser parser,
-    @NonNull Argument arg,
-    @NonNull String value
-  ) throws ArgumentParserException {
-    return Enums.getIfPresent(McVersion.VersionType.class, value).get();
-  }
 }

@@ -22,8 +22,17 @@
  * THE SOFTWARE.
  */
 
-package dev.derklaro.protocolgenerator.generator;
+package dev.derklaro.protocolgenerator.gson;
 
-final class MarkdownGenerator {
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import java.time.OffsetDateTime;
 
+@Deprecated // todo: jackson soon?
+public final class GsonProvider {
+
+  public static final Gson ISO_8601_DATE_TIME_GSON = new GsonBuilder()
+    .disableHtmlEscaping()
+    .registerTypeAdapter(OffsetDateTime.class, ISO8601DateTimeDeserializer.DESERIALIZER)
+    .create();
 }

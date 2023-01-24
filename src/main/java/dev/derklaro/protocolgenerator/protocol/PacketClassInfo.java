@@ -22,4 +22,39 @@
  * THE SOFTWARE.
  */
 
-rootProject.name = "mc-protocol-generator"
+package dev.derklaro.protocolgenerator.protocol;
+
+import java.lang.reflect.Field;
+import java.lang.reflect.Type;
+import java.util.LinkedList;
+import java.util.List;
+import lombok.NonNull;
+
+public record PacketClassInfo(
+  int packetId,
+  @NonNull String name,
+  @NonNull String source,
+  @NonNull String target,
+  @NonNull List<FieldInfo> fields
+) implements Comparable<PacketClassInfo> {
+
+  public PacketClassInfo(int packetId, @NonNull String name, @NonNull String source, @NonNull String target) {
+    this(packetId, name, source, target, new LinkedList<>());
+  }
+
+  public void registerField(@NonNull FieldInfo fieldInfo) {
+    this.fields.add(fieldInfo);
+  }
+
+  @Override
+  public int compareTo(@NonNull PacketClassInfo other) {
+    return Integer.compare(this.packetId(), other.packetId());
+  }
+
+  public record FieldInfo(@NonNull String name, @NonNull Class<?> rawType, @NonNull Type genericType) {
+
+    public static @NonNull FieldInfo ofReflectField(@NonNull Field field) {
+      return new FieldInfo(field.getName(), field.getType(), field.getGenericType());
+    }
+  }
+}

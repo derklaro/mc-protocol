@@ -22,37 +22,26 @@
  * THE SOFTWARE.
  */
 
-package dev.derklaro.protocolgenerator.generator;
+package dev.derklaro.protocolgenerator.gameversion;
 
-import java.lang.reflect.Field;
-import java.lang.reflect.Type;
-import java.util.LinkedHashMap;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
+import com.google.gson.annotations.SerializedName;
+import java.time.OffsetDateTime;
 import lombok.NonNull;
 
-record PacketClassInfo(
-  int packetId,
+public record GameVersion(
+  @NonNull String id,
   @NonNull String name,
-  @NonNull String source,
-  @NonNull String target,
-  @NonNull Map<Class<?>, List<FieldInfo>> fields
+  @NonNull @SerializedName("series_id") String series,
+  @NonNull @SerializedName("build_time") OffsetDateTime buildTime,
+  @NonNull @SerializedName("pack_version") PackVersion packVersion,
+  @NonNull @SerializedName("java_component") String javaComponent,
+  @SerializedName("java_version") int javaVersion,
+  @SerializedName("protocol_version") int protocolVersion,
+  @SerializedName("world_version") int worldVersion,
+  boolean stable
 ) {
 
-  public PacketClassInfo(int packetId, @NonNull String name, @NonNull String source, @NonNull String target) {
-    this(packetId, name, source, target, new LinkedHashMap<>());
-  }
+  public record PackVersion(int resource, int data) {
 
-  public void registerField(@NonNull FieldInfo fieldInfo) {
-    var info = this.fields.computeIfAbsent(fieldInfo.rawType(), $ -> new LinkedList<>());
-    info.add(fieldInfo);
-  }
-
-  public record FieldInfo(@NonNull String name, @NonNull Class<?> rawType, @NonNull Type genericType) {
-
-    public static @NonNull FieldInfo ofReflectField(@NonNull Field field) {
-      return new FieldInfo(field.getName(), field.getType(), field.getGenericType());
-    }
   }
 }

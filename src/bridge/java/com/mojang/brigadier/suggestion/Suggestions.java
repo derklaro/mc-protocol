@@ -22,4 +22,8 @@
  * THE SOFTWARE.
  */
 
-rootProject.name = "mc-protocol-generator"
+package com.mojang.brigadier.suggestion;
+
+public class Suggestions {
+
+}

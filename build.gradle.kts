@@ -56,6 +56,15 @@ dependencies {
   val argparse4j = "0.9.0"
   implementation("net.sourceforge.argparse4j", "argparse4j", argparse4j)
 
+  val reflexion = "1.8.0"
+  implementation("dev.derklaro.reflexion", "reflexion", reflexion)
+
+  val fastutil = "8.5.11" // needed internally for minecraft, do not remove
+  implementation("it.unimi.dsi", "fastutil", fastutil)
+
+  val netty = "4.1.87.Final"
+  runtimeOnly("io.netty", "netty-buffer", netty)
+
   val lombok = "1.18.24"
   compileOnly("org.projectlombok", "lombok", lombok)
   annotationProcessor("org.projectlombok", "lombok", lombok)
@@ -67,6 +76,12 @@ tasks.withType<JavaCompile>().configureEach {
   // options
   options.encoding = "UTF-8"
   options.isIncremental = true
+}
+
+java {
+  sourceSets["main"].java {
+    srcDir("src/bridge/java")
+  }
 }
 
 checkstyle {

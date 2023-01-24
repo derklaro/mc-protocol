@@ -22,21 +22,36 @@
  * THE SOFTWARE.
  */
 
-package dev.derklaro.protocolgenerator.generator;
+package dev.derklaro.protocolgenerator.markdown;
 
+import com.google.common.html.HtmlEscapers;
 import fun.mingshan.markdown4j.Markdown;
+import fun.mingshan.markdown4j.constant.FlagConstants;
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
 import java.nio.file.Path;
 import lombok.NonNull;
 
-public final class ProtocolInfoGenerator {
+public final class MarkdownFormatter {
 
-  private final Path remappedJarPath;
+  private final Markdown markdown;
 
-  public ProtocolInfoGenerator(@NonNull Path remappedJarPath) {
-    this.remappedJarPath = remappedJarPath;
+  public MarkdownFormatter(@NonNull Markdown markdown) {
+    this.markdown = markdown;
   }
 
-  public @NonNull Markdown generatePacketInfo() {
+  public void writeTo(@NonNull Path targetFile) throws IOException {
+    StringBuilder builder = new StringBuilder();
+    this.markdown.getBlocks().forEach(block -> {
+      // join the block lines & escape html chars
+      var fullRawText = String.join("\n", block.toMd().split(FlagConstants.LINE_BREAK));
+      var fullEscapedText = HtmlEscapers.htmlEscaper().escape(fullRawText);
 
+      // append the full text to the builder
+      builder.append(fullEscapedText).append('\n');
+    });
+
+    Files.writeString(targetFile, builder.toString(), StandardCharsets.UTF_8);
   }
 }

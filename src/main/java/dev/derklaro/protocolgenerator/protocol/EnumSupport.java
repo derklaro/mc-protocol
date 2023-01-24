@@ -22,37 +22,27 @@
  * THE SOFTWARE.
  */
 
-package dev.derklaro.protocolgenerator.generator;
+package dev.derklaro.protocolgenerator.protocol;
 
-import java.lang.reflect.Modifier;
+import com.google.common.base.CaseFormat;
+import dev.derklaro.reflexion.MethodAccessor;
+import dev.derklaro.reflexion.Reflexion;
 import lombok.NonNull;
 
-final class PacketClassFieldScanner {
+final class EnumSupport {
 
-  private final Class<?> packetClass;
-  private final PacketClassInfo baseInfo;
+  private static final MethodAccessor<?> ENUM_NAME_ACCESSOR = Reflexion.on(Enum.class).findMethod("name").orElseThrow();
 
-  public PacketClassFieldScanner(@NonNull Class<?> packetClass, @NonNull PacketClassInfo baseInfo) {
-    this.packetClass = packetClass;
-    this.baseInfo = baseInfo;
+  private EnumSupport() {
+    throw new UnsupportedOperationException();
   }
 
-  public @NonNull PacketClassInfo scanClassFields() {
-    // walk up the class tree
-    var currentClass = this.packetClass;
-    do {
-      var fields = currentClass.getDeclaredFields();
-      for (var field : fields) {
-        var fieldModifiers = field.getModifiers();
-        if (!Modifier.isStatic(fieldModifiers)) {
-          var fieldInfo = PacketClassInfo.FieldInfo.ofReflectField(field);
-          this.baseInfo.registerField(fieldInfo);
-        }
-      }
+  public static @NonNull String resolveEnumConstantName(@NonNull Object enumConstant) {
+    return ENUM_NAME_ACCESSOR.<String>invoke(enumConstant).getOrThrow();
+  }
 
-    } while ((currentClass = currentClass.getSuperclass()) != Object.class);
-
-    // return the passed-in info, for chaining
-    return this.baseInfo;
+  public static @NonNull String normalizeEnumConstantName(@NonNull Object enumConstant) {
+    var enumConstantName = resolveEnumConstantName(enumConstant);
+    return CaseFormat.UPPER_UNDERSCORE.to(CaseFormat.UPPER_CAMEL, enumConstantName);
   }
 }

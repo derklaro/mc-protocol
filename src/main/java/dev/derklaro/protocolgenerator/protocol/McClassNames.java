@@ -22,4 +22,14 @@
  * THE SOFTWARE.
  */
 
-rootProject.name = "mc-protocol-generator"
+package dev.derklaro.protocolgenerator.protocol;
+
+final class McClassNames {
+
+  public static final String PACKET_FLOW = "net.minecraft.network.protocol.PacketFlow";
+  public static final String CONNECTION_PROTOCOL = "net.minecraft.network.ConnectionProtocol";
+
+  private McClassNames() {
+    throw new UnsupportedOperationException();
+  }
+}

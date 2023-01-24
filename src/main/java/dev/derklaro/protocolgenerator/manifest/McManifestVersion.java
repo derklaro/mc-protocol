@@ -22,4 +22,39 @@
  * THE SOFTWARE.
  */
 
-rootProject.name = "mc-protocol-generator"
+package dev.derklaro.protocolgenerator.manifest;
+
+import com.google.gson.annotations.SerializedName;
+import java.net.URI;
+import java.time.OffsetDateTime;
+import lombok.NonNull;
+
+public record McManifestVersion(
+  @NonNull String id,
+  @NonNull VersionType type,
+  @NonNull String url,
+  @NonNull OffsetDateTime releaseTime,
+  @NonNull String sha1
+) implements Comparable<McManifestVersion> {
+
+  public @NonNull URI uri() {
+    return URI.create(this.url);
+  }
+
+  @Override
+  public int compareTo(@NonNull McManifestVersion other) {
+    return other.releaseTime().compareTo(this.releaseTime());
+  }
+
+  public enum VersionType {
+
+    @SerializedName("release")
+    RELEASE,
+    @SerializedName("snapshot")
+    SNAPSHOT,
+    @SerializedName("old_beta")
+    OLD_BETA,
+    @SerializedName("old_alpha")
+    OLD_ALPHA
+  }
+}

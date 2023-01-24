@@ -22,46 +22,8 @@
  * THE SOFTWARE.
  */
 
-package dev.derklaro.protocolgenerator.version;
+package com.mojang.datafixers.util;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.annotations.SerializedName;
-import java.net.URI;
-import java.time.OffsetDateTime;
-import lombok.NonNull;
+public class Pair<F, S> {
 
-public record McVersion(
-  @NonNull String id,
-  @NonNull VersionType type,
-  @NonNull String url,
-  @NonNull OffsetDateTime releaseTime,
-  @NonNull String sha1
-) implements Comparable<McVersion> {
-
-  static final Gson VERSION_GSON = new GsonBuilder()
-    .disableHtmlEscaping()
-    .registerTypeAdapter(OffsetDateTime.class, ISO8601DateTimeDeserializer.DESERIALIZER)
-    .create();
-
-  public @NonNull URI uri() {
-    return URI.create(this.url);
-  }
-
-  @Override
-  public int compareTo(@NonNull McVersion other) {
-    return other.releaseTime().compareTo(this.releaseTime());
-  }
-
-  public enum VersionType {
-
-    @SerializedName("release")
-    RELEASE,
-    @SerializedName("snapshot")
-    SNAPSHOT,
-    @SerializedName("old_beta")
-    OLD_BETA,
-    @SerializedName("old_alpha")
-    OLD_ALPHA
-  }
 }

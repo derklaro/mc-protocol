@@ -22,10 +22,11 @@
  * THE SOFTWARE.
  */
 
-package dev.derklaro.protocolgenerator.version;
+package dev.derklaro.protocolgenerator.manifest;
 
 import com.google.gson.JsonObject;
 import com.google.gson.reflect.TypeToken;
+import dev.derklaro.protocolgenerator.gson.GsonProvider;
 import dev.derklaro.protocolgenerator.http.BodyParser;
 import dev.derklaro.protocolgenerator.http.HttpClientProvider;
 import java.lang.reflect.Type;
@@ -37,13 +38,15 @@ import java.util.Set;
 import java.util.concurrent.CompletableFuture;
 import lombok.NonNull;
 
-public final class McVersionFetcher {
+public final class McManifestVersionFetcher {
 
   private static final URI VERSION_MANIFEST_URI = URI.create(
     "https://piston-meta.mojang.com/mc/game/version_manifest_v2.json");
-  private static final Type COLLECTION_MC_VERSION = TypeToken.getParameterized(Set.class, McVersion.class).getType();
+  private static final Type COLLECTION_MC_VERSION = TypeToken
+    .getParameterized(Set.class, McManifestVersion.class)
+    .getType();
 
-  public @NonNull CompletableFuture<Collection<McVersion>> resolveMcVersions() {
+  public @NonNull CompletableFuture<Collection<McManifestVersion>> resolveMcVersions() {
     var httpClient = HttpClientProvider.provideClient();
     var request = HttpRequest.newBuilder(VERSION_MANIFEST_URI).build();
 
@@ -53,11 +56,11 @@ public final class McVersionFetcher {
       .thenApply(fullJsonElement -> {
         // get the releases section
         var versionsSection = fullJsonElement.get("versions");
-        return McVersion.VERSION_GSON.fromJson(versionsSection, COLLECTION_MC_VERSION);
+        return GsonProvider.ISO_8601_DATE_TIME_GSON.fromJson(versionsSection, COLLECTION_MC_VERSION);
       });
   }
 
-  public @NonNull CompletableFuture<JsonObject> parseVersionData(@NonNull McVersion version) {
+  public @NonNull CompletableFuture<JsonObject> parseVersionData(@NonNull McManifestVersion version) {
     var httpClient = HttpClientProvider.provideClient();
     var request = HttpRequest.newBuilder(version.uri()).build();
 

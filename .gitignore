@@ -4,7 +4,7 @@
 # copyright settings
 !/.idea/copyright
 .idea/copyright/*
-!/.idea/copyright/CloudNet.xml
+!/.idea/copyright/protocol-gen.xml
 !/.idea/copyright/profiles_settings.xml
 # Code Style settings
 !/.idea/codeStyles
@@ -14,7 +14,7 @@
 # Inspection profiles
 !/.idea/inspectionProfiles
 .idea/inspectionProfiles/*
-!/.idea/inspectionProfiles/CloudNet.xml
+!/.idea/inspectionProfiles/protocol-gen.xml
 !/.idea/inspectionProfiles/profiles_settings.xml
 
 # gradle
@@ -69,3 +69,6 @@ atlassian-ide-plugin.xml
 
 # delombok
 */src/main/lombok
+
+# temp test files
+*.tmp

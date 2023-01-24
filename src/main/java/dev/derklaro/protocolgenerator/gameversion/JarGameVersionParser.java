@@ -22,4 +22,36 @@
  * THE SOFTWARE.
  */
 
-rootProject.name = "mc-protocol-generator"
+package dev.derklaro.protocolgenerator.gameversion;
+
+import dev.derklaro.protocolgenerator.gson.GsonProvider;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Path;
+import java.util.jar.JarFile;
+import lombok.NonNull;
+
+public final class JarGameVersionParser {
+
+  private static final String VERSION_JSON_FILE_NAME = "version.json";
+
+  private final Path gameJarPath;
+
+  public JarGameVersionParser(@NonNull Path gameJarPath) {
+    this.gameJarPath = gameJarPath;
+  }
+
+  public @NonNull GameVersion readGameVersion() throws IOException {
+    try (var jarFile = new JarFile(this.gameJarPath.toFile())) {
+      // get the version json entry
+      var versionJsonEntry = jarFile.getEntry(VERSION_JSON_FILE_NAME);
+      var versionJsonStream = jarFile.getInputStream(versionJsonEntry);
+
+      // read the file
+      try (var reader = new InputStreamReader(versionJsonStream, StandardCharsets.UTF_8)) {
+        return GsonProvider.ISO_8601_DATE_TIME_GSON.fromJson(reader, GameVersion.class);
+      }
+    }
+  }
+}

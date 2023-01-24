@@ -25,11 +25,16 @@
 package dev.derklaro.protocolgenerator;
 
 import dev.derklaro.protocolgenerator.cli.CliArgParser;
-import dev.derklaro.protocolgenerator.util.CatchingFunction;
+import dev.derklaro.protocolgenerator.gameversion.JarGameVersionParser;
 import dev.derklaro.protocolgenerator.http.HttpFileDownloader;
+import dev.derklaro.protocolgenerator.manifest.McManifestVersion;
+import dev.derklaro.protocolgenerator.manifest.McManifestVersionFetcher;
+import dev.derklaro.protocolgenerator.markdown.MarkdownFormatter;
+import dev.derklaro.protocolgenerator.markdown.MarkdownGenerator;
+import dev.derklaro.protocolgenerator.protocol.ProtocolInfoCollector;
 import dev.derklaro.protocolgenerator.remap.JarRemapper;
-import dev.derklaro.protocolgenerator.version.McVersion;
-import dev.derklaro.protocolgenerator.version.McVersionFetcher;
+import dev.derklaro.protocolgenerator.util.CatchingFunction;
+import java.io.IOException;
 import java.nio.file.Path;
 import java.util.concurrent.CompletableFuture;
 import java.util.function.Supplier;
@@ -40,18 +45,18 @@ public final class GeneratorEntrypoint {
   private static final Path MAPPING_PATH = Path.of("mappings.tmp");
   private static final Path CLIENT_JAR_PATH = Path.of("client.tmp");
 
-  public static void main(@NonNull String[] args) {
+  public static void main(@NonNull String[] args) throws IOException {
     // parse the cli arguments
     var cliArgumentParser = new CliArgParser("ProtocolGenerator");
     GeneratorCLIArguments.registerDefaultArguments(cliArgumentParser);
     var cliNamespace = cliArgumentParser.parseCommandLine(args);
 
     // resolve all client versions
-    var versionFetcher = new McVersionFetcher();
+    var versionFetcher = new McManifestVersionFetcher();
     var clientVersions = versionFetcher.resolveMcVersions();
 
     // search the requested version
-    McVersion.VersionType versionType = cliNamespace.get("vt");
+    McManifestVersion.VersionType versionType = cliNamespace.get("version_type");
     var latestVersionOfType = clientVersions
       .thenApply(versions -> versions.stream().filter(version -> version.type() == versionType).sorted().findFirst())
       .thenApply(optional -> {
@@ -82,7 +87,28 @@ public final class GeneratorEntrypoint {
     var remapOutput = versionTypeDownloads
       .thenApply(CatchingFunction.asJavaUtil(ignored -> remapper.remap(), "Unable to remap client"));
 
-    var versions = new McVersionFetcher().resolveMcVersions().join();
-    System.out.println(versions.size());
+    // get the game version from the jar
+    var gameVersion = remapOutput
+      .thenApply(CatchingFunction.asJavaUtil(remappedJarPath -> {
+        var versionParser = new JarGameVersionParser(remappedJarPath);
+        return versionParser.readGameVersion();
+      }, "Unable to read game version of remapped jar"))
+      .join();
+
+    // collect the protocol information
+    var protocolInfos = remapOutput
+      .thenApply(CatchingFunction.asJavaUtil(remappedJarPath -> {
+        var protocolInfoGenerator = new ProtocolInfoCollector(remappedJarPath);
+        return protocolInfoGenerator.collectAllPacketInfos();
+      }, "Unable to resolve packet information"))
+      .join();
+
+    // build the final markdown info from the information
+    var markdownGenerator = new MarkdownGenerator();
+    var protocolMarkdown = markdownGenerator.generateProtocolMarkdown(gameVersion, protocolInfos);
+
+    // format & write the final markdown file
+    var markdownFormatter = new MarkdownFormatter(protocolMarkdown);
+    markdownFormatter.writeTo(Path.of("test.md"));
   }
 }
