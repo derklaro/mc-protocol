@@ -34,6 +34,7 @@ import dev.derklaro.protocolgenerator.markdown.MarkdownGenerator;
 import dev.derklaro.protocolgenerator.protocol.ProtocolInfoCollector;
 import dev.derklaro.protocolgenerator.remap.JarRemapper;
 import dev.derklaro.protocolgenerator.util.CatchingFunction;
+import dev.derklaro.protocolgenerator.util.FileUtil;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.util.concurrent.CompletableFuture;
@@ -114,5 +115,9 @@ public final class GeneratorEntrypoint {
     // format & write the final markdown file
     var markdownFormatter = new MarkdownFormatter(protocolMarkdown);
     markdownFormatter.writeTo(outputFilePath);
+
+    // remove unneeded temp files
+    FileUtil.deleteFileSilently(MAPPING_PATH);
+    FileUtil.deleteFileSilently(CLIENT_JAR_PATH);
   }
 }
