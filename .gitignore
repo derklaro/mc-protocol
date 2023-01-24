@@ -72,3 +72,6 @@ atlassian-ide-plugin.xml
 
 # temp test files
 *.tmp
+
+# final protocol output
+*.md

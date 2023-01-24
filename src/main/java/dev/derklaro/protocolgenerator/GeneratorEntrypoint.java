@@ -107,8 +107,12 @@ public final class GeneratorEntrypoint {
     var markdownGenerator = new MarkdownGenerator();
     var protocolMarkdown = markdownGenerator.generateProtocolMarkdown(gameVersion, protocolInfos);
 
+    // get the output path to dump the protocol to
+    var outputFileName = cliNamespace.getString("output_file");
+    var outputFilePath = Path.of(outputFileName);
+
     // format & write the final markdown file
     var markdownFormatter = new MarkdownFormatter(protocolMarkdown);
-    markdownFormatter.writeTo(Path.of("test.md"));
+    markdownFormatter.writeTo(outputFilePath);
   }
 }

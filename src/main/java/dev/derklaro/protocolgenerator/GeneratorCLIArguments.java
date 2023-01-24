@@ -41,5 +41,10 @@ final class GeneratorCLIArguments {
       .setDefault(McManifestVersion.VersionType.SNAPSHOT)
       .help("Sets the argument type to download and parse the protocol of")
       .type(EnumStringArgumentType.forEnum(McManifestVersion.VersionType.class));
+
+    // the final output file name
+    argParser.registerArgument("-of", "--output-file")
+      .setDefault("readme.md")
+      .help("The name of the output file to export to (the parent directory need to exist)");
   }
 }
