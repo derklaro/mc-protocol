@@ -106,9 +106,13 @@ public final class MarkdownGenerator {
   ) {
     var cellSet = packetInfos.cellSet();
     for (var cell : cellSet) {
-      // append the
-      var normalizedTitle = CaseFormat.UPPER_UNDERSCORE.to(CaseFormat.UPPER_CAMEL, cell.getRowKey());
-      markdownBuilder.block(TitleBlock.builder().level(TitleBlock.Level.SECOND).content(normalizedTitle).build());
+      // normalize the name of the connection protocol and connection flow
+      var normalizedPacketFlow = CaseFormat.UPPER_UNDERSCORE.to(CaseFormat.UPPER_CAMEL, cell.getColumnKey());
+      var normalizedConnectionProtocol = CaseFormat.UPPER_UNDERSCORE.to(CaseFormat.UPPER_CAMEL, cell.getRowKey());
+
+      // append the protocol and flow information
+      var flowContent = "%s (%s)".formatted(normalizedConnectionProtocol, normalizedPacketFlow);
+      markdownBuilder.block(TitleBlock.builder().level(TitleBlock.Level.SECOND).content(flowContent).build());
 
       // append the information of each packet
       for (var packetClassInfo : cell.getValue()) {
