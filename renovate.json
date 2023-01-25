@@ -1,0 +1,33 @@
+{
+  "extends": [
+    "config:base",
+    ":rebaseStalePrs"
+  ],
+  "labels": [
+    "t: dependencies"
+  ],
+  "packageRules": [
+    {
+      "description": "Correct Guava version handling",
+      "matchPackagePrefixes": [
+        "com.google.guava:"
+      ],
+      "versioning": "regex:^(?<major>\\d+)(\\.(?<minor>\\d+))?(\\.(?<patch>\\d+))?(-(?<compatibility>.*))?$"
+    }
+  ],
+  "vulnerabilityAlerts": {
+    "addLabels": [
+      "t: security"
+    ],
+    "assignees": [
+      "@derklaro"
+    ]
+  },
+  "timezone": "Europe/Berlin",
+  "schedule": [
+    "before 6:00am"
+  ],
+  "prHourlyLimit": 10,
+  "commitMessagePrefix": "chore: ",
+  "commitMessageAction": "update"
+}
