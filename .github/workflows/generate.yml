@@ -1,0 +1,57 @@
+name: "Generate Protocol Specification"
+on:
+  push:
+    branches: [ "main" ]
+    tags-ignore: [ "**" ]
+  workflow_dispatch:
+  schedule:
+    - cron: '0 0 * * *'
+
+jobs:
+  generate:
+    name: "Generate Protocol Specification"
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Setup java
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'temurin'
+          java-version: 17
+          check-latest: true
+
+      - name: Build Generator
+        run: ./gradlew clean build shadowJar
+
+      - name: Prepare execute directory
+        run: |
+          mkdir -p generation/;
+          mkdir -p generation/result;
+          cp build/libs/protocol-generator.jar generation/generator.jar;
+
+      - name: Run generator
+        run: |
+          cd generation;
+          java -jar generator.jar --output-file=result/readme.md;
+
+      - name: Push generated specification
+        uses: s0/git-publish-subdir-action@develop
+        env:
+          REPO: self
+          BRANCH: gh-pages
+          FOLDER: generation/result
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Set current date as env variable
+        run: echo "NOW=$(date +'%Y-%m-%dT%H:%M:%S')" >> $GITHUB_ENV
+
+# See https://github.com/s0/git-publish-subdir-action/issues/92
+#      - name: Tag protocol specification
+#        uses: rickstaa/action-create-tag@v1
+#        with:
+#          tag: $NOW
+#          message: "Protocol Update"
+#          commit_sha: "gh-pages" # this is just passed to "git tag" so we can use a branch here
