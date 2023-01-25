@@ -24,17 +24,18 @@
 
 package dev.derklaro.protocolgenerator.remap;
 
-import io.github.lxgaming.reconstruct.common.Reconstruct;
-import io.github.lxgaming.reconstruct.common.configuration.Config;
+import cuchaz.enigma.Enigma;
+import cuchaz.enigma.ProgressListener;
+import cuchaz.enigma.classprovider.ClasspathClassProvider;
+import cuchaz.enigma.translation.mapping.serde.MappingFormat;
+import cuchaz.enigma.translation.mapping.serde.MappingParseException;
 import java.io.IOException;
-import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.function.Supplier;
 import lombok.NonNull;
 
 public final class JarRemapper {
 
-  private static final Supplier<Config> RECONSTRUCT_CONFIG_FACTORY = ReconstructConfig::new;
+  private static final ProgressListener PROGRESS_LISTENER = ProgressListener.none(); // todo maybe add a real progress listener?
 
   private final Path inputJarFile;
   private final Path mappingsPath;
@@ -44,21 +45,18 @@ public final class JarRemapper {
     this.mappingsPath = mappingsPath;
   }
 
-  public @NonNull Path remap() throws IOException {
-    // construct a reconstruct config and set the supplied values
-    var reconstructConfig = RECONSTRUCT_CONFIG_FACTORY.get();
-    reconstructConfig.setInputPath(this.inputJarFile);
-    reconstructConfig.setMappingPath(this.mappingsPath);
+  public void remap(@NonNull Path outputPath) throws IOException, MappingParseException {
+    // read the jar file
+    var enigma = Enigma.create();
+    var project = enigma.openJar(this.inputJarFile, new ClasspathClassProvider(), PROGRESS_LISTENER);
 
-    // generate a temp output file to write the reconstructed value to
-    var outputPath = Files.createTempFile("reconstructed-jar", null);
-    reconstructConfig.setOutputPath(outputPath);
+    // read and set the mappings
+    var saveParameters = enigma.getProfile().getMappingSaveParameters();
+    var mappingTree = MappingFormat.PROGUARD.read(this.mappingsPath, PROGRESS_LISTENER, saveParameters);
+    project.setMappings(mappingTree);
 
-    // execute the remap process
-    var reconstruct = new Reconstruct(reconstructConfig);
-    reconstruct.load();
-
-    // return the constructed temp path
-    return outputPath;
+    // export the jar file
+    var jarExport = project.exportRemappedJar(PROGRESS_LISTENER);
+    jarExport.write(outputPath, PROGRESS_LISTENER);
   }
 }

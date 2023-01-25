@@ -45,6 +45,7 @@ public final class GeneratorEntrypoint {
 
   private static final Path MAPPING_PATH = Path.of("mappings.tmp");
   private static final Path CLIENT_JAR_PATH = Path.of("client.tmp");
+  private static final Path REMAPPED_JAR_PATH = Path.of("client_remapped.tmp");
 
   public static void main(@NonNull String[] args) throws IOException {
     // parse the cli arguments
@@ -85,21 +86,23 @@ public final class GeneratorEntrypoint {
 
     // remap the client jar
     var remapper = new JarRemapper(CLIENT_JAR_PATH, MAPPING_PATH);
-    var remapOutput = versionTypeDownloads
-      .thenApply(CatchingFunction.asJavaUtil(ignored -> remapper.remap(), "Unable to remap client"));
+    var remapOutput = versionTypeDownloads.thenApply(CatchingFunction.asJavaUtil(ignored -> {
+      remapper.remap(REMAPPED_JAR_PATH);
+      return null;
+    }, "Unable to remap client"));
 
     // get the game version from the jar
     var gameVersion = remapOutput
-      .thenApply(CatchingFunction.asJavaUtil(remappedJarPath -> {
-        var versionParser = new JarGameVersionParser(remappedJarPath);
+      .thenApply(CatchingFunction.asJavaUtil(ignored -> {
+        var versionParser = new JarGameVersionParser(CLIENT_JAR_PATH);
         return versionParser.readGameVersion();
       }, "Unable to read game version of remapped jar"))
       .join();
 
     // collect the protocol information
     var protocolInfos = remapOutput
-      .thenApply(CatchingFunction.asJavaUtil(remappedJarPath -> {
-        var protocolInfoGenerator = new ProtocolInfoCollector(remappedJarPath);
+      .thenApply(CatchingFunction.asJavaUtil(ignored -> {
+        var protocolInfoGenerator = new ProtocolInfoCollector(REMAPPED_JAR_PATH);
         return protocolInfoGenerator.collectAllPacketInfos();
       }, "Unable to resolve packet information"))
       .join();
@@ -119,5 +122,6 @@ public final class GeneratorEntrypoint {
     // remove unneeded temp files
     FileUtil.deleteFileSilently(MAPPING_PATH);
     FileUtil.deleteFileSilently(CLIENT_JAR_PATH);
+    FileUtil.deleteFileSilently(REMAPPED_JAR_PATH);
   }
 }

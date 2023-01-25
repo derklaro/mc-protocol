@@ -35,6 +35,7 @@ version = "1.0-SNAPSHOT"
 
 repositories {
   mavenCentral()
+  maven("https://maven.fabricmc.net/")
 }
 
 dependencies {
@@ -50,8 +51,8 @@ dependencies {
   val gson = "2.10.1"
   implementation("com.google.code.gson", "gson", gson)
 
-  val reconstruct = "1.3.21"
-  implementation("io.github.lxgaming", "reconstruct-common", reconstruct)
+  val enigma = "2.2.0"
+  implementation("cuchaz", "enigma", enigma)
 
   val argparse4j = "0.9.0"
   implementation("net.sourceforge.argparse4j", "argparse4j", argparse4j)
