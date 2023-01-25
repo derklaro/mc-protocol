@@ -116,58 +116,65 @@ public final class MarkdownGenerator {
       var flowContent = "%s (%s)".formatted(normalizedConnectionProtocol, normalizedPacketFlow);
       markdownBuilder.block(TitleBlock.builder().level(TitleBlock.Level.SECOND).content(flowContent).build());
 
-      // append the information of each packet
-      for (var packetClassInfo : cell.getValue()) {
-        // begin the packet info
-        var titleContent = "0x%s - %s (%c ➔ %c)".formatted(
-          "%02X".formatted(0xFF & packetClassInfo.packetId()),
-          packetClassInfo.name(),
-          packetClassInfo.source().charAt(0),
-          packetClassInfo.target().charAt(0));
-        markdownBuilder.block(TitleBlock.builder().level(TitleBlock.Level.FOURTH).content(titleContent).build());
+      // check if the flow has packets to dump
+      var packets = cell.getValue();
+      if (packets.isEmpty()) {
+        var noPacketContent = "This packet flow has no registered packets";
+        markdownBuilder.block(StringBlock.builder().content(noPacketContent).build());
+      } else {
+        // append the information of each packet
+        for (var packetClassInfo : packets) {
+          // begin the packet info
+          var titleContent = "0x%s - %s (%c ➔ %c)".formatted(
+            "%02X".formatted(0xFF & packetClassInfo.packetId()),
+            packetClassInfo.name(),
+            packetClassInfo.source().charAt(0),
+            packetClassInfo.target().charAt(0));
+          markdownBuilder.block(TitleBlock.builder().level(TitleBlock.Level.FOURTH).content(titleContent).build());
 
-        // check if the packet has fields to dump
-        var fields = packetClassInfo.fields();
-        if (fields.isEmpty()) {
-          var noFieldContent = "Packet has no fields";
-          markdownBuilder.block(StringBlock.builder().content(noFieldContent).build());
-        } else {
-          // keep track of the field index we're giving out
-          var overallIndex = 0;
-          Map<Class<?>, Integer> indexPerType = new HashMap<>();
+          // check if the packet has fields to dump
+          var fields = packetClassInfo.fields();
+          if (fields.isEmpty()) {
+            var noFieldContent = "Packet has no fields";
+            markdownBuilder.block(StringBlock.builder().content(noFieldContent).build());
+          } else {
+            // keep track of the field index we're giving out
+            var overallIndex = 0;
+            Map<Class<?>, Integer> indexPerType = new HashMap<>();
 
-          // dump all packet fields
-          List<TableBlock.TableRow> fieldTableRows = new LinkedList<>();
-          for (var field : fields) {
-            // get the field index
-            var overallFieldIndex = overallIndex++;
-            var fieldTypeIndex = indexPerType.merge(field.rawType(), 1, Integer::sum);
+            // dump all packet fields
+            List<TableBlock.TableRow> fieldTableRows = new LinkedList<>();
+            for (var field : fields) {
+              // get the field index
+              var overallFieldIndex = overallIndex++;
+              var fieldTypeIndex = indexPerType.merge(field.rawType(), 1, Integer::sum);
 
-            // get the nice information of the field type
-            var niceRawType = TypeHelper.toPrettyString(field.rawType());
-            var niceGenericType = TypeHelper.toPrettyString(field.genericType());
+              // get the nice information of the field type
+              var niceRawType = TypeHelper.toPrettyString(field.rawType());
+              var niceGenericType = TypeHelper.toPrettyString(field.genericType());
 
-            // build the table row values
-            List<String> rowValues = List.of(
-              Integer.toString(overallFieldIndex), // no need to subtract, we start at 0
-              Integer.toString(fieldTypeIndex - 1), // -1 here as this counter starts at 1
-              field.name(),
-              niceRawType,
-              niceGenericType);
+              // build the table row values
+              List<String> rowValues = List.of(
+                Integer.toString(overallFieldIndex), // no need to subtract, we start at 0
+                Integer.toString(fieldTypeIndex - 1), // -1 here as this counter starts at 1
+                field.name(),
+                niceRawType,
+                niceGenericType);
 
-            // register the row
-            var tableRow = new TableBlock.TableRow();
-            tableRow.setRows(rowValues);
-            fieldTableRows.add(tableRow);
+              // register the row
+              var tableRow = new TableBlock.TableRow();
+              tableRow.setRows(rowValues);
+              fieldTableRows.add(tableRow);
+            }
+
+            // add the final table
+            var table = TableBlock.builder().titles(FIELD_TABLE_HEADERS).rows(fieldTableRows).build();
+            markdownBuilder.block(table);
           }
 
-          // add the final table
-          var table = TableBlock.builder().titles(FIELD_TABLE_HEADERS).rows(fieldTableRows).build();
-          markdownBuilder.block(table);
+          // add a single blank line below
+          markdownBuilder.block(StringBlock.builder().content(" ").build());
         }
-
-        // add a single black line below
-        markdownBuilder.block(StringBlock.builder().content(" ").build());
       }
     }
   }
