@@ -24,7 +24,7 @@
 
 package dev.derklaro.protocolgenerator.manifest;
 
-import com.google.gson.annotations.SerializedName;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import java.net.URI;
 import java.time.OffsetDateTime;
 import lombok.NonNull;
@@ -48,13 +48,13 @@ public record McManifestVersion(
 
   public enum VersionType {
 
-    @SerializedName("release")
+    @JsonProperty("release")
     RELEASE,
-    @SerializedName("snapshot")
+    @JsonProperty("snapshot")
     SNAPSHOT,
-    @SerializedName("old_beta")
+    @JsonProperty("old_beta")
     OLD_BETA,
-    @SerializedName("old_alpha")
+    @JsonProperty("old_alpha")
     OLD_ALPHA
   }
 }

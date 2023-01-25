@@ -24,12 +24,13 @@
 
 package dev.derklaro.protocolgenerator.manifest;
 
-import com.google.gson.JsonObject;
-import com.google.gson.reflect.TypeToken;
-import dev.derklaro.protocolgenerator.gson.GsonProvider;
+import com.fasterxml.jackson.databind.JavaType;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.type.TypeFactory;
 import dev.derklaro.protocolgenerator.http.BodyParser;
 import dev.derklaro.protocolgenerator.http.HttpClientProvider;
-import java.lang.reflect.Type;
+import dev.derklaro.protocolgenerator.jackson.JacksonSupport;
+import dev.derklaro.protocolgenerator.util.CatchingFunction;
 import java.net.URI;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
@@ -42,9 +43,9 @@ public final class McManifestVersionFetcher {
 
   private static final URI VERSION_MANIFEST_URI = URI.create(
     "https://piston-meta.mojang.com/mc/game/version_manifest_v2.json");
-  private static final Type COLLECTION_MC_VERSION = TypeToken
-    .getParameterized(Set.class, McManifestVersion.class)
-    .getType();
+  private static final JavaType COLLECTION_MC_VERSION = TypeFactory.defaultInstance().constructCollectionType(
+    Set.class,
+    McManifestVersion.class);
 
   public @NonNull CompletableFuture<Collection<McManifestVersion>> resolveMcVersions() {
     var httpClient = HttpClientProvider.provideClient();
@@ -53,14 +54,14 @@ public final class McManifestVersionFetcher {
     return httpClient.sendAsync(request, HttpResponse.BodyHandlers.ofInputStream())
       .thenApply(BodyParser.bodyExtractorIfOk())
       .thenApply(BodyParser.toJsonObject())
-      .thenApply(fullJsonElement -> {
+      .thenApply(CatchingFunction.asJavaUtil(jsonNode -> {
         // get the releases section
-        var versionsSection = fullJsonElement.get("versions");
-        return GsonProvider.ISO_8601_DATE_TIME_GSON.fromJson(versionsSection, COLLECTION_MC_VERSION);
-      });
+        var versionsSection = jsonNode.get("versions");
+        return JacksonSupport.OBJECT_MAPPER.treeToValue(versionsSection, COLLECTION_MC_VERSION);
+      }, "Unable to parse mc manifest versions"));
   }
 
-  public @NonNull CompletableFuture<JsonObject> parseVersionData(@NonNull McManifestVersion version) {
+  public @NonNull CompletableFuture<JsonNode> parseVersionData(@NonNull McManifestVersion version) {
     var httpClient = HttpClientProvider.provideClient();
     var request = HttpRequest.newBuilder(version.uri()).build();
 

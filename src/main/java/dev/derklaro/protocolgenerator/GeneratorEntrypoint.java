@@ -70,11 +70,11 @@ public final class GeneratorEntrypoint {
     // fetch the version data of the latest version
     var versionTypeDownloads = latestVersionOfType
       .thenCompose(versionFetcher::parseVersionData)
-      .thenApply(data -> data.get("downloads").getAsJsonObject())
+      .thenApply(data -> data.get("downloads"))
       .thenCompose(downloads -> {
         // extract the client downloads
-        var clientUrl = downloads.get("client").getAsJsonObject().get("url").getAsString();
-        var clientMappings = downloads.get("client_mappings").getAsJsonObject().get("url").getAsString();
+        var clientUrl = downloads.get("client").get("url").asText();
+        var clientMappings = downloads.get("client_mappings").get("url").asText();
 
         // download both files
         var clientDownload = HttpFileDownloader.downloadFile(clientUrl, CLIENT_JAR_PATH);

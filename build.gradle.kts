@@ -48,8 +48,9 @@ dependencies {
   val slf4j = "2.0.6"
   implementation("org.slf4j", "slf4j-api", slf4j)
 
-  val gson = "2.10.1"
-  implementation("com.google.code.gson", "gson", gson)
+  val jackson = "2.14.1"
+  implementation("com.fasterxml.jackson.core", "jackson-databind", jackson)
+  implementation("com.fasterxml.jackson.datatype", "jackson-datatype-jsr310", jackson)
 
   val enigma = "2.2.0"
   implementation("cuchaz", "enigma", enigma)

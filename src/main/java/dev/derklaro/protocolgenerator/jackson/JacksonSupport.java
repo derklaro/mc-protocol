@@ -22,17 +22,23 @@
  * THE SOFTWARE.
  */
 
-package dev.derklaro.protocolgenerator.gson;
+package dev.derklaro.protocolgenerator.jackson;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import java.time.OffsetDateTime;
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import com.fasterxml.jackson.annotation.PropertyAccessor;
+import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
-@Deprecated // todo: jackson soon?
-public final class GsonProvider {
+public final class JacksonSupport {
 
-  public static final Gson ISO_8601_DATE_TIME_GSON = new GsonBuilder()
-    .disableHtmlEscaping()
-    .registerTypeAdapter(OffsetDateTime.class, ISO8601DateTimeDeserializer.DESERIALIZER)
-    .create();
+  public static final ObjectMapper OBJECT_MAPPER = new ObjectMapper()
+    .findAndRegisterModules()
+    .enable(DeserializationFeature.FAIL_ON_NUMBERS_FOR_ENUMS)
+    .enable(DeserializationFeature.FAIL_ON_NULL_FOR_PRIMITIVES)
+    .disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES)
+    .setVisibility(PropertyAccessor.FIELD, JsonAutoDetect.Visibility.ANY);
+
+  private JacksonSupport() {
+    throw new UnsupportedOperationException();
+  }
 }

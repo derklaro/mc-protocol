@@ -24,7 +24,7 @@
 
 package dev.derklaro.protocolgenerator.gameversion;
 
-import dev.derklaro.protocolgenerator.gson.GsonProvider;
+import dev.derklaro.protocolgenerator.jackson.JacksonSupport;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
@@ -50,7 +50,7 @@ public final class JarGameVersionParser {
 
       // read the file
       try (var reader = new InputStreamReader(versionJsonStream, StandardCharsets.UTF_8)) {
-        return GsonProvider.ISO_8601_DATE_TIME_GSON.fromJson(reader, GameVersion.class);
+        return JacksonSupport.OBJECT_MAPPER.readValue(reader, GameVersion.class);
       }
     }
   }

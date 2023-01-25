@@ -24,20 +24,20 @@
 
 package dev.derklaro.protocolgenerator.gameversion;
 
-import com.google.gson.annotations.SerializedName;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import java.time.OffsetDateTime;
 import lombok.NonNull;
 
 public record GameVersion(
   @NonNull String id,
   @NonNull String name,
-  @NonNull @SerializedName("series_id") String series,
-  @NonNull @SerializedName("build_time") OffsetDateTime buildTime,
-  @NonNull @SerializedName("pack_version") PackVersion packVersion,
-  @NonNull @SerializedName("java_component") String javaComponent,
-  @SerializedName("java_version") int javaVersion,
-  @SerializedName("protocol_version") int protocolVersion,
-  @SerializedName("world_version") int worldVersion,
+  @NonNull @JsonProperty("series_id") String series,
+  @NonNull @JsonProperty("build_time") OffsetDateTime buildTime,
+  @NonNull @JsonProperty("pack_version") PackVersion packVersion,
+  @NonNull @JsonProperty("java_component") String javaComponent,
+  @JsonProperty("java_version") int javaVersion,
+  @JsonProperty("protocol_version") int protocolVersion,
+  @JsonProperty("world_version") int worldVersion,
   boolean stable
 ) {
 

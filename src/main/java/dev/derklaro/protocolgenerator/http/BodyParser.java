@@ -24,9 +24,8 @@
 
 package dev.derklaro.protocolgenerator.http;
 
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParseException;
-import com.google.gson.JsonParser;
+import com.fasterxml.jackson.databind.JsonNode;
+import dev.derklaro.protocolgenerator.jackson.JacksonSupport;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -37,11 +36,11 @@ import lombok.NonNull;
 
 public final class BodyParser {
 
-  private static final Function<InputStream, JsonObject> TO_JSON_OBJECT = stream -> {
+  private static final Function<InputStream, JsonNode> TO_JSON_OBJECT = stream -> {
     try (var reader = new InputStreamReader(stream, StandardCharsets.UTF_8)) {
-      return JsonParser.parseReader(reader).getAsJsonObject();
+      return JacksonSupport.OBJECT_MAPPER.readTree(reader);
     } catch (IOException exception) {
-      throw new JsonParseException("Unable to parse mc versions", exception);
+      throw new IllegalStateException("Unable to parse json input", exception);
     }
   };
 
@@ -58,7 +57,7 @@ public final class BodyParser {
     throw new UnsupportedOperationException();
   }
 
-  public static @NonNull Function<InputStream, JsonObject> toJsonObject() {
+  public static @NonNull Function<InputStream, JsonNode> toJsonObject() {
     return TO_JSON_OBJECT;
   }
 
