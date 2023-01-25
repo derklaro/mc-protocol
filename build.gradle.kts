@@ -89,6 +89,10 @@ java {
   }
 }
 
+tasks.shadowJar {
+  archiveFileName.set("protocol-generator.jar")
+}
+
 checkstyle {
   maxErrors = 0
   maxWarnings = 0
