@@ -53,6 +53,7 @@ public final class MarkdownGenerator {
     "Full Type");
   private static final List<String> METADATA_TABLE_HEADERS = List.of(
     "Series",
+    "Java Runtime",
     "Java Version",
     "Protocol Version",
     "World Version",
@@ -84,7 +85,8 @@ public final class MarkdownGenerator {
     // metadata table row values
     List<String> metadataRowValues = List.of(
       gameVersion.series(),
-      "%s %d".formatted(gameVersion.javaComponent(), gameVersion.javaVersion()),
+      gameVersion.javaComponent(),
+      Integer.toString(gameVersion.javaVersion()),
       Integer.toString(gameVersion.protocolVersion()),
       Integer.toString(gameVersion.worldVersion()),
       Integer.toString(gameVersion.packVersion().resource()),
