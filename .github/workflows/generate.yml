@@ -52,5 +52,5 @@ jobs:
           FOLDER: generation/result
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           SKIP_EMPTY_COMMITS: true
-          MESSAGE: Update protocol for ${{ env.GITHUB_ENV }}
-          TAG: ${{ env.GITHUB_ENV }}
+          MESSAGE: Update protocol for ${{ env.VERSION }}
+          TAG: ${{ env.VERSION }}
