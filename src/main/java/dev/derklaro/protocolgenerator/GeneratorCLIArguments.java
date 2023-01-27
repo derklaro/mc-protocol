@@ -27,7 +27,7 @@ package dev.derklaro.protocolgenerator;
 import dev.derklaro.protocolgenerator.cli.CliArgParser;
 import dev.derklaro.protocolgenerator.manifest.McManifestVersion;
 import lombok.NonNull;
-import net.sourceforge.argparse4j.impl.type.EnumStringArgumentType;
+import net.sourceforge.argparse4j.impl.Arguments;
 
 final class GeneratorCLIArguments {
 
@@ -40,7 +40,7 @@ final class GeneratorCLIArguments {
     argParser.registerArgument("-vt", "--version-type")
       .setDefault(McManifestVersion.VersionType.SNAPSHOT)
       .help("Sets the argument type to download and parse the protocol of")
-      .type(EnumStringArgumentType.forEnum(McManifestVersion.VersionType.class));
+      .type(Arguments.caseInsensitiveEnumType(McManifestVersion.VersionType.class));
 
     // the final output file name
     argParser.registerArgument("-of", "--output-file")
