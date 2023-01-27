@@ -38,7 +38,7 @@ final class GeneratorCLIArguments {
   public static void registerDefaultArguments(@NonNull CliArgParser argParser) {
     // argument to set the version type to fetch
     argParser.registerArgument("-vt", "--version-type")
-      .setDefault(McManifestVersion.VersionType.SNAPSHOT)
+      .setDefault(McManifestVersion.VersionType.LATEST)
       .help("Sets the argument type to download and parse the protocol of")
       .type(Arguments.caseInsensitiveEnumType(McManifestVersion.VersionType.class));
 

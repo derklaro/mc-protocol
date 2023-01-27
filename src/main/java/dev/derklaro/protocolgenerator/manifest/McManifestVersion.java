@@ -24,6 +24,7 @@
 
 package dev.derklaro.protocolgenerator.manifest;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import java.net.URI;
 import java.time.OffsetDateTime;
@@ -47,6 +48,9 @@ public record McManifestVersion(
   }
 
   public enum VersionType {
+
+    @JsonIgnore
+    LATEST,
 
     @JsonProperty("release")
     RELEASE,

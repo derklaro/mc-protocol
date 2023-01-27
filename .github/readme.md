@@ -36,7 +36,7 @@ options:
 
 | Name                      | Description                                                                                                                                                                    | Default Value | Required |
 |---------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|---------------|----------|
-| `--version-type` or `-vt` | Sets the version type to process (one of: `RELEASE`, `SNAPSHOT`). This tries to generate the specification for the latest available version of the type.                       | `SNAPSHOT`    | no       |
+| `--version-type` or `-vt` | Sets the version type to process (one of: `RELEASE`, `SNAPSHOT`, `LATEST`). This tries to generate the specification for the latest available version of the type.             | `LATEST`      | no       |
 | `--output-file` or `-of`  | Sets the file name of the output file to generate. The file contain the generated markdown for the protocol version. Note that parent directories need to be created manually. | `readme.md`   | no       |
 | `--version-file` or `-vf` | Sets the file name to which the processed version id should be dumped. If this option is not specified, the version will not be written to any file.                           | no default    | no       |
 

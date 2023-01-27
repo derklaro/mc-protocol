@@ -61,7 +61,10 @@ public final class GeneratorEntrypoint {
     // search the requested version
     McManifestVersion.VersionType versionType = cliNamespace.get("version_type");
     var latestVersionOfType = clientVersions
-      .thenApply(versions -> versions.stream().filter(version -> version.type() == versionType).sorted().findFirst())
+      .thenApply(versions -> versions.stream()
+        .filter(version -> versionType == McManifestVersion.VersionType.LATEST || version.type() == versionType)
+        .sorted()
+        .findFirst())
       .thenApply(optional -> {
         Supplier<RuntimeException> versionNotFoundExceptionSupplier =
           () -> new IllegalStateException("Unable to find a version with type " + versionType);
