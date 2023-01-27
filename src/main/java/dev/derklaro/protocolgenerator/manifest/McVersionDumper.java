@@ -22,33 +22,23 @@
  * THE SOFTWARE.
  */
 
-package dev.derklaro.protocolgenerator;
+package dev.derklaro.protocolgenerator.manifest;
 
-import dev.derklaro.protocolgenerator.cli.CliArgParser;
-import dev.derklaro.protocolgenerator.manifest.McManifestVersion;
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import lombok.NonNull;
-import net.sourceforge.argparse4j.impl.type.EnumStringArgumentType;
 
-final class GeneratorCLIArguments {
+public final class McVersionDumper {
 
-  private GeneratorCLIArguments() {
-    throw new UnsupportedOperationException();
+  private final McManifestVersion version;
+
+  public McVersionDumper(@NonNull McManifestVersion version) {
+    this.version = version;
   }
 
-  public static void registerDefaultArguments(@NonNull CliArgParser argParser) {
-    // argument to set the version type to fetch
-    argParser.registerArgument("-vt", "--version-type")
-      .setDefault(McManifestVersion.VersionType.SNAPSHOT)
-      .help("Sets the argument type to download and parse the protocol of")
-      .type(EnumStringArgumentType.forEnum(McManifestVersion.VersionType.class));
-
-    // the final output file name
-    argParser.registerArgument("-of", "--output-file")
-      .setDefault("readme.md")
-      .help("The name of the output file to export to (the parent directory need to exist)");
-
-    // if a file with the generated version should be created
-    argParser.registerArgument("-vf", "--version-file")
-      .help("Sets an optional file path to dump the target Minecraft version version to");
+  public void writeTo(@NonNull Path targetFile) throws IOException {
+    Files.writeString(targetFile, this.version.id(), StandardCharsets.UTF_8);
   }
 }

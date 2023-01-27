@@ -29,6 +29,7 @@ import dev.derklaro.protocolgenerator.gameversion.JarGameVersionParser;
 import dev.derklaro.protocolgenerator.http.HttpFileDownloader;
 import dev.derklaro.protocolgenerator.manifest.McManifestVersion;
 import dev.derklaro.protocolgenerator.manifest.McManifestVersionFetcher;
+import dev.derklaro.protocolgenerator.manifest.McVersionDumper;
 import dev.derklaro.protocolgenerator.markdown.MarkdownFormatter;
 import dev.derklaro.protocolgenerator.markdown.MarkdownGenerator;
 import dev.derklaro.protocolgenerator.protocol.ProtocolInfoCollector;
@@ -118,6 +119,13 @@ public final class GeneratorEntrypoint {
     // format & write the final markdown file
     var markdownFormatter = new MarkdownFormatter(protocolMarkdown);
     markdownFormatter.writeTo(outputFilePath);
+
+    // dump the version information into the requested file (if any)
+    var versionFilePath = cliNamespace.getString("version_file");
+    if (versionFilePath != null) {
+      var versionDumper = new McVersionDumper(latestVersionOfType.join());
+      versionDumper.writeTo(Path.of(versionFilePath));
+    }
 
     // remove unneeded temp files
     FileUtil.deleteFileSilently(MAPPING_PATH);
