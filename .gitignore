@@ -75,3 +75,4 @@ atlassian-ide-plugin.xml
 
 # final protocol output
 *.md
+!.github/readme.md
