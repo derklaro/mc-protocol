@@ -37,23 +37,20 @@ jobs:
       - name: Run generator
         run: |
           cd generation;
-          java -jar generator.jar --output-file=result/readme.md;
+          java -jar generator.jar --output-file=result/readme.md --version-file=version.txt;
 
-      - name: Push generated specification
+      - name: Export processed version to env
+        run: |
+          cd generation;
+          echo "VERSION=$(cat version.txt)" >> $GITHUB_ENV;
+
+      - name: Push and Tag generated specification
         uses: s0/git-publish-subdir-action@develop
         env:
           REPO: self
           BRANCH: gh-pages
           FOLDER: generation/result
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Set current date as env variable
-        run: echo "NOW=$(date +'%Y-%m-%dT%H:%M:%S')" >> $GITHUB_ENV
-
-# See https://github.com/s0/git-publish-subdir-action/issues/92
-#      - name: Tag protocol specification
-#        uses: rickstaa/action-create-tag@v1
-#        with:
-#          tag: $NOW
-#          message: "Protocol Update"
-#          commit_sha: "gh-pages" # this is just passed to "git tag" so we can use a branch here
+          SKIP_EMPTY_COMMITS: true
+          MESSAGE: Update protocol for $VERSION
+          TAG: $VERSION
