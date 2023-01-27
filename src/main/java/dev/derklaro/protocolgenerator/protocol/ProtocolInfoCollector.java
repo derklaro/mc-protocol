@@ -87,7 +87,7 @@ public final class ProtocolInfoCollector {
         var oppositeFlowName = EnumSupport.normalizeEnumConstantName(oppositeFlow);
 
         // get all packets
-        var packets = protocolScanner.scanPackets(packetFlow, normalizedFlowName, oppositeFlowName);
+        var packets = protocolScanner.scanPackets(packetFlow, oppositeFlowName, normalizedFlowName);
         packetClassInfos.put(protocolName, flowName, packets);
       }
     }

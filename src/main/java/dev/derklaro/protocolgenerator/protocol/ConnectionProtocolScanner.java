@@ -64,7 +64,7 @@ final class ConnectionProtocolScanner {
     List<PacketClassInfo> packetClassInfos = new LinkedList<>();
     for (var entry : packets.entrySet()) {
       // normalize the packet class name
-      var normalizedName = entry.getValue().getSimpleName().replaceFirst(sourceFlowName, "");
+      var normalizedName = entry.getValue().getSimpleName().replaceFirst(targetFlowName, "");
       var fullName = String.join(" ", normalizedName.split("(?=\\p{Lu})"));
 
       // build a packet class info
