@@ -29,7 +29,9 @@ jobs:
       - name: Prepare execute directory
         run: |
           mkdir -p generation/;
-          mkdir -p generation/result;
+          mkdir -p generation/result/;
+
+          cp -r pages/* generation/result/;
           cp build/libs/protocol-generator.jar generation/generator.jar;
 
       - name: Run generator
