@@ -1,7 +1,7 @@
-# 23w05a (Snapshot)
+# 23w06a (Snapshot)
 | Series | Java Runtime | Java Version | Protocol Version | World Version | Pack Resource Version | Pack Data Version | Built at (UTC) |
 | -------------| -------------| -------------| -------------| -------------| -------------| -------------| -------------|
-| main| java-runtime-gamma| 17| 1073741941| 3323| 12| 11| 01/02/2023 14:15:46|
+| main| java-runtime-gamma| 17| 1073741942| 3326| 12| 12| 08/02/2023 14:55:10|
 ## Handshaking (Serverbound)
 #### 0x00 - Client Intention Packet (C ➔ S)
 | Index | Type Index | Name | Raw Type | Full Type |
@@ -538,29 +538,38 @@ Packet has no fields
 | 0| 0| identifier| ResourceLocation| ResourceLocation|
 | 1| 0| data| FriendlyByteBuf| FriendlyByteBuf|
  
-#### 0x17 - Delete Chat Packet (S ➔ C)
+#### 0x17 - Damage Event Packet (S ➔ C)
+| Index | Type Index | Name | Raw Type | Full Type |
+| -------------| -------------| -------------| -------------| -------------|
+| 0| 0| entityId| int| int|
+| 1| 1| sourceTypeId| int| int|
+| 2| 2| sourceCauseId| int| int|
+| 3| 3| sourceDirectId| int| int|
+| 4| 0| sourcePosition| Optional| Optional&lt;Vec3&gt;|
+ 
+#### 0x18 - Delete Chat Packet (S ➔ C)
 | Index | Type Index | Name | Raw Type | Full Type |
 | -------------| -------------| -------------| -------------| -------------|
 | 0| 0| messageSignature| MessageSignature$Packed| MessageSignature$Packed|
  
-#### 0x18 - Disconnect Packet (S ➔ C)
+#### 0x19 - Disconnect Packet (S ➔ C)
 | Index | Type Index | Name | Raw Type | Full Type |
 | -------------| -------------| -------------| -------------| -------------|
 | 0| 0| reason| Component| Component|
  
-#### 0x19 - Disguised Chat Packet (S ➔ C)
+#### 0x1A - Disguised Chat Packet (S ➔ C)
 | Index | Type Index | Name | Raw Type | Full Type |
 | -------------| -------------| -------------| -------------| -------------|
 | 0| 0| message| Component| Component|
 | 1| 0| chatType| ChatType$BoundNetwork| ChatType$BoundNetwork|
  
-#### 0x1A - Entity Event Packet (S ➔ C)
+#### 0x1B - Entity Event Packet (S ➔ C)
 | Index | Type Index | Name | Raw Type | Full Type |
 | -------------| -------------| -------------| -------------| -------------|
 | 0| 0| entityId| int| int|
 | 1| 0| eventId| byte| byte|
  
-#### 0x1B - Explode Packet (S ➔ C)
+#### 0x1C - Explode Packet (S ➔ C)
 | Index | Type Index | Name | Raw Type | Full Type |
 | -------------| -------------| -------------| -------------| -------------|
 | 0| 0| x| double| double|
@@ -572,32 +581,32 @@ Packet has no fields
 | 6| 2| knockbackY| float| float|
 | 7| 3| knockbackZ| float| float|
  
-#### 0x1C - Forget Level Chunk Packet (S ➔ C)
+#### 0x1D - Forget Level Chunk Packet (S ➔ C)
 | Index | Type Index | Name | Raw Type | Full Type |
 | -------------| -------------| -------------| -------------| -------------|
 | 0| 0| x| int| int|
 | 1| 1| z| int| int|
  
-#### 0x1D - Game Event Packet (S ➔ C)
+#### 0x1E - Game Event Packet (S ➔ C)
 | Index | Type Index | Name | Raw Type | Full Type |
 | -------------| -------------| -------------| -------------| -------------|
 | 0| 0| event| ClientboundGameEventPacket$Type| ClientboundGameEventPacket$Type|
 | 1| 0| param| float| float|
  
-#### 0x1E - Horse Screen Open Packet (S ➔ C)
+#### 0x1F - Horse Screen Open Packet (S ➔ C)
 | Index | Type Index | Name | Raw Type | Full Type |
 | -------------| -------------| -------------| -------------| -------------|
 | 0| 0| containerId| int| int|
 | 1| 1| size| int| int|
 | 2| 2| entityId| int| int|
  
-#### 0x1F - Hurt Animation Packet (S ➔ C)
+#### 0x20 - Hurt Animation Packet (S ➔ C)
 | Index | Type Index | Name | Raw Type | Full Type |
 | -------------| -------------| -------------| -------------| -------------|
 | 0| 0| id| int| int|
 | 1| 0| yaw| float| float|
  
-#### 0x20 - Initialize Border Packet (S ➔ C)
+#### 0x21 - Initialize Border Packet (S ➔ C)
 | Index | Type Index | Name | Raw Type | Full Type |
 | -------------| -------------| -------------| -------------| -------------|
 | 0| 0| newCenterX| double| double|
@@ -609,12 +618,12 @@ Packet has no fields
 | 6| 1| warningBlocks| int| int|
 | 7| 2| warningTime| int| int|
  
-#### 0x21 - Keep Alive Packet (S ➔ C)
+#### 0x22 - Keep Alive Packet (S ➔ C)
 | Index | Type Index | Name | Raw Type | Full Type |
 | -------------| -------------| -------------| -------------| -------------|
 | 0| 0| id| long| long|
  
-#### 0x22 - Level Chunk With Light Packet (S ➔ C)
+#### 0x23 - Level Chunk With Light Packet (S ➔ C)
 | Index | Type Index | Name | Raw Type | Full Type |
 | -------------| -------------| -------------| -------------| -------------|
 | 0| 0| x| int| int|
@@ -622,7 +631,7 @@ Packet has no fields
 | 2| 0| chunkData| ClientboundLevelChunkPacketData| ClientboundLevelChunkPacketData|
 | 3| 0| lightData| ClientboundLightUpdatePacketData| ClientboundLightUpdatePacketData|
  
-#### 0x23 - Level Event Packet (S ➔ C)
+#### 0x24 - Level Event Packet (S ➔ C)
 | Index | Type Index | Name | Raw Type | Full Type |
 | -------------| -------------| -------------| -------------| -------------|
 | 0| 0| type| int| int|
@@ -630,7 +639,7 @@ Packet has no fields
 | 2| 1| data| int| int|
 | 3| 0| globalEvent| boolean| boolean|
  
-#### 0x24 - Level Particles Packet (S ➔ C)
+#### 0x25 - Level Particles Packet (S ➔ C)
 | Index | Type Index | Name | Raw Type | Full Type |
 | -------------| -------------| -------------| -------------| -------------|
 | 0| 0| x| double| double|
@@ -644,14 +653,14 @@ Packet has no fields
 | 8| 0| overrideLimiter| boolean| boolean|
 | 9| 0| particle| ParticleOptions| ParticleOptions|
  
-#### 0x25 - Light Update Packet (S ➔ C)
+#### 0x26 - Light Update Packet (S ➔ C)
 | Index | Type Index | Name | Raw Type | Full Type |
 | -------------| -------------| -------------| -------------| -------------|
 | 0| 0| x| int| int|
 | 1| 1| z| int| int|
 | 2| 0| lightData| ClientboundLightUpdatePacketData| ClientboundLightUpdatePacketData|
  
-#### 0x26 - Login Packet (S ➔ C)
+#### 0x27 - Login Packet (S ➔ C)
 | Index | Type Index | Name | Raw Type | Full Type |
 | -------------| -------------| -------------| -------------| -------------|
 | 0| 0| playerId| int| int|
@@ -672,7 +681,7 @@ Packet has no fields
 | 15| 4| isFlat| boolean| boolean|
 | 16| 0| lastDeathLocation| Optional| Optional&lt;GlobalPos&gt;|
  
-#### 0x27 - Map Item Data Packet (S ➔ C)
+#### 0x28 - Map Item Data Packet (S ➔ C)
 | Index | Type Index | Name | Raw Type | Full Type |
 | -------------| -------------| -------------| -------------| -------------|
 | 0| 0| mapId| int| int|
@@ -681,7 +690,7 @@ Packet has no fields
 | 3| 0| decorations| List| List&lt;MapDecoration&gt;|
 | 4| 0| colorPatch| MapItemSavedData$MapPatch| MapItemSavedData$MapPatch|
  
-#### 0x28 - Merchant Offers Packet (S ➔ C)
+#### 0x29 - Merchant Offers Packet (S ➔ C)
 | Index | Type Index | Name | Raw Type | Full Type |
 | -------------| -------------| -------------| -------------| -------------|
 | 0| 0| containerId| int| int|
@@ -691,7 +700,7 @@ Packet has no fields
 | 4| 0| showProgress| boolean| boolean|
 | 5| 1| canRestock| boolean| boolean|
  
-#### 0x29 - Pos (S ➔ C)
+#### 0x2A - Pos (S ➔ C)
 | Index | Type Index | Name | Raw Type | Full Type |
 | -------------| -------------| -------------| -------------| -------------|
 | 0| 0| entityId| int| int|
@@ -704,7 +713,7 @@ Packet has no fields
 | 7| 1| hasRot| boolean| boolean|
 | 8| 2| hasPos| boolean| boolean|
  
-#### 0x2A - Pos Rot (S ➔ C)
+#### 0x2B - Pos Rot (S ➔ C)
 | Index | Type Index | Name | Raw Type | Full Type |
 | -------------| -------------| -------------| -------------| -------------|
 | 0| 0| entityId| int| int|
@@ -717,7 +726,7 @@ Packet has no fields
 | 7| 1| hasRot| boolean| boolean|
 | 8| 2| hasPos| boolean| boolean|
  
-#### 0x2B - Rot (S ➔ C)
+#### 0x2C - Rot (S ➔ C)
 | Index | Type Index | Name | Raw Type | Full Type |
 | -------------| -------------| -------------| -------------| -------------|
 | 0| 0| entityId| int| int|
@@ -730,7 +739,7 @@ Packet has no fields
 | 7| 1| hasRot| boolean| boolean|
 | 8| 2| hasPos| boolean| boolean|
  
-#### 0x2C - Move Vehicle Packet (S ➔ C)
+#### 0x2D - Move Vehicle Packet (S ➔ C)
 | Index | Type Index | Name | Raw Type | Full Type |
 | -------------| -------------| -------------| -------------| -------------|
 | 0| 0| x| double| double|
@@ -739,35 +748,35 @@ Packet has no fields
 | 3| 0| yRot| float| float|
 | 4| 1| xRot| float| float|
  
-#### 0x2D - Open Book Packet (S ➔ C)
+#### 0x2E - Open Book Packet (S ➔ C)
 | Index | Type Index | Name | Raw Type | Full Type |
 | -------------| -------------| -------------| -------------| -------------|
 | 0| 0| hand| InteractionHand| InteractionHand|
  
-#### 0x2E - Open Screen Packet (S ➔ C)
+#### 0x2F - Open Screen Packet (S ➔ C)
 | Index | Type Index | Name | Raw Type | Full Type |
 | -------------| -------------| -------------| -------------| -------------|
 | 0| 0| containerId| int| int|
 | 1| 0| type| MenuType| MenuType&lt;?&gt;|
 | 2| 0| title| Component| Component|
  
-#### 0x2F - Open Sign Editor Packet (S ➔ C)
+#### 0x30 - Open Sign Editor Packet (S ➔ C)
 | Index | Type Index | Name | Raw Type | Full Type |
 | -------------| -------------| -------------| -------------| -------------|
 | 0| 0| pos| BlockPos| BlockPos|
  
-#### 0x30 - Ping Packet (S ➔ C)
+#### 0x31 - Ping Packet (S ➔ C)
 | Index | Type Index | Name | Raw Type | Full Type |
 | -------------| -------------| -------------| -------------| -------------|
 | 0| 0| id| int| int|
  
-#### 0x31 - Place Ghost Recipe Packet (S ➔ C)
+#### 0x32 - Place Ghost Recipe Packet (S ➔ C)
 | Index | Type Index | Name | Raw Type | Full Type |
 | -------------| -------------| -------------| -------------| -------------|
 | 0| 0| containerId| int| int|
 | 1| 0| recipe| ResourceLocation| ResourceLocation|
  
-#### 0x32 - Player Abilities Packet (S ➔ C)
+#### 0x33 - Player Abilities Packet (S ➔ C)
 | Index | Type Index | Name | Raw Type | Full Type |
 | -------------| -------------| -------------| -------------| -------------|
 | 0| 0| invulnerable| boolean| boolean|
@@ -777,7 +786,7 @@ Packet has no fields
 | 4| 0| flyingSpeed| float| float|
 | 5| 1| walkingSpeed| float| float|
  
-#### 0x33 - Player Chat Packet (S ➔ C)
+#### 0x34 - Player Chat Packet (S ➔ C)
 | Index | Type Index | Name | Raw Type | Full Type |
 | -------------| -------------| -------------| -------------| -------------|
 | 0| 0| sender| UUID| UUID|
@@ -788,34 +797,34 @@ Packet has no fields
 | 5| 0| filterMask| FilterMask| FilterMask|
 | 6| 0| chatType| ChatType$BoundNetwork| ChatType$BoundNetwork|
  
-#### 0x34 - Player Combat End Packet (S ➔ C)
+#### 0x35 - Player Combat End Packet (S ➔ C)
 | Index | Type Index | Name | Raw Type | Full Type |
 | -------------| -------------| -------------| -------------| -------------|
 | 0| 0| killerId| int| int|
 | 1| 1| duration| int| int|
  
-#### 0x35 - Player Combat Enter Packet (S ➔ C)
+#### 0x36 - Player Combat Enter Packet (S ➔ C)
 Packet has no fields
  
-#### 0x36 - Player Combat Kill Packet (S ➔ C)
+#### 0x37 - Player Combat Kill Packet (S ➔ C)
 | Index | Type Index | Name | Raw Type | Full Type |
 | -------------| -------------| -------------| -------------| -------------|
 | 0| 0| playerId| int| int|
 | 1| 1| killerId| int| int|
 | 2| 0| message| Component| Component|
  
-#### 0x37 - Player Info Remove Packet (S ➔ C)
+#### 0x38 - Player Info Remove Packet (S ➔ C)
 | Index | Type Index | Name | Raw Type | Full Type |
 | -------------| -------------| -------------| -------------| -------------|
 | 0| 0| profileIds| List| List&lt;UUID&gt;|
  
-#### 0x38 - Player Info Update Packet (S ➔ C)
+#### 0x39 - Player Info Update Packet (S ➔ C)
 | Index | Type Index | Name | Raw Type | Full Type |
 | -------------| -------------| -------------| -------------| -------------|
 | 0| 0| actions| EnumSet| EnumSet&lt;ClientboundPlayerInfoUpdatePacket$Action&gt;|
 | 1| 0| entries| List| List&lt;ClientboundPlayerInfoUpdatePacket$Entry&gt;|
  
-#### 0x39 - Player Look At Packet (S ➔ C)
+#### 0x3A - Player Look At Packet (S ➔ C)
 | Index | Type Index | Name | Raw Type | Full Type |
 | -------------| -------------| -------------| -------------| -------------|
 | 0| 0| x| double| double|
@@ -826,7 +835,7 @@ Packet has no fields
 | 5| 1| toAnchor| EntityAnchorArgument$Anchor| EntityAnchorArgument$Anchor|
 | 6| 0| atEntity| boolean| boolean|
  
-#### 0x3A - Player Position Packet (S ➔ C)
+#### 0x3B - Player Position Packet (S ➔ C)
 | Index | Type Index | Name | Raw Type | Full Type |
 | -------------| -------------| -------------| -------------| -------------|
 | 0| 0| x| double| double|
@@ -838,7 +847,7 @@ Packet has no fields
 | 6| 0| id| int| int|
 | 7| 0| dismountVehicle| boolean| boolean|
  
-#### 0x3B - Recipe Packet (S ➔ C)
+#### 0x3C - Recipe Packet (S ➔ C)
 | Index | Type Index | Name | Raw Type | Full Type |
 | -------------| -------------| -------------| -------------| -------------|
 | 0| 0| state| ClientboundRecipePacket$State| ClientboundRecipePacket$State|
@@ -846,18 +855,18 @@ Packet has no fields
 | 2| 1| toHighlight| List| List&lt;ResourceLocation&gt;|
 | 3| 0| bookSettings| RecipeBookSettings| RecipeBookSettings|
  
-#### 0x3C - Remove Entities Packet (S ➔ C)
+#### 0x3D - Remove Entities Packet (S ➔ C)
 | Index | Type Index | Name | Raw Type | Full Type |
 | -------------| -------------| -------------| -------------| -------------|
 | 0| 0| entityIds| IntList| IntList|
  
-#### 0x3D - Remove Mob Effect Packet (S ➔ C)
+#### 0x3E - Remove Mob Effect Packet (S ➔ C)
 | Index | Type Index | Name | Raw Type | Full Type |
 | -------------| -------------| -------------| -------------| -------------|
 | 0| 0| entityId| int| int|
 | 1| 0| effect| MobEffect| MobEffect|
  
-#### 0x3E - Resource Pack Packet (S ➔ C)
+#### 0x3F - Resource Pack Packet (S ➔ C)
 | Index | Type Index | Name | Raw Type | Full Type |
 | -------------| -------------| -------------| -------------| -------------|
 | 0| 0| url| String| String|
@@ -865,7 +874,7 @@ Packet has no fields
 | 2| 0| required| boolean| boolean|
 | 3| 0| prompt| Component| Component|
  
-#### 0x3F - Respawn Packet (S ➔ C)
+#### 0x40 - Respawn Packet (S ➔ C)
 | Index | Type Index | Name | Raw Type | Full Type |
 | -------------| -------------| -------------| -------------| -------------|
 | 0| 0| dimensionType| ResourceKey| ResourceKey&lt;DimensionType&gt;|
@@ -878,13 +887,13 @@ Packet has no fields
 | 7| 0| dataToKeep| byte| byte|
 | 8| 0| lastDeathLocation| Optional| Optional&lt;GlobalPos&gt;|
  
-#### 0x40 - Rotate Head Packet (S ➔ C)
+#### 0x41 - Rotate Head Packet (S ➔ C)
 | Index | Type Index | Name | Raw Type | Full Type |
 | -------------| -------------| -------------| -------------| -------------|
 | 0| 0| entityId| int| int|
 | 1| 0| yHeadRot| byte| byte|
  
-#### 0x41 - Section Blocks Update Packet (S ➔ C)
+#### 0x42 - Section Blocks Update Packet (S ➔ C)
 | Index | Type Index | Name | Raw Type | Full Type |
 | -------------| -------------| -------------| -------------| -------------|
 | 0| 0| sectionPos| SectionPos| SectionPos|
@@ -892,97 +901,97 @@ Packet has no fields
 | 2| 0| states| BlockState[]| BlockState[]|
 | 3| 0| suppressLightUpdates| boolean| boolean|
  
-#### 0x42 - Select Advancements Tab Packet (S ➔ C)
+#### 0x43 - Select Advancements Tab Packet (S ➔ C)
 | Index | Type Index | Name | Raw Type | Full Type |
 | -------------| -------------| -------------| -------------| -------------|
 | 0| 0| tab| ResourceLocation| ResourceLocation|
  
-#### 0x43 - Server Data Packet (S ➔ C)
+#### 0x44 - Server Data Packet (S ➔ C)
 | Index | Type Index | Name | Raw Type | Full Type |
 | -------------| -------------| -------------| -------------| -------------|
 | 0| 0| motd| Optional| Optional&lt;Component&gt;|
 | 1| 1| iconBase64| Optional| Optional&lt;String&gt;|
 | 2| 0| enforcesSecureChat| boolean| boolean|
  
-#### 0x44 - Set Action Bar Text Packet (S ➔ C)
+#### 0x45 - Set Action Bar Text Packet (S ➔ C)
 | Index | Type Index | Name | Raw Type | Full Type |
 | -------------| -------------| -------------| -------------| -------------|
 | 0| 0| text| Component| Component|
  
-#### 0x45 - Set Border Center Packet (S ➔ C)
+#### 0x46 - Set Border Center Packet (S ➔ C)
 | Index | Type Index | Name | Raw Type | Full Type |
 | -------------| -------------| -------------| -------------| -------------|
 | 0| 0| newCenterX| double| double|
 | 1| 1| newCenterZ| double| double|
  
-#### 0x46 - Set Border Lerp Size Packet (S ➔ C)
+#### 0x47 - Set Border Lerp Size Packet (S ➔ C)
 | Index | Type Index | Name | Raw Type | Full Type |
 | -------------| -------------| -------------| -------------| -------------|
 | 0| 0| oldSize| double| double|
 | 1| 1| newSize| double| double|
 | 2| 0| lerpTime| long| long|
  
-#### 0x47 - Set Border Size Packet (S ➔ C)
+#### 0x48 - Set Border Size Packet (S ➔ C)
 | Index | Type Index | Name | Raw Type | Full Type |
 | -------------| -------------| -------------| -------------| -------------|
 | 0| 0| size| double| double|
  
-#### 0x48 - Set Border Warning Delay Packet (S ➔ C)
+#### 0x49 - Set Border Warning Delay Packet (S ➔ C)
 | Index | Type Index | Name | Raw Type | Full Type |
 | -------------| -------------| -------------| -------------| -------------|
 | 0| 0| warningDelay| int| int|
  
-#### 0x49 - Set Border Warning Distance Packet (S ➔ C)
+#### 0x4A - Set Border Warning Distance Packet (S ➔ C)
 | Index | Type Index | Name | Raw Type | Full Type |
 | -------------| -------------| -------------| -------------| -------------|
 | 0| 0| warningBlocks| int| int|
  
-#### 0x4A - Set Camera Packet (S ➔ C)
+#### 0x4B - Set Camera Packet (S ➔ C)
 | Index | Type Index | Name | Raw Type | Full Type |
 | -------------| -------------| -------------| -------------| -------------|
 | 0| 0| cameraId| int| int|
  
-#### 0x4B - Set Carried Item Packet (S ➔ C)
+#### 0x4C - Set Carried Item Packet (S ➔ C)
 | Index | Type Index | Name | Raw Type | Full Type |
 | -------------| -------------| -------------| -------------| -------------|
 | 0| 0| slot| int| int|
  
-#### 0x4C - Set Chunk Cache Center Packet (S ➔ C)
+#### 0x4D - Set Chunk Cache Center Packet (S ➔ C)
 | Index | Type Index | Name | Raw Type | Full Type |
 | -------------| -------------| -------------| -------------| -------------|
 | 0| 0| x| int| int|
 | 1| 1| z| int| int|
  
-#### 0x4D - Set Chunk Cache Radius Packet (S ➔ C)
+#### 0x4E - Set Chunk Cache Radius Packet (S ➔ C)
 | Index | Type Index | Name | Raw Type | Full Type |
 | -------------| -------------| -------------| -------------| -------------|
 | 0| 0| radius| int| int|
  
-#### 0x4E - Set Default Spawn Position Packet (S ➔ C)
+#### 0x4F - Set Default Spawn Position Packet (S ➔ C)
 | Index | Type Index | Name | Raw Type | Full Type |
 | -------------| -------------| -------------| -------------| -------------|
 | 0| 0| pos| BlockPos| BlockPos|
 | 1| 0| angle| float| float|
  
-#### 0x4F - Set Display Objective Packet (S ➔ C)
+#### 0x50 - Set Display Objective Packet (S ➔ C)
 | Index | Type Index | Name | Raw Type | Full Type |
 | -------------| -------------| -------------| -------------| -------------|
 | 0| 0| slot| int| int|
 | 1| 0| objectiveName| String| String|
  
-#### 0x50 - Set Entity Data Packet (S ➔ C)
+#### 0x51 - Set Entity Data Packet (S ➔ C)
 | Index | Type Index | Name | Raw Type | Full Type |
 | -------------| -------------| -------------| -------------| -------------|
 | 0| 0| id| int| int|
 | 1| 0| packedItems| List| List&lt;SynchedEntityData$DataValue&lt;?&gt;&gt;|
  
-#### 0x51 - Set Entity Link Packet (S ➔ C)
+#### 0x52 - Set Entity Link Packet (S ➔ C)
 | Index | Type Index | Name | Raw Type | Full Type |
 | -------------| -------------| -------------| -------------| -------------|
 | 0| 0| sourceId| int| int|
 | 1| 1| destId| int| int|
  
-#### 0x52 - Set Entity Motion Packet (S ➔ C)
+#### 0x53 - Set Entity Motion Packet (S ➔ C)
 | Index | Type Index | Name | Raw Type | Full Type |
 | -------------| -------------| -------------| -------------| -------------|
 | 0| 0| id| int| int|
@@ -990,27 +999,27 @@ Packet has no fields
 | 2| 2| ya| int| int|
 | 3| 3| za| int| int|
  
-#### 0x53 - Set Equipment Packet (S ➔ C)
+#### 0x54 - Set Equipment Packet (S ➔ C)
 | Index | Type Index | Name | Raw Type | Full Type |
 | -------------| -------------| -------------| -------------| -------------|
 | 0| 0| entity| int| int|
 | 1| 0| slots| List| List&lt;Pair&lt;EquipmentSlot, ItemStack&gt;&gt;|
  
-#### 0x54 - Set Experience Packet (S ➔ C)
+#### 0x55 - Set Experience Packet (S ➔ C)
 | Index | Type Index | Name | Raw Type | Full Type |
 | -------------| -------------| -------------| -------------| -------------|
 | 0| 0| experienceProgress| float| float|
 | 1| 0| totalExperience| int| int|
 | 2| 1| experienceLevel| int| int|
  
-#### 0x55 - Set Health Packet (S ➔ C)
+#### 0x56 - Set Health Packet (S ➔ C)
 | Index | Type Index | Name | Raw Type | Full Type |
 | -------------| -------------| -------------| -------------| -------------|
 | 0| 0| health| float| float|
 | 1| 0| food| int| int|
 | 2| 1| saturation| float| float|
  
-#### 0x56 - Set Objective Packet (S ➔ C)
+#### 0x57 - Set Objective Packet (S ➔ C)
 | Index | Type Index | Name | Raw Type | Full Type |
 | -------------| -------------| -------------| -------------| -------------|
 | 0| 0| objectiveName| String| String|
@@ -1018,13 +1027,13 @@ Packet has no fields
 | 2| 0| renderType| ObjectiveCriteria$RenderType| ObjectiveCriteria$RenderType|
 | 3| 0| method| int| int|
  
-#### 0x57 - Set Passengers Packet (S ➔ C)
+#### 0x58 - Set Passengers Packet (S ➔ C)
 | Index | Type Index | Name | Raw Type | Full Type |
 | -------------| -------------| -------------| -------------| -------------|
 | 0| 0| vehicle| int| int|
 | 1| 0| passengers| int[]| int[]|
  
-#### 0x58 - Set Player Team Packet (S ➔ C)
+#### 0x59 - Set Player Team Packet (S ➔ C)
 | Index | Type Index | Name | Raw Type | Full Type |
 | -------------| -------------| -------------| -------------| -------------|
 | 0| 0| method| int| int|
@@ -1032,7 +1041,7 @@ Packet has no fields
 | 2| 0| players| Collection| Collection&lt;String&gt;|
 | 3| 0| parameters| Optional| Optional&lt;ClientboundSetPlayerTeamPacket$Parameters&gt;|
  
-#### 0x59 - Set Score Packet (S ➔ C)
+#### 0x5A - Set Score Packet (S ➔ C)
 | Index | Type Index | Name | Raw Type | Full Type |
 | -------------| -------------| -------------| -------------| -------------|
 | 0| 0| owner| String| String|
@@ -1040,35 +1049,35 @@ Packet has no fields
 | 2| 0| score| int| int|
 | 3| 0| method| ServerScoreboard$Method| ServerScoreboard$Method|
  
-#### 0x5A - Set Simulation Distance Packet (S ➔ C)
+#### 0x5B - Set Simulation Distance Packet (S ➔ C)
 | Index | Type Index | Name | Raw Type | Full Type |
 | -------------| -------------| -------------| -------------| -------------|
 | 0| 0| simulationDistance| int| int|
  
-#### 0x5B - Set Subtitle Text Packet (S ➔ C)
+#### 0x5C - Set Subtitle Text Packet (S ➔ C)
 | Index | Type Index | Name | Raw Type | Full Type |
 | -------------| -------------| -------------| -------------| -------------|
 | 0| 0| text| Component| Component|
  
-#### 0x5C - Set Time Packet (S ➔ C)
+#### 0x5D - Set Time Packet (S ➔ C)
 | Index | Type Index | Name | Raw Type | Full Type |
 | -------------| -------------| -------------| -------------| -------------|
 | 0| 0| gameTime| long| long|
 | 1| 1| dayTime| long| long|
  
-#### 0x5D - Set Title Text Packet (S ➔ C)
+#### 0x5E - Set Title Text Packet (S ➔ C)
 | Index | Type Index | Name | Raw Type | Full Type |
 | -------------| -------------| -------------| -------------| -------------|
 | 0| 0| text| Component| Component|
  
-#### 0x5E - Set Titles Animation Packet (S ➔ C)
+#### 0x5F - Set Titles Animation Packet (S ➔ C)
 | Index | Type Index | Name | Raw Type | Full Type |
 | -------------| -------------| -------------| -------------| -------------|
 | 0| 0| fadeIn| int| int|
 | 1| 1| stay| int| int|
 | 2| 2| fadeOut| int| int|
  
-#### 0x5F - Sound Entity Packet (S ➔ C)
+#### 0x60 - Sound Entity Packet (S ➔ C)
 | Index | Type Index | Name | Raw Type | Full Type |
 | -------------| -------------| -------------| -------------| -------------|
 | 0| 0| sound| Holder| Holder&lt;SoundEvent&gt;|
@@ -1078,7 +1087,7 @@ Packet has no fields
 | 4| 1| pitch| float| float|
 | 5| 0| seed| long| long|
  
-#### 0x60 - Sound Packet (S ➔ C)
+#### 0x61 - Sound Packet (S ➔ C)
 | Index | Type Index | Name | Raw Type | Full Type |
 | -------------| -------------| -------------| -------------| -------------|
 | 0| 0| sound| Holder| Holder&lt;SoundEvent&gt;|
@@ -1090,38 +1099,38 @@ Packet has no fields
 | 6| 1| pitch| float| float|
 | 7| 0| seed| long| long|
  
-#### 0x61 - Stop Sound Packet (S ➔ C)
+#### 0x62 - Stop Sound Packet (S ➔ C)
 | Index | Type Index | Name | Raw Type | Full Type |
 | -------------| -------------| -------------| -------------| -------------|
 | 0| 0| name| ResourceLocation| ResourceLocation|
 | 1| 0| source| SoundSource| SoundSource|
  
-#### 0x62 - System Chat Packet (S ➔ C)
+#### 0x63 - System Chat Packet (S ➔ C)
 | Index | Type Index | Name | Raw Type | Full Type |
 | -------------| -------------| -------------| -------------| -------------|
 | 0| 0| content| Component| Component|
 | 1| 0| overlay| boolean| boolean|
  
-#### 0x63 - Tab List Packet (S ➔ C)
+#### 0x64 - Tab List Packet (S ➔ C)
 | Index | Type Index | Name | Raw Type | Full Type |
 | -------------| -------------| -------------| -------------| -------------|
 | 0| 0| header| Component| Component|
 | 1| 1| footer| Component| Component|
  
-#### 0x64 - Tag Query Packet (S ➔ C)
+#### 0x65 - Tag Query Packet (S ➔ C)
 | Index | Type Index | Name | Raw Type | Full Type |
 | -------------| -------------| -------------| -------------| -------------|
 | 0| 0| transactionId| int| int|
 | 1| 0| tag| CompoundTag| CompoundTag|
  
-#### 0x65 - Take Item Entity Packet (S ➔ C)
+#### 0x66 - Take Item Entity Packet (S ➔ C)
 | Index | Type Index | Name | Raw Type | Full Type |
 | -------------| -------------| -------------| -------------| -------------|
 | 0| 0| itemId| int| int|
 | 1| 1| playerId| int| int|
 | 2| 2| amount| int| int|
  
-#### 0x66 - Teleport Entity Packet (S ➔ C)
+#### 0x67 - Teleport Entity Packet (S ➔ C)
 | Index | Type Index | Name | Raw Type | Full Type |
 | -------------| -------------| -------------| -------------| -------------|
 | 0| 0| id| int| int|
@@ -1132,7 +1141,7 @@ Packet has no fields
 | 5| 1| xRot| byte| byte|
 | 6| 0| onGround| boolean| boolean|
  
-#### 0x67 - Update Advancements Packet (S ➔ C)
+#### 0x68 - Update Advancements Packet (S ➔ C)
 | Index | Type Index | Name | Raw Type | Full Type |
 | -------------| -------------| -------------| -------------| -------------|
 | 0| 0| reset| boolean| boolean|
@@ -1140,18 +1149,18 @@ Packet has no fields
 | 2| 0| removed| Set| Set&lt;ResourceLocation&gt;|
 | 3| 1| progress| Map| Map&lt;ResourceLocation, AdvancementProgress&gt;|
  
-#### 0x68 - Update Attributes Packet (S ➔ C)
+#### 0x69 - Update Attributes Packet (S ➔ C)
 | Index | Type Index | Name | Raw Type | Full Type |
 | -------------| -------------| -------------| -------------| -------------|
 | 0| 0| entityId| int| int|
 | 1| 0| attributes| List| List&lt;ClientboundUpdateAttributesPacket$AttributeSnapshot&gt;|
  
-#### 0x69 - Update Enabled Features Packet (S ➔ C)
+#### 0x6A - Update Enabled Features Packet (S ➔ C)
 | Index | Type Index | Name | Raw Type | Full Type |
 | -------------| -------------| -------------| -------------| -------------|
 | 0| 0| features| Set| Set&lt;ResourceLocation&gt;|
  
-#### 0x6A - Update Mob Effect Packet (S ➔ C)
+#### 0x6B - Update Mob Effect Packet (S ➔ C)
 | Index | Type Index | Name | Raw Type | Full Type |
 | -------------| -------------| -------------| -------------| -------------|
 | 0| 0| entityId| int| int|
@@ -1161,12 +1170,12 @@ Packet has no fields
 | 4| 1| flags| byte| byte|
 | 5| 0| factorData| MobEffectInstance$FactorData| MobEffectInstance$FactorData|
  
-#### 0x6B - Update Recipes Packet (S ➔ C)
+#### 0x6C - Update Recipes Packet (S ➔ C)
 | Index | Type Index | Name | Raw Type | Full Type |
 | -------------| -------------| -------------| -------------| -------------|
 | 0| 0| recipes| List| List&lt;Recipe&lt;?&gt;&gt;|
  
-#### 0x6C - Update Tags Packet (S ➔ C)
+#### 0x6D - Update Tags Packet (S ➔ C)
 | Index | Type Index | Name | Raw Type | Full Type |
 | -------------| -------------| -------------| -------------| -------------|
 | 0| 0| tags| Map| Map&lt;ResourceKey&lt;? extends Registry&lt;?&gt;&gt;, TagNetworkSerialization$NetworkPayload&gt;|
