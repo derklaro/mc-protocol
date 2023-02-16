@@ -1,7 +1,7 @@
-# 23w06a (Snapshot)
+# 23w07a (Snapshot)
 | Series | Java Runtime | Java Version | Protocol Version | World Version | Pack Resource Version | Pack Data Version | Built at (UTC) |
 | -------------| -------------| -------------| -------------| -------------| -------------| -------------| -------------|
-| main| java-runtime-gamma| 17| 1073741942| 3326| 12| 12| 08/02/2023 14:55:10|
+| main| java-runtime-gamma| 17| 1073741943| 3329| 12| 12| 15/02/2023 14:27:45|
 ## Handshaking (Serverbound)
 #### 0x00 - Client Intention Packet (C ➔ S)
 | Index | Type Index | Name | Raw Type | Full Type |
@@ -909,8 +909,8 @@ Packet has no fields
 #### 0x44 - Server Data Packet (S ➔ C)
 | Index | Type Index | Name | Raw Type | Full Type |
 | -------------| -------------| -------------| -------------| -------------|
-| 0| 0| motd| Optional| Optional&lt;Component&gt;|
-| 1| 1| iconBase64| Optional| Optional&lt;String&gt;|
+| 0| 0| motd| Component| Component|
+| 1| 0| iconBytes| Optional| Optional&lt;byte[]&gt;|
 | 2| 0| enforcesSecureChat| boolean| boolean|
  
 #### 0x45 - Set Action Bar Text Packet (S ➔ C)
