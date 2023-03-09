@@ -1,7 +1,7 @@
-# 1.19.4 Pre-release 3 (Snapshot)
+# 1.19.4 Pre-release 4 (Snapshot)
 | Series | Java Runtime | Java Version | Protocol Version | World Version | Pack Resource Version | Pack Data Version | Built at (UTC) |
 | -------------| -------------| -------------| -------------| -------------| -------------| -------------| -------------|
-| main| java-runtime-gamma| 17| 1073741946| 3332| 13| 12| 01/03/2023 14:07:02|
+| main| java-runtime-gamma| 17| 1073741947| 3333| 13| 12| 08/03/2023 13:05:59|
 ## Handshaking (Serverbound)
 #### 0x00 - Client Intention Packet (C ➔ S)
 | Index | Type Index | Name | Raw Type | Full Type |
