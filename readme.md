@@ -1,7 +1,7 @@
-# 1.19.4 (Stable)
+# 23w12a (Snapshot)
 | Series | Java Runtime | Java Version | Protocol Version | World Version | Pack Resource Version | Pack Data Version | Built at (UTC) |
 | -------------| -------------| -------------| -------------| -------------| -------------| -------------| -------------|
-| main| java-runtime-gamma| 17| 762| 3337| 13| 12| 14/03/2023 12:53:56|
+| main| java-runtime-gamma| 17| 1073741951| 3442| 13| 13| 22/03/2023 13:26:16|
 ## Handshaking (Serverbound)
 #### 0x00 - Client Intention Packet (C ➔ S)
 | Index | Type Index | Name | Raw Type | Full Type |
@@ -354,6 +354,7 @@ This packet flow has no registered packets
 | -------------| -------------| -------------| -------------| -------------|
 | 0| 0| pos| BlockPos| BlockPos|
 | 1| 0| lines| String[]| String[]|
+| 2| 0| isFrontText| boolean| boolean|
  
 #### 0x2F - Swing Packet (C ➔ S)
 | Index | Type Index | Name | Raw Type | Full Type |
@@ -769,6 +770,7 @@ Packet has no fields
 | Index | Type Index | Name | Raw Type | Full Type |
 | -------------| -------------| -------------| -------------| -------------|
 | 0| 0| pos| BlockPos| BlockPos|
+| 1| 0| isFrontText| boolean| boolean|
  
 #### 0x32 - Ping Packet (S ➔ C)
 | Index | Type Index | Name | Raw Type | Full Type |
