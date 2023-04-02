@@ -1,7 +1,7 @@
-# 23w13a (Snapshot)
+# 23w13a_or_b (Snapshot)
 | Series | Java Runtime | Java Version | Protocol Version | World Version | Pack Resource Version | Pack Data Version | Built at (UTC) |
 | -------------| -------------| -------------| -------------| -------------| -------------| -------------| -------------|
-| main| java-runtime-gamma| 17| 1073741952| 3443| 13| 13| 29/03/2023 13:51:53|
+| april2023| java-runtime-gamma| 17| 1073741953| 3444| 13| 13| 01/04/2023 12:49:32|
 ## Handshaking (Serverbound)
 #### 0x00 - Client Intention Packet (C ➔ S)
 | Index | Type Index | Name | Raw Type | Full Type |
@@ -378,6 +378,17 @@ This packet flow has no registered packets
 | -------------| -------------| -------------| -------------| -------------|
 | 0| 0| hand| InteractionHand| InteractionHand|
 | 1| 0| sequence| int| int|
+ 
+#### 0x33 - Vote Cast Packet (C ➔ S)
+| Index | Type Index | Name | Raw Type | Full Type |
+| -------------| -------------| -------------| -------------| -------------|
+| 0| 0| transactionId| int| int|
+| 1| 0| optionId| OptionId| OptionId|
+ 
+#### 0x34 - Crash Vehicle Packet (C ➔ S)
+| Index | Type Index | Name | Raw Type | Full Type |
+| -------------| -------------| -------------| -------------| -------------|
+| 0| 0| speed| float| float|
  
 ## Play (Clientbound)
 #### 0x00 - Bundle Delimiter Packet (S ➔ C)
@@ -1004,6 +1015,7 @@ Packet has no fields
 | 1| 1| xa| int| int|
 | 2| 2| ya| int| int|
 | 3| 3| za| int| int|
+| 4| 0| moon| boolean| boolean|
  
 #### 0x55 - Set Equipment Packet (S ➔ C)
 | Index | Type Index | Name | Raw Type | Full Type |
@@ -1024,6 +1036,7 @@ Packet has no fields
 | 0| 0| health| float| float|
 | 1| 0| food| int| int|
 | 2| 1| saturation| float| float|
+| 3| 1| thirst| int| int|
  
 #### 0x58 - Set Objective Packet (S ➔ C)
 | Index | Type Index | Name | Raw Type | Full Type |
@@ -1185,6 +1198,43 @@ Packet has no fields
 | Index | Type Index | Name | Raw Type | Full Type |
 | -------------| -------------| -------------| -------------| -------------|
 | 0| 0| tags| Map| Map&lt;ResourceKey&lt;? extends Registry&lt;?&gt;&gt;, TagNetworkSerialization$NetworkPayload&gt;|
+ 
+#### 0x6F - Rule Update Packet (S ➔ C)
+| Index | Type Index | Name | Raw Type | Full Type |
+| -------------| -------------| -------------| -------------| -------------|
+| 0| 0| resetAll| boolean| boolean|
+| 1| 0| action| RuleAction| RuleAction|
+| 2| 0| rules| List| List&lt;RuleChange&gt;|
+ 
+#### 0x70 - Vote Start Packet (S ➔ C)
+| Index | Type Index | Name | Raw Type | Full Type |
+| -------------| -------------| -------------| -------------| -------------|
+| 0| 0| id| UUID| UUID|
+| 1| 0| voteData| ClientVote| ClientVote|
+ 
+#### 0x71 - Vote Finish Packet (S ➔ C)
+| Index | Type Index | Name | Raw Type | Full Type |
+| -------------| -------------| -------------| -------------| -------------|
+| 0| 0| id| UUID| UUID|
+ 
+#### 0x72 - Vote Progress Info Packet (S ➔ C)
+| Index | Type Index | Name | Raw Type | Full Type |
+| -------------| -------------| -------------| -------------| -------------|
+| 0| 0| id| OptionId| OptionId|
+| 1| 0| voters| OptionVotes| OptionVotes|
+ 
+#### 0x73 - Vote Cast Result Packet (S ➔ C)
+| Index | Type Index | Name | Raw Type | Full Type |
+| -------------| -------------| -------------| -------------| -------------|
+| 0| 0| transactionId| int| int|
+| 1| 0| rejectReason| Optional| Optional&lt;Component&gt;|
+ 
+#### 0x74 - Bulk Vote Info Packet (S ➔ C)
+| Index | Type Index | Name | Raw Type | Full Type |
+| -------------| -------------| -------------| -------------| -------------|
+| 0| 0| clear| boolean| boolean|
+| 1| 0| votes| Map| Map&lt;UUID, ClientVote&gt;|
+| 2| 1| voters| Map| Map&lt;OptionId, OptionVotes&gt;|
  
 ## Status (Serverbound)
 #### 0x00 - Status Request Packet (C ➔ S)
