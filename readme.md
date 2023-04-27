@@ -1,7 +1,7 @@
-# 23w16a (Snapshot)
+# 23w17a (Snapshot)
 | Series | Java Runtime | Java Version | Protocol Version | World Version | Pack Resource Version | Pack Data Version | Built at (UTC) |
 | -------------| -------------| -------------| -------------| -------------| -------------| -------------| -------------|
-| main| java-runtime-gamma| 17| 1073741955| 3449| 14| 14| 20/04/2023 11:52:56|
+| main| java-runtime-gamma| 17| 1073741956| 3452| 15| 14| 26/04/2023 12:07:25|
 ## Handshaking (Serverbound)
 #### 0x00 - Client Intention Packet (C ➔ S)
 | Index | Type Index | Name | Raw Type | Full Type |
@@ -905,7 +905,6 @@ Packet has no fields
 | 0| 0| sectionPos| SectionPos| SectionPos|
 | 1| 0| positions| short[]| short[]|
 | 2| 0| states| BlockState[]| BlockState[]|
-| 3| 0| suppressLightUpdates| boolean| boolean|
  
 #### 0x44 - Select Advancements Tab Packet (S ➔ C)
 | Index | Type Index | Name | Raw Type | Full Type |
