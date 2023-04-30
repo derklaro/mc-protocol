@@ -64,7 +64,7 @@ dependencies {
   val reflexion = "1.8.0"
   implementation("dev.derklaro.reflexion", "reflexion", reflexion)
 
-  val fastutil = "8.5.11" // needed internally for minecraft, do not remove
+  val fastutil = "8.5.12" // needed internally for minecraft, do not remove
   implementation("it.unimi.dsi", "fastutil", fastutil)
 
   val netty = "4.1.87.Final"
