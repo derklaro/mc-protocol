@@ -55,7 +55,7 @@ dependencies {
   implementation("com.fasterxml.jackson.core", "jackson-databind", jackson)
   implementation("com.fasterxml.jackson.datatype", "jackson-datatype-jsr310", jackson)
 
-  val enigma = "2.3.0"
+  val enigma = "2.3.1"
   implementation("cuchaz", "enigma", enigma)
 
   val argparse4j = "0.9.0"
