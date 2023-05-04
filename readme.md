@@ -1,7 +1,7 @@
-# 23w17a (Snapshot)
+# 23w18a (Snapshot)
 | Series | Java Runtime | Java Version | Protocol Version | World Version | Pack Resource Version | Pack Data Version | Built at (UTC) |
 | -------------| -------------| -------------| -------------| -------------| -------------| -------------| -------------|
-| main| java-runtime-gamma| 17| 1073741956| 3452| 15| 14| 26/04/2023 12:07:25|
+| main| java-runtime-gamma| 17| 1073741957| 3453| 15| 15| 03/05/2023 11:27:02|
 ## Handshaking (Serverbound)
 #### 0x00 - Client Intention Packet (C ➔ S)
 | Index | Type Index | Name | Raw Type | Full Type |
