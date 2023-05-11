@@ -1,7 +1,7 @@
-# 23w18a (Snapshot)
+# 1.20 Pre-release 1 (Snapshot)
 | Series | Java Runtime | Java Version | Protocol Version | World Version | Pack Resource Version | Pack Data Version | Built at (UTC) |
 | -------------| -------------| -------------| -------------| -------------| -------------| -------------| -------------|
-| main| java-runtime-gamma| 17| 1073741957| 3453| 15| 15| 03/05/2023 11:27:02|
+| main| java-runtime-gamma| 17| 1073741958| 3454| 15| 15| 10/05/2023 12:17:02|
 ## Handshaking (Serverbound)
 #### 0x00 - Client Intention Packet (C ➔ S)
 | Index | Type Index | Name | Raw Type | Full Type |
@@ -686,6 +686,7 @@ Packet has no fields
 | 14| 3| isDebug| boolean| boolean|
 | 15| 4| isFlat| boolean| boolean|
 | 16| 0| lastDeathLocation| Optional| Optional&lt;GlobalPos&gt;|
+| 17| 4| portalCooldown| int| int|
  
 #### 0x29 - Map Item Data Packet (S ➔ C)
 | Index | Type Index | Name | Raw Type | Full Type |
@@ -892,6 +893,7 @@ Packet has no fields
 | 6| 1| isFlat| boolean| boolean|
 | 7| 0| dataToKeep| byte| byte|
 | 8| 0| lastDeathLocation| Optional| Optional&lt;GlobalPos&gt;|
+| 9| 0| portalCooldown| int| int|
  
 #### 0x42 - Rotate Head Packet (S ➔ C)
 | Index | Type Index | Name | Raw Type | Full Type |
