@@ -1,7 +1,7 @@
-# 1.20 Pre-release 2 (Snapshot)
+# 1.20 Pre-release 4 (Snapshot)
 | Series | Java Runtime | Java Version | Protocol Version | World Version | Pack Resource Version | Pack Data Version | Built at (UTC) |
 | -------------| -------------| -------------| -------------| -------------| -------------| -------------| -------------|
-| main| java-runtime-gamma| 17| 1073741959| 3455| 15| 15| 16/05/2023 11:32:22|
+| main| java-runtime-gamma| 17| 1073741961| 3457| 15| 15| 19/05/2023 13:11:22|
 ## Handshaking (Serverbound)
 #### 0x00 - Client Intention Packet (C ➔ S)
 | Index | Type Index | Name | Raw Type | Full Type |
@@ -808,8 +808,7 @@ Packet has no fields
 #### 0x36 - Player Combat End Packet (S ➔ C)
 | Index | Type Index | Name | Raw Type | Full Type |
 | -------------| -------------| -------------| -------------| -------------|
-| 0| 0| killerId| int| int|
-| 1| 1| duration| int| int|
+| 0| 0| duration| int| int|
  
 #### 0x37 - Player Combat Enter Packet (S ➔ C)
 Packet has no fields
@@ -818,8 +817,7 @@ Packet has no fields
 | Index | Type Index | Name | Raw Type | Full Type |
 | -------------| -------------| -------------| -------------| -------------|
 | 0| 0| playerId| int| int|
-| 1| 1| killerId| int| int|
-| 2| 0| message| Component| Component|
+| 1| 0| message| Component| Component|
  
 #### 0x39 - Player Info Remove Packet (S ➔ C)
 | Index | Type Index | Name | Raw Type | Full Type |
