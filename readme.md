@@ -1,7 +1,7 @@
-# 23w33a (Snapshot)
+# 23w35a (Snapshot)
 | Series | Java Runtime | Java Version | Protocol Version | World Version | Pack Resource Version | Pack Data Version | Built at (UTC) |
 | -------------| -------------| -------------| -------------| -------------| -------------| -------------| -------------|
-| main| java-runtime-gamma| 17| 1073741970| 3570| 17| 17| 17/08/2023 11:36:38|
+| main| java-runtime-gamma-snapshot| 17| 1073741971| 3571| 17| 17| 30/08/2023 11:22:03|
 ## Handshaking (Serverbound)
 #### 0x00 - Client Intention Packet (C ➔ S)
 | Index | Type Index | Name | Raw Type | Full Type |
@@ -1159,9 +1159,9 @@ Packet has no fields
 | Index | Type Index | Name | Raw Type | Full Type |
 | -------------| -------------| -------------| -------------| -------------|
 | 0| 0| reset| boolean| boolean|
-| 1| 0| added| Map| Map&lt;ResourceLocation, Advancement$Builder&gt;|
+| 1| 0| added| List| List&lt;AdvancementHolder&gt;|
 | 2| 0| removed| Set| Set&lt;ResourceLocation&gt;|
-| 3| 1| progress| Map| Map&lt;ResourceLocation, AdvancementProgress&gt;|
+| 3| 0| progress| Map| Map&lt;ResourceLocation, AdvancementProgress&gt;|
  
 #### 0x6E - Update Attributes Packet (S ➔ C)
 | Index | Type Index | Name | Raw Type | Full Type |
@@ -1182,7 +1182,7 @@ Packet has no fields
 #### 0x70 - Update Recipes Packet (S ➔ C)
 | Index | Type Index | Name | Raw Type | Full Type |
 | -------------| -------------| -------------| -------------| -------------|
-| 0| 0| recipes| List| List&lt;Recipe&lt;?&gt;&gt;|
+| 0| 0| recipes| List| List&lt;RecipeHolder&lt;?&gt;&gt;|
  
 #### 0x71 - Update Tags Packet (S ➔ C)
 | Index | Type Index | Name | Raw Type | Full Type |
