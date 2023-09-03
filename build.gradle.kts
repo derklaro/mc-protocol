@@ -45,7 +45,7 @@ dependencies {
   val guava = "31.1-jre"
   implementation("com.google.guava", "guava", guava)
 
-  val slf4j = "2.0.6"
+  val slf4j = "2.0.9"
   implementation("org.slf4j", "slf4j-api", slf4j)
 
   val logback = "1.4.5"
