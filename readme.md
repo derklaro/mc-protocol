@@ -1,7 +1,7 @@
-# 23w35a (Snapshot)
+# 1.20.2 Pre-release 1 (Snapshot)
 | Series | Java Runtime | Java Version | Protocol Version | World Version | Pack Resource Version | Pack Data Version | Built at (UTC) |
 | -------------| -------------| -------------| -------------| -------------| -------------| -------------| -------------|
-| main| java-runtime-gamma-snapshot| 17| 1073741971| 3571| 17| 17| 30/08/2023 11:22:03|
+| main| java-runtime-gamma-snapshot| 17| 1073741972| 3572| 17| 18| 05/09/2023 12:03:25|
 ## Handshaking (Serverbound)
 #### 0x00 - Client Intention Packet (C ➔ S)
 | Index | Type Index | Name | Raw Type | Full Type |
@@ -71,14 +71,7 @@ This packet flow has no registered packets
 #### 0x09 - Client Information Packet (C ➔ S)
 | Index | Type Index | Name | Raw Type | Full Type |
 | -------------| -------------| -------------| -------------| -------------|
-| 0| 0| language| String| String|
-| 1| 0| viewDistance| int| int|
-| 2| 0| chatVisibility| ChatVisiblity| ChatVisiblity|
-| 3| 0| chatColors| boolean| boolean|
-| 4| 1| modelCustomisation| int| int|
-| 5| 0| mainHand| HumanoidArm| HumanoidArm|
-| 6| 1| textFilteringEnabled| boolean| boolean|
-| 7| 2| allowsListing| boolean| boolean|
+| 0| 0| information| ClientInformation| ClientInformation|
  
 #### 0x0A - Command Suggestion Packet (C ➔ S)
 | Index | Type Index | Name | Raw Type | Full Type |
@@ -695,7 +688,8 @@ Packet has no fields
 | 5| 3| simulationDistance| int| int|
 | 6| 1| reducedDebugInfo| boolean| boolean|
 | 7| 2| showDeathScreen| boolean| boolean|
-| 8| 0| commonPlayerSpawnInfo| CommonPlayerSpawnInfo| CommonPlayerSpawnInfo|
+| 8| 3| doLimitedCrafting| boolean| boolean|
+| 9| 0| commonPlayerSpawnInfo| CommonPlayerSpawnInfo| CommonPlayerSpawnInfo|
  
 #### 0x2B - Map Item Data Packet (S ➔ C)
 | Index | Type Index | Name | Raw Type | Full Type |
@@ -1261,25 +1255,30 @@ Packet has no fields
 | 1| 0| payload| CustomQueryPayload| CustomQueryPayload|
  
 ## Configuration (Serverbound)
-#### 0x00 - Custom Payload Packet (C ➔ S)
+#### 0x00 - Client Information Packet (C ➔ S)
+| Index | Type Index | Name | Raw Type | Full Type |
+| -------------| -------------| -------------| -------------| -------------|
+| 0| 0| information| ClientInformation| ClientInformation|
+ 
+#### 0x01 - Custom Payload Packet (C ➔ S)
 | Index | Type Index | Name | Raw Type | Full Type |
 | -------------| -------------| -------------| -------------| -------------|
 | 0| 0| payload| CustomPacketPayload| CustomPacketPayload|
  
-#### 0x01 - Finish Configuration Packet (C ➔ S)
+#### 0x02 - Finish Configuration Packet (C ➔ S)
 Packet has no fields
  
-#### 0x02 - Keep Alive Packet (C ➔ S)
+#### 0x03 - Keep Alive Packet (C ➔ S)
 | Index | Type Index | Name | Raw Type | Full Type |
 | -------------| -------------| -------------| -------------| -------------|
 | 0| 0| id| long| long|
  
-#### 0x03 - Pong Packet (C ➔ S)
+#### 0x04 - Pong Packet (C ➔ S)
 | Index | Type Index | Name | Raw Type | Full Type |
 | -------------| -------------| -------------| -------------| -------------|
 | 0| 0| id| int| int|
  
-#### 0x04 - Resource Pack Packet (C ➔ S)
+#### 0x05 - Resource Pack Packet (C ➔ S)
 | Index | Type Index | Name | Raw Type | Full Type |
 | -------------| -------------| -------------| -------------| -------------|
 | 0| 0| action| ServerboundResourcePackPacket$Action| ServerboundResourcePackPacket$Action|
