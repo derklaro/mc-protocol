@@ -26,8 +26,8 @@ plugins {
   id("java")
   id("checkstyle")
   id("application")
-  id("com.diffplug.spotless") version "6.13.0"
-  id("com.github.johnrengelman.shadow") version "7.1.2"
+  id("com.diffplug.spotless") version "6.22.0"
+  id("com.github.johnrengelman.shadow") version "8.1.1"
 }
 
 group = "dev.derklaro"
@@ -42,20 +42,20 @@ dependencies {
   val markdown4j = "1.0"
   implementation("fun.mingshan", "markdown4j", markdown4j)
 
-  val guava = "31.1-jre"
+  val guava = "32.1.2-jre"
   implementation("com.google.guava", "guava", guava)
 
-  val slf4j = "2.0.6"
+  val slf4j = "2.0.9"
   implementation("org.slf4j", "slf4j-api", slf4j)
 
-  val logback = "1.4.5"
+  val logback = "1.4.11"
   runtimeOnly("ch.qos.logback", "logback-classic", logback)
 
-  val jackson = "2.14.1"
+  val jackson = "2.15.2"
   implementation("com.fasterxml.jackson.core", "jackson-databind", jackson)
   implementation("com.fasterxml.jackson.datatype", "jackson-datatype-jsr310", jackson)
 
-  val enigma = "2.3.1"
+  val enigma = "2.3.3"
   implementation("cuchaz", "enigma", enigma)
 
   val argparse4j = "0.9.0"
@@ -64,13 +64,13 @@ dependencies {
   val reflexion = "1.8.0"
   implementation("dev.derklaro.reflexion", "reflexion", reflexion)
 
-  val fastutil = "8.5.11" // needed internally for minecraft, do not remove
+  val fastutil = "8.5.12" // needed internally for minecraft, do not remove
   implementation("it.unimi.dsi", "fastutil", fastutil)
 
-  val netty = "4.1.87.Final"
+  val netty = "4.1.99.Final"
   runtimeOnly("io.netty", "netty-buffer", netty)
 
-  val lombok = "1.18.24"
+  val lombok = "1.18.30"
   compileOnly("org.projectlombok", "lombok", lombok)
   annotationProcessor("org.projectlombok", "lombok", lombok)
 }
@@ -100,7 +100,7 @@ checkstyle {
 }
 
 extensions.configure<CheckstyleExtension> {
-  toolVersion = "10.6.0"
+  toolVersion = "10.12.4"
 }
 
 spotless {
