@@ -65,12 +65,12 @@ dependencies {
   implementation("dev.derklaro.reflexion", "reflexion", reflexion)
 
   val fastutil = "8.5.12" // needed internally for minecraft, do not remove
-  implementation("it.unimi.dsi", "fastutil", fastutil)
+  runtimeOnly("it.unimi.dsi", "fastutil", fastutil)
 
   val joml = "1.10.5" // needed internally for minecraft, do not remove
-  implementation("org.joml", "joml", joml)
+  runtimeOnly("org.joml", "joml", joml)
 
-  val netty = "4.1.99.Final"
+  val netty = "4.1.99.Final" // needed internally for minecraft, do not remove
   runtimeOnly("io.netty", "netty-buffer", netty)
 
   val lombok = "1.18.30"
