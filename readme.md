@@ -1,7 +1,7 @@
-# 23w42a (Snapshot)
+# 23w43a (Snapshot)
 | Series | Java Runtime | Java Version | Protocol Version | World Version | Pack Resource Version | Pack Data Version | Built at (UTC) |
 | -------------| -------------| -------------| -------------| -------------| -------------| -------------| -------------|
-| main| java-runtime-gamma| 17| 1073741981| 3684| 19| 21| 18/10/2023 11:34:29|
+| main| java-runtime-gamma| 17| 1073741983| 3686| 20| 22| 25/10/2023 13:31:53|
 ## Handshaking (Serverbound)
 #### 0x00 - Client Intention Packet (C ➔ S)
 | Index | Type Index | Name | Raw Type | Full Type |
@@ -342,6 +342,8 @@ Packet has no fields
 | 3| 2| pool| ResourceLocation| ResourceLocation|
 | 4| 0| finalState| String| String|
 | 5| 0| joint| JigsawBlockEntity$JointType| JigsawBlockEntity$JointType|
+| 6| 0| selectionPriority| int| int|
+| 7| 1| placementPriority| int| int|
  
 #### 0x31 - Set Structure Block Packet (C ➔ S)
 | Index | Type Index | Name | Raw Type | Full Type |
@@ -1145,7 +1147,18 @@ Packet has no fields
 | 5| 1| xRot| byte| byte|
 | 6| 0| onGround| boolean| boolean|
  
-#### 0x6C - Update Advancements Packet (S ➔ C)
+#### 0x6C - Ticking State Packet (S ➔ C)
+| Index | Type Index | Name | Raw Type | Full Type |
+| -------------| -------------| -------------| -------------| -------------|
+| 0| 0| tickRate| float| float|
+| 1| 0| isFrozen| boolean| boolean|
+ 
+#### 0x6D - Ticking Step Packet (S ➔ C)
+| Index | Type Index | Name | Raw Type | Full Type |
+| -------------| -------------| -------------| -------------| -------------|
+| 0| 0| tickSteps| int| int|
+ 
+#### 0x6E - Update Advancements Packet (S ➔ C)
 | Index | Type Index | Name | Raw Type | Full Type |
 | -------------| -------------| -------------| -------------| -------------|
 | 0| 0| reset| boolean| boolean|
@@ -1153,13 +1166,13 @@ Packet has no fields
 | 2| 0| removed| Set| Set&lt;ResourceLocation&gt;|
 | 3| 0| progress| Map| Map&lt;ResourceLocation, AdvancementProgress&gt;|
  
-#### 0x6D - Update Attributes Packet (S ➔ C)
+#### 0x6F - Update Attributes Packet (S ➔ C)
 | Index | Type Index | Name | Raw Type | Full Type |
 | -------------| -------------| -------------| -------------| -------------|
 | 0| 0| entityId| int| int|
 | 1| 0| attributes| List| List&lt;ClientboundUpdateAttributesPacket$AttributeSnapshot&gt;|
  
-#### 0x6E - Update Mob Effect Packet (S ➔ C)
+#### 0x70 - Update Mob Effect Packet (S ➔ C)
 | Index | Type Index | Name | Raw Type | Full Type |
 | -------------| -------------| -------------| -------------| -------------|
 | 0| 0| entityId| int| int|
@@ -1169,12 +1182,12 @@ Packet has no fields
 | 4| 1| flags| byte| byte|
 | 5| 0| factorData| MobEffectInstance$FactorData| MobEffectInstance$FactorData|
  
-#### 0x6F - Update Recipes Packet (S ➔ C)
+#### 0x71 - Update Recipes Packet (S ➔ C)
 | Index | Type Index | Name | Raw Type | Full Type |
 | -------------| -------------| -------------| -------------| -------------|
 | 0| 0| recipes| List| List&lt;RecipeHolder&lt;?&gt;&gt;|
  
-#### 0x70 - Update Tags Packet (S ➔ C)
+#### 0x72 - Update Tags Packet (S ➔ C)
 | Index | Type Index | Name | Raw Type | Full Type |
 | -------------| -------------| -------------| -------------| -------------|
 | 0| 0| tags| Map| Map&lt;ResourceKey&lt;? extends Registry&lt;?&gt;&gt;, TagNetworkSerialization$NetworkPayload&gt;|
