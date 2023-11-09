@@ -1,7 +1,7 @@
-# 23w44a (Snapshot)
+# 23w45a (Snapshot)
 | Series | Java Runtime | Java Version | Protocol Version | World Version | Pack Resource Version | Pack Data Version | Built at (UTC) |
 | -------------| -------------| -------------| -------------| -------------| -------------| -------------| -------------|
-| main| java-runtime-gamma| 17| 1073741985| 3688| 20| 23| 01/11/2023 12:28:07|
+| main| java-runtime-gamma| 17| 1073741986| 3690| 21| 24| 08/11/2023 13:57:06|
 ## Handshaking (Serverbound)
 #### 0x00 - Client Intention Packet (C ➔ S)
 | Index | Type Index | Name | Raw Type | Full Type |
@@ -596,6 +596,10 @@ Packet has no fields
 | 5| 1| knockbackX| float| float|
 | 6| 2| knockbackY| float| float|
 | 7| 3| knockbackZ| float| float|
+| 8| 0| smallExplosionParticles| ParticleOptions| ParticleOptions|
+| 9| 1| largeExplosionParticles| ParticleOptions| ParticleOptions|
+| 10| 0| blockInteraction| Explosion$BlockInteraction| Explosion$BlockInteraction|
+| 11| 0| explosionSound| SoundEvent| SoundEvent|
  
 #### 0x1F - Forget Level Chunk Packet (S ➔ C)
 | Index | Type Index | Name | Raw Type | Full Type |
