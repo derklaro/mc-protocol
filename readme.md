@@ -1,7 +1,7 @@
-# 1.20.3 Pre-Release 2 (Snapshot)
+# 1.20.3 Pre-Release 3 (Snapshot)
 | Series | Java Runtime | Java Version | Protocol Version | World Version | Pack Resource Version | Pack Data Version | Built at (UTC) |
 | -------------| -------------| -------------| -------------| -------------| -------------| -------------| -------------|
-| main| java-runtime-gamma| 17| 1073741989| 3694| 22| 26| 22/11/2023 12:18:06|
+| main| java-runtime-gamma| 17| 1073741990| 3695| 22| 26| 27/11/2023 14:18:53|
 ## Handshaking (Serverbound)
 #### 0x00 - Client Intention Packet (C ➔ S)
 | Index | Type Index | Name | Raw Type | Full Type |
