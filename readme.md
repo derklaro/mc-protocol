@@ -1,7 +1,7 @@
-# 1.20.4 Release Candidate 1 (Snapshot)
+# 1.20.4 (Stable)
 | Series | Java Runtime | Java Version | Protocol Version | World Version | Pack Resource Version | Pack Data Version | Built at (UTC) |
 | -------------| -------------| -------------| -------------| -------------| -------------| -------------| -------------|
-| main| java-runtime-gamma| 17| 1073741993| 3699| 22| 26| 06/12/2023 14:34:42|
+| main| java-runtime-gamma| 17| 765| 3700| 22| 26| 07/12/2023 12:53:30|
 ## Handshaking (Serverbound)
 #### 0x00 - Client Intention Packet (C ➔ S)
 | Index | Type Index | Name | Raw Type | Full Type |
