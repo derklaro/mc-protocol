@@ -24,7 +24,6 @@
 
 plugins {
   id("java")
-  id("checkstyle")
   id("application")
   id("com.diffplug.spotless") version "6.23.3"
   id("com.github.johnrengelman.shadow") version "8.1.1"
@@ -95,16 +94,6 @@ java {
 
 tasks.shadowJar {
   archiveFileName.set("protocol-generator.jar")
-}
-
-checkstyle {
-  maxErrors = 0
-  maxWarnings = 0
-  configFile = rootProject.file("checkstyle.xml")
-}
-
-extensions.configure<CheckstyleExtension> {
-  toolVersion = "10.12.6"
 }
 
 spotless {
