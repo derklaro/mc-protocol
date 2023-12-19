@@ -1,7 +1,7 @@
-# 1.20.4 (Stable)
+# 23w51b (Snapshot)
 | Series | Java Runtime | Java Version | Protocol Version | World Version | Pack Resource Version | Pack Data Version | Built at (UTC) |
 | -------------| -------------| -------------| -------------| -------------| -------------| -------------| -------------|
-| main| java-runtime-gamma| 17| 765| 3700| 22| 26| 07/12/2023 12:53:30|
+| main| java-runtime-gamma| 17| 1073741994| 3802| 22| 27| 18/12/2023 15:36:27|
 ## Handshaking (Serverbound)
 #### 0x00 - Client Intention Packet (C ➔ S)
 | Index | Type Index | Name | Raw Type | Full Type |
@@ -303,8 +303,8 @@ Packet has no fields
 #### 0x2B - Set Beacon Packet (C ➔ S)
 | Index | Type Index | Name | Raw Type | Full Type |
 | -------------| -------------| -------------| -------------| -------------|
-| 0| 0| primary| Optional| Optional&lt;MobEffect&gt;|
-| 1| 1| secondary| Optional| Optional&lt;MobEffect&gt;|
+| 0| 0| primary| Optional| Optional&lt;Holder&lt;MobEffect&gt;&gt;|
+| 1| 1| secondary| Optional| Optional&lt;Holder&lt;MobEffect&gt;&gt;|
  
 #### 0x2C - Set Carried Item Packet (C ➔ S)
 | Index | Type Index | Name | Raw Type | Full Type |
@@ -880,7 +880,7 @@ Packet has no fields
 | Index | Type Index | Name | Raw Type | Full Type |
 | -------------| -------------| -------------| -------------| -------------|
 | 0| 0| entityId| int| int|
-| 1| 0| effect| MobEffect| MobEffect|
+| 1| 0| effect| Holder| Holder&lt;MobEffect&gt;|
  
 #### 0x42 - Reset Score Packet (S ➔ C)
 | Index | Type Index | Name | Raw Type | Full Type |
@@ -1195,11 +1195,10 @@ Packet has no fields
 | Index | Type Index | Name | Raw Type | Full Type |
 | -------------| -------------| -------------| -------------| -------------|
 | 0| 0| entityId| int| int|
-| 1| 0| effect| MobEffect| MobEffect|
+| 1| 0| effect| Holder| Holder&lt;MobEffect&gt;|
 | 2| 0| effectAmplifier| byte| byte|
 | 3| 1| effectDurationTicks| int| int|
 | 4| 1| flags| byte| byte|
-| 5| 0| factorData| MobEffectInstance$FactorData| MobEffectInstance$FactorData|
  
 #### 0x73 - Update Recipes Packet (S ➔ C)
 | Index | Type Index | Name | Raw Type | Full Type |
