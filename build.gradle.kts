@@ -26,7 +26,7 @@ plugins {
   id("java")
   id("checkstyle")
   id("application")
-  id("com.diffplug.spotless") version "6.22.0"
+  id("com.diffplug.spotless") version "6.23.3"
   id("com.github.johnrengelman.shadow") version "8.1.1"
 }
 
@@ -42,16 +42,16 @@ dependencies {
   val markdown4j = "1.0"
   implementation("fun.mingshan", "markdown4j", markdown4j)
 
-  val guava = "32.1.2-jre"
+  val guava = "33.0.0-jre"
   implementation("com.google.guava", "guava", guava)
 
   val slf4j = "2.0.9"
   implementation("org.slf4j", "slf4j-api", slf4j)
 
-  val logback = "1.4.11"
+  val logback = "1.4.14"
   runtimeOnly("ch.qos.logback", "logback-classic", logback)
 
-  val jackson = "2.15.3"
+  val jackson = "2.16.0"
   implementation("com.fasterxml.jackson.core", "jackson-databind", jackson)
   implementation("com.fasterxml.jackson.datatype", "jackson-datatype-jsr310", jackson)
 
@@ -70,8 +70,9 @@ dependencies {
   val joml = "1.10.5" // needed internally for minecraft, do not remove
   runtimeOnly("org.joml", "joml", joml)
 
-  val netty = "4.1.99.Final" // needed internally for minecraft, do not remove
+  val netty = "4.1.104.Final" // needed internally for minecraft, do not remove
   runtimeOnly("io.netty", "netty-buffer", netty)
+  runtimeOnly("io.netty", "netty-handler", netty)
 
   val lombok = "1.18.30"
   compileOnly("org.projectlombok", "lombok", lombok)
@@ -79,9 +80,9 @@ dependencies {
 }
 
 tasks.withType<JavaCompile>().configureEach {
-  sourceCompatibility = JavaVersion.VERSION_17.toString()
-  targetCompatibility = JavaVersion.VERSION_17.toString()
-  // options
+  sourceCompatibility = JavaVersion.VERSION_21.toString()
+  targetCompatibility = JavaVersion.VERSION_21.toString()
+
   options.encoding = "UTF-8"
   options.isIncremental = true
 }
@@ -103,7 +104,7 @@ checkstyle {
 }
 
 extensions.configure<CheckstyleExtension> {
-  toolVersion = "10.12.4"
+  toolVersion = "10.12.6"
 }
 
 spotless {

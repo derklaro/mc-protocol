@@ -41,16 +41,16 @@ public final class HttpFileDownloader {
   }
 
   public static @NonNull CompletableFuture<Void> downloadFile(@NonNull String url, @NonNull Path filePath) {
-    var httpClient = HttpClientProvider.provideClient();
-    var request = HttpRequest.newBuilder(URI.create(url)).build();
-
-    return httpClient.sendAsync(request, HttpResponse.BodyHandlers.ofInputStream())
-      .thenApply(BodyParser.bodyExtractorIfOk())
-      .thenApply(CatchingFunction.asJavaUtil(stream -> {
-        try (stream) {
-          Files.copy(stream, filePath, StandardCopyOption.REPLACE_EXISTING);
-          return null;
-        }
-      }, "Unable to download file from " + url + " to " + filePath));
+    try (var httpClient = HttpClientProvider.provideClient()) {
+      var request = HttpRequest.newBuilder(URI.create(url)).build();
+      return httpClient.sendAsync(request, HttpResponse.BodyHandlers.ofInputStream())
+        .thenApply(BodyParser.bodyExtractorIfOk())
+        .thenApply(CatchingFunction.asJavaUtil(stream -> {
+          try (stream) {
+            Files.copy(stream, filePath, StandardCopyOption.REPLACE_EXISTING);
+            return null;
+          }
+        }, "Unable to download file from " + url + " to " + filePath));
+    }
   }
 }

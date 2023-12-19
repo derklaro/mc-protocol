@@ -44,64 +44,72 @@ public final class TypeHelper {
   }
 
   public static @NonNull String toPrettyString(@NonNull Type type) {
-    if (type instanceof Class<?> clazz) {
-      // check if the class is enclosed
-      Class<?> enclosingClass = clazz.getEnclosingClass();
-      if (enclosingClass != null) {
-        String prettyEnclosingClass = toPrettyString(enclosingClass);
-        return prettyEnclosingClass + '$' + clazz.getSimpleName();
-      } else {
-        // top level class
-        return clazz.getSimpleName();
-      }
-    } else if (type instanceof ParameterizedType parameterizedType) {
-      StringBuilder infoBuilder = new StringBuilder();
-
-      // append the info about the raw type
-      String rawPretty = toPrettyString(parameterizedType.getRawType());
-      infoBuilder.append(rawPretty);
-
-      // append the type arguments
-      Type[] typeArguments = parameterizedType.getActualTypeArguments();
-      if (typeArguments.length > 0) {
-        StringJoiner argumentJoiner = new StringJoiner(", ", "<", ">");
-        for (Type typeArgument : typeArguments) {
-          String argumentPretty = toPrettyString(typeArgument);
-          argumentJoiner.add(argumentPretty);
+    switch (type) {
+      case Class<?> clazz -> {
+        // check if the class is enclosed
+        var enclosingClass = clazz.getEnclosingClass();
+        if (enclosingClass != null) {
+          var prettyEnclosingClass = toPrettyString(enclosingClass);
+          return prettyEnclosingClass + '$' + clazz.getSimpleName();
+        } else {
+          // top level class
+          return clazz.getSimpleName();
         }
-        infoBuilder.append(argumentJoiner);
       }
-      return infoBuilder.toString();
-    } else if (type instanceof WildcardType wildcardType) {
-      // check the lower bounds of the wildcard type
-      Type[] lowerBounds = wildcardType.getLowerBounds();
-      if (lowerBounds.length > 0) {
-        String prettyBound = toPrettyString(lowerBounds[0]);
-        return "? super " + prettyBound;
-      }
+      case ParameterizedType parameterizedType -> {
+        var infoBuilder = new StringBuilder();
 
-      // check the upper bounds of the type
-      Type[] upperBounds = wildcardType.getUpperBounds();
-      if (upperBounds.length == 0 || upperBounds[0] == Object.class) {
-        return "?";
-      } else {
-        String prettyBound = toPrettyString(upperBounds[0]);
-        return "? extends " + prettyBound;
-      }
-    } else if (type instanceof GenericArrayType genericArrayType) {
-      // get the info about the component type
-      String prettyComponentType = toPrettyString(genericArrayType.getGenericComponentType());
-      return prettyComponentType + "[]";
-    } else if (type instanceof TypeVariable<?> typeVariable) {
-      // get the raw type of the bounds
-      Type[] bounds = typeVariable.getBounds();
-      String prettyBound = toPrettyString(bounds.length == 0 ? Object.class : bounds[0]);
+        // append the info about the raw type
+        var rawPretty = toPrettyString(parameterizedType.getRawType());
+        infoBuilder.append(rawPretty);
 
-      // append the name of the variable as well
-      return prettyBound + " " + typeVariable.getName();
-    } else {
-      // unknown type, just return the toString value
-      return type.toString();
+        // append the type arguments
+        var typeArguments = parameterizedType.getActualTypeArguments();
+        if (typeArguments.length > 0) {
+          var argumentJoiner = new StringJoiner(", ", "<", ">");
+          for (var typeArgument : typeArguments) {
+            var argumentPretty = toPrettyString(typeArgument);
+            argumentJoiner.add(argumentPretty);
+          }
+          infoBuilder.append(argumentJoiner);
+        }
+
+        return infoBuilder.toString();
+      }
+      case WildcardType wildcardType -> {
+        // check the lower bounds of the wildcard type
+        var lowerBounds = wildcardType.getLowerBounds();
+        if (lowerBounds.length > 0) {
+          var prettyBound = toPrettyString(lowerBounds[0]);
+          return "? super " + prettyBound;
+        }
+
+        // check the upper bounds of the type
+        var upperBounds = wildcardType.getUpperBounds();
+        if (upperBounds.length == 0 || upperBounds[0] == Object.class) {
+          return "?";
+        } else {
+          var prettyBound = toPrettyString(upperBounds[0]);
+          return "? extends " + prettyBound;
+        }
+      }
+      case GenericArrayType genericArrayType -> {
+        // get the info about the component type
+        var prettyComponentType = toPrettyString(genericArrayType.getGenericComponentType());
+        return prettyComponentType + "[]";
+      }
+      case TypeVariable<?> typeVariable -> {
+        // get the raw type of the bounds
+        var bounds = typeVariable.getBounds();
+        var prettyBound = toPrettyString(bounds.length == 0 ? Object.class : bounds[0]);
+
+        // append the name of the variable as well
+        return prettyBound + " " + typeVariable.getName();
+      }
+      default -> {
+        // unknown type, just return the toString value
+        return type.toString();
+      }
     }
   }
 }

@@ -48,25 +48,25 @@ public final class McManifestVersionFetcher {
     McManifestVersion.class);
 
   public @NonNull CompletableFuture<Collection<McManifestVersion>> resolveMcVersions() {
-    var httpClient = HttpClientProvider.provideClient();
-    var request = HttpRequest.newBuilder(VERSION_MANIFEST_URI).build();
-
-    return httpClient.sendAsync(request, HttpResponse.BodyHandlers.ofInputStream())
-      .thenApply(BodyParser.bodyExtractorIfOk())
-      .thenApply(BodyParser.toJsonObject())
-      .thenApply(CatchingFunction.asJavaUtil(jsonNode -> {
-        // get the releases section
-        var versionsSection = jsonNode.get("versions");
-        return JacksonSupport.OBJECT_MAPPER.treeToValue(versionsSection, COLLECTION_MC_VERSION);
-      }, "Unable to parse mc manifest versions"));
+    try (var httpClient = HttpClientProvider.provideClient()) {
+      var request = HttpRequest.newBuilder(VERSION_MANIFEST_URI).build();
+      return httpClient.sendAsync(request, HttpResponse.BodyHandlers.ofInputStream())
+        .thenApply(BodyParser.bodyExtractorIfOk())
+        .thenApply(BodyParser.toJsonObject())
+        .thenApply(CatchingFunction.asJavaUtil(jsonNode -> {
+          // get the releases section
+          var versionsSection = jsonNode.get("versions");
+          return JacksonSupport.OBJECT_MAPPER.treeToValue(versionsSection, COLLECTION_MC_VERSION);
+        }, "Unable to parse mc manifest versions"));
+    }
   }
 
   public @NonNull CompletableFuture<JsonNode> parseVersionData(@NonNull McManifestVersion version) {
-    var httpClient = HttpClientProvider.provideClient();
-    var request = HttpRequest.newBuilder(version.uri()).build();
-
-    return httpClient.sendAsync(request, HttpResponse.BodyHandlers.ofInputStream())
-      .thenApply(BodyParser.bodyExtractorIfOk())
-      .thenApply(BodyParser.toJsonObject());
+    try (var httpClient = HttpClientProvider.provideClient()) {
+      var request = HttpRequest.newBuilder(version.uri()).build();
+      return httpClient.sendAsync(request, HttpResponse.BodyHandlers.ofInputStream())
+        .thenApply(BodyParser.bodyExtractorIfOk())
+        .thenApply(BodyParser.toJsonObject());
+    }
   }
 }
