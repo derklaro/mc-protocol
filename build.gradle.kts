@@ -69,7 +69,7 @@ dependencies {
   val joml = "1.10.5" // needed internally for minecraft, do not remove
   runtimeOnly("org.joml", "joml", joml)
 
-  val netty = "4.1.104.Final" // needed internally for minecraft, do not remove
+  val netty = "4.1.107.Final" // needed internally for minecraft, do not remove
   runtimeOnly("io.netty", "netty-buffer", netty)
   runtimeOnly("io.netty", "netty-handler", netty)
 
