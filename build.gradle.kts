@@ -24,6 +24,7 @@
 
 plugins {
   id("java")
+  id("checkstyle")
   id("application")
   id("com.diffplug.spotless") version "6.25.0"
   id("com.github.johnrengelman.shadow") version "8.1.1"
@@ -88,6 +89,23 @@ tasks.shadowJar {
 spotless {
   java {
     licenseHeaderFile(rootProject.file("license_header.txt"))
+  }
+}
+
+tasks.withType<Checkstyle> {
+  maxErrors = 0
+  maxWarnings = 0
+  configFile = rootProject.file("checkstyle.xml")
+}
+
+extensions.configure<CheckstyleExtension> {
+  toolVersion = "10.14.0"
+}
+
+// see https://github.com/checkstyle/checkstyle/issues/14211
+configurations.named("checkstyle") {
+  resolutionStrategy.capabilitiesResolution.withCapability("com.google.collections:google-collections") {
+    select("com.google.guava:guava:0")
   }
 }
 
