@@ -1,7 +1,7 @@
 /*
  * This file is part of mc-protocol-generator, licensed under the MIT License (MIT).
  *
- * Copyright (c) 2023 Pasqual K. and contributors
+ * Copyright (c) 2024 Pasqual K. and contributors
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -22,8 +22,21 @@
  * THE SOFTWARE.
  */
 
-package com.mojang.serialization;
+package dev.derklaro.protocolgenerator.protocol;
 
-public interface Keyable {
+import lombok.NonNull;
 
+enum McPacketFlow {
+
+  /* packets from server to client */
+  CLIENTBOUND,
+  /* packets from client to server */
+  SERVERBOUND;
+
+  public @NonNull McPacketFlow sender() {
+    return switch (this) {
+      case CLIENTBOUND -> SERVERBOUND;
+      case SERVERBOUND -> CLIENTBOUND;
+    };
+  }
 }

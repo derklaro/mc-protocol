@@ -1,7 +1,7 @@
 /*
  * This file is part of mc-protocol-generator, licensed under the MIT License (MIT).
  *
- * Copyright (c) 2023 Pasqual K. and contributors
+ * Copyright (c) 2024 Pasqual K. and contributors
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -22,8 +22,27 @@
  * THE SOFTWARE.
  */
 
-package com.mojang.authlib;
+package dev.derklaro.protocolgenerator.protocol;
 
-public class GameProfile {
+import lombok.NonNull;
 
+final class McInit {
+
+  private final ClassLoader classLoader;
+
+  public McInit(@NonNull ClassLoader classLoader) {
+    this.classLoader = classLoader;
+  }
+
+  public void init() throws Exception {
+    // detect running version
+    var sharedConstantsClass = Class.forName(McClassNames.SHARED_CONSTANTS, true, this.classLoader);
+    var tryDetectVersionMethod = sharedConstantsClass.getMethod("tryDetectVersion");
+    tryDetectVersionMethod.invoke(null);
+
+    // bootstrap registries
+    var bootstrapClass = Class.forName(McClassNames.BOOTSTRAP, true, this.classLoader);
+    var bootStrapMethod = bootstrapClass.getMethod("bootStrap");
+    bootStrapMethod.invoke(null);
+  }
 }

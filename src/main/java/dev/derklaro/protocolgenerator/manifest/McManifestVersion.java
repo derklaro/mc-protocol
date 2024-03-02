@@ -24,15 +24,13 @@
 
 package dev.derklaro.protocolgenerator.manifest;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import java.net.URI;
 import java.time.OffsetDateTime;
 import lombok.NonNull;
 
 public record McManifestVersion(
   @NonNull String id,
-  @NonNull VersionType type,
+  @NonNull McManifestVersionType type,
   @NonNull String url,
   @NonNull OffsetDateTime releaseTime,
   @NonNull String sha1
@@ -45,20 +43,5 @@ public record McManifestVersion(
   @Override
   public int compareTo(@NonNull McManifestVersion other) {
     return other.releaseTime().compareTo(this.releaseTime());
-  }
-
-  public enum VersionType {
-
-    @JsonIgnore
-    LATEST,
-
-    @JsonProperty("release")
-    RELEASE,
-    @JsonProperty("snapshot")
-    SNAPSHOT,
-    @JsonProperty("old_beta")
-    OLD_BETA,
-    @JsonProperty("old_alpha")
-    OLD_ALPHA
   }
 }

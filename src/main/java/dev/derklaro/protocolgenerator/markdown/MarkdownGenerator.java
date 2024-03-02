@@ -57,9 +57,9 @@ public final class MarkdownGenerator {
     "Java Version",
     "Protocol Version",
     "World Version",
-    "Pack Resource Version",
-    "Pack Data Version",
-    "Built at (UTC)");
+    "Resource Pack Version",
+    "Data Pack Version",
+    "Build Timestamp (UTC)");
 
   public @NonNull Markdown generateProtocolMarkdown(
     @NonNull GameVersion currentGameVersion,

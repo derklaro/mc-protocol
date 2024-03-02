@@ -26,8 +26,11 @@ package dev.derklaro.protocolgenerator.protocol;
 
 final class McClassNames {
 
-  public static final String PACKET_FLOW = "net.minecraft.network.protocol.PacketFlow";
-  public static final String CONNECTION_PROTOCOL = "net.minecraft.network.ConnectionProtocol";
+  public static final String BOOTSTRAP = "net.minecraft.server.Bootstrap";
+  public static final String SHARED_CONSTANTS = "net.minecraft.SharedConstants";
+
+  public static final String REGISTRY_ACCESS = "net.minecraft.core.RegistryAccess";
+  public static final String REGISTRY_FRIENDLY_BB = "net.minecraft.network.RegistryFriendlyByteBuf";
 
   private McClassNames() {
     throw new UnsupportedOperationException();

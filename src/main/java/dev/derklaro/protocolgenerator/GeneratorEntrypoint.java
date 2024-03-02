@@ -27,8 +27,9 @@ package dev.derklaro.protocolgenerator;
 import dev.derklaro.protocolgenerator.cli.CliArgParser;
 import dev.derklaro.protocolgenerator.gameversion.JarGameVersionParser;
 import dev.derklaro.protocolgenerator.http.HttpFileDownloader;
-import dev.derklaro.protocolgenerator.manifest.McManifestVersion;
+import dev.derklaro.protocolgenerator.library.McLibraryLoader;
 import dev.derklaro.protocolgenerator.manifest.McManifestVersionFetcher;
+import dev.derklaro.protocolgenerator.manifest.McManifestVersionType;
 import dev.derklaro.protocolgenerator.manifest.McVersionDumper;
 import dev.derklaro.protocolgenerator.markdown.MarkdownFormatter;
 import dev.derklaro.protocolgenerator.markdown.MarkdownGenerator;
@@ -38,12 +39,15 @@ import dev.derklaro.protocolgenerator.util.CatchingFunction;
 import dev.derklaro.protocolgenerator.util.FileUtil;
 import java.io.IOException;
 import java.nio.file.Path;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.function.Supplier;
 import lombok.NonNull;
 
 public final class GeneratorEntrypoint {
 
+  private static final Path LIB_DIR_PATH = Path.of("client_libs");
   private static final Path MAPPING_PATH = Path.of("mappings.tmp");
   private static final Path CLIENT_JAR_PATH = Path.of("client.tmp");
   private static final Path REMAPPED_JAR_PATH = Path.of("client_remapped.tmp");
@@ -59,10 +63,10 @@ public final class GeneratorEntrypoint {
     var clientVersions = versionFetcher.resolveMcVersions();
 
     // search the requested version
-    McManifestVersion.VersionType versionType = cliNamespace.get("version_type");
+    McManifestVersionType versionType = cliNamespace.get("version_type");
     var latestVersionOfType = clientVersions
       .thenApply(versions -> versions.stream()
-        .filter(version -> versionType == McManifestVersion.VersionType.LATEST || version.type() == versionType)
+        .filter(version -> versionType == McManifestVersionType.LATEST || version.type() == versionType)
         .sorted()
         .findFirst())
       .thenApply(optional -> {
@@ -71,26 +75,42 @@ public final class GeneratorEntrypoint {
         return optional.orElseThrow(versionNotFoundExceptionSupplier);
       });
 
-    // fetch the version data of the latest version
-    var versionTypeDownloads = latestVersionOfType
-      .thenCompose(versionFetcher::parseVersionData)
-      .thenApply(data -> data.get("downloads"))
-      .thenCompose(downloads -> {
-        // extract the client downloads
-        var clientUrl = downloads.get("client").get("url").asText();
-        var clientMappings = downloads.get("client_mappings").get("url").asText();
+    // deserialize version data
+    var versionData = latestVersionOfType.thenCompose(versionFetcher::parseVersionData);
 
-        // download both files
-        var clientDownload = HttpFileDownloader.downloadFile(clientUrl, CLIENT_JAR_PATH);
-        var clientMappingsDownload = HttpFileDownloader.downloadFile(clientMappings, MAPPING_PATH);
+    // download the client and client mappings of the version
+    var versionTypeDownloads = versionData.thenCompose(data -> {
+      var clientDownloadInfo = data.fileDownloads().get("client");
+      var mappingsDownloadInfo = data.fileDownloads().get("client_mappings");
 
-        // combine both futures
-        return CompletableFuture.allOf(clientDownload, clientMappingsDownload);
-      });
+      // no null check here as we just require the downloads to present
+      // in all other cases we cannot proceed anyway
+      var clientDownload = HttpFileDownloader.downloadFile(clientDownloadInfo.downloadUrl(), CLIENT_JAR_PATH);
+      var clientMappingsDownload = HttpFileDownloader.downloadFile(mappingsDownloadInfo.downloadUrl(), MAPPING_PATH);
+
+      // combine both futures
+      return CompletableFuture.allOf(clientDownload, clientMappingsDownload);
+    });
+
+    // download all required client libraries
+    var libraryLoader = new McLibraryLoader(LIB_DIR_PATH);
+    var libraryLoading = versionData.thenCompose(data -> {
+      List<CompletableFuture<Void>> libDownloadFutures = new ArrayList<>();
+      for (var library : data.libraries()) {
+        var downloadFuture = libraryLoader.loadLibrary(library);
+        libDownloadFutures.add(downloadFuture);
+      }
+
+      var futures = libDownloadFutures.toArray(CompletableFuture[]::new);
+      return CompletableFuture.allOf(futures);
+    });
+
+    // combine the loading of the client and the loading of the required libraries
+    var downloadFuture = CompletableFuture.allOf(versionTypeDownloads, libraryLoading);
 
     // remap the client jar
     var remapper = new JarRemapper(CLIENT_JAR_PATH, MAPPING_PATH);
-    var remapOutput = versionTypeDownloads.thenApply(CatchingFunction.asJavaUtil(ignored -> {
+    var remapOutput = downloadFuture.thenApply(CatchingFunction.asJavaUtil(ignored -> {
       remapper.remap(REMAPPED_JAR_PATH);
       return null;
     }, "Unable to remap client"));
@@ -106,7 +126,7 @@ public final class GeneratorEntrypoint {
     // collect the protocol information
     var protocolInfos = remapOutput
       .thenApply(CatchingFunction.asJavaUtil(ignored -> {
-        var protocolInfoGenerator = new ProtocolInfoCollector(REMAPPED_JAR_PATH);
+        var protocolInfoGenerator = new ProtocolInfoCollector(REMAPPED_JAR_PATH, libraryLoader.provideClassLoader());
         return protocolInfoGenerator.collectAllPacketInfos();
       }, "Unable to resolve packet information"))
       .join();

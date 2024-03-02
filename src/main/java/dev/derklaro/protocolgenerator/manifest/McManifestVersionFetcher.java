@@ -25,7 +25,6 @@
 package dev.derklaro.protocolgenerator.manifest;
 
 import com.fasterxml.jackson.databind.JavaType;
-import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.type.TypeFactory;
 import dev.derklaro.protocolgenerator.http.BodyParser;
 import dev.derklaro.protocolgenerator.http.HttpClientProvider;
@@ -43,6 +42,7 @@ public final class McManifestVersionFetcher {
 
   private static final URI VERSION_MANIFEST_URI = URI.create(
     "https://piston-meta.mojang.com/mc/game/version_manifest_v2.json");
+
   private static final JavaType COLLECTION_MC_VERSION = TypeFactory.defaultInstance().constructCollectionType(
     Set.class,
     McManifestVersion.class);
@@ -61,12 +61,15 @@ public final class McManifestVersionFetcher {
     }
   }
 
-  public @NonNull CompletableFuture<JsonNode> parseVersionData(@NonNull McManifestVersion version) {
+  public @NonNull CompletableFuture<McManifestVersionData> parseVersionData(@NonNull McManifestVersion version) {
     try (var httpClient = HttpClientProvider.provideClient()) {
       var request = HttpRequest.newBuilder(version.uri()).build();
       return httpClient.sendAsync(request, HttpResponse.BodyHandlers.ofInputStream())
         .thenApply(BodyParser.bodyExtractorIfOk())
-        .thenApply(BodyParser.toJsonObject());
+        .thenApply(BodyParser.toJsonObject())
+        .thenApply(CatchingFunction.asJavaUtil(
+          jsonNode -> JacksonSupport.OBJECT_MAPPER.treeToValue(jsonNode, McManifestVersionData.class),
+          "Unable to parse mc manifest versions"));
     }
   }
 }

@@ -46,6 +46,11 @@ public final class HttpFileDownloader {
       return httpClient.sendAsync(request, HttpResponse.BodyHandlers.ofInputStream())
         .thenApply(BodyParser.bodyExtractorIfOk())
         .thenApply(CatchingFunction.asJavaUtil(stream -> {
+          var parent = filePath.getParent();
+          if (parent != null) {
+            Files.createDirectories(parent);
+          }
+
           try (stream) {
             Files.copy(stream, filePath, StandardCopyOption.REPLACE_EXISTING);
             return null;

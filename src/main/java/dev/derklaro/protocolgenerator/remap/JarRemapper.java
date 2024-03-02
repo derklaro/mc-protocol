@@ -24,18 +24,22 @@
 
 package dev.derklaro.protocolgenerator.remap;
 
-import cuchaz.enigma.Enigma;
-import cuchaz.enigma.ProgressListener;
-import cuchaz.enigma.classprovider.ClasspathClassProvider;
-import cuchaz.enigma.translation.mapping.serde.MappingFormat;
-import cuchaz.enigma.translation.mapping.serde.MappingParseException;
 import java.io.IOException;
+import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.function.Consumer;
 import lombok.NonNull;
+import net.minecraftforge.fart.api.IdentifierFixerConfig;
+import net.minecraftforge.fart.api.Renamer;
+import net.minecraftforge.fart.api.SignatureStripperConfig;
+import net.minecraftforge.fart.api.SourceFixerConfig;
+import net.minecraftforge.fart.api.Transformer;
+import net.minecraftforge.srgutils.IMappingFile;
 
 public final class JarRemapper {
 
-  private static final ProgressListener PROGRESS_LISTENER = ProgressListener.none(); // todo maybe add a real progress listener?
+  private static final Consumer<String> NO_OP_LOGGER = __ -> {
+  };
 
   private final Path inputJarFile;
   private final Path mappingsPath;
@@ -45,18 +49,20 @@ public final class JarRemapper {
     this.mappingsPath = mappingsPath;
   }
 
-  public void remap(@NonNull Path outputPath) throws IOException, MappingParseException {
-    // read the jar file
-    var enigma = Enigma.create();
-    var project = enigma.openJar(this.inputJarFile, new ClasspathClassProvider(), PROGRESS_LISTENER);
-
-    // read and set the mappings
-    var saveParameters = enigma.getProfile().getMappingSaveParameters();
-    var mappingTree = MappingFormat.PROGUARD.read(this.mappingsPath, PROGRESS_LISTENER, saveParameters);
-    project.setMappings(mappingTree);
-
-    // export the jar file
-    var jarExport = project.exportRemappedJar(PROGRESS_LISTENER);
-    jarExport.write(outputPath, PROGRESS_LISTENER);
+  public void remap(@NonNull Path outputPath) throws IOException {
+    try (var mappingsStream = Files.newInputStream(this.mappingsPath)) {
+      var mappings = IMappingFile.load(mappingsStream).reverse();
+      var renamerBuilder = Renamer.builder()
+        .logger(NO_OP_LOGGER)
+        .add(Transformer.renamerFactory(mappings, false))
+        .add(Transformer.parameterAnnotationFixerFactory())
+        .add(Transformer.recordFixerFactory())
+        .add(Transformer.identifierFixerFactory(IdentifierFixerConfig.ALL))
+        .add(Transformer.sourceFixerFactory(SourceFixerConfig.JAVA))
+        .add(Transformer.signatureStripperFactory(SignatureStripperConfig.ALL));
+      try (var renamer = renamerBuilder.build()) {
+        renamer.run(this.inputJarFile.toFile(), outputPath.toFile());
+      }
+    }
   }
 }

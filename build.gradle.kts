@@ -25,7 +25,7 @@
 plugins {
   id("java")
   id("application")
-  id("com.diffplug.spotless") version "6.23.3"
+  id("com.diffplug.spotless") version "6.25.0"
   id("com.github.johnrengelman.shadow") version "8.1.1"
 }
 
@@ -34,7 +34,7 @@ version = "1.0-SNAPSHOT"
 
 repositories {
   mavenCentral()
-  maven("https://maven.fabricmc.net/")
+  maven("https://maven.minecraftforge.net/")
 }
 
 dependencies {
@@ -44,18 +44,19 @@ dependencies {
   val guava = "33.0.0-jre"
   implementation("com.google.guava", "guava", guava)
 
-  val slf4j = "2.0.9"
+  val slf4j = "2.0.12"
   implementation("org.slf4j", "slf4j-api", slf4j)
 
-  val logback = "1.4.14"
+  val logback = "1.5.0"
   runtimeOnly("ch.qos.logback", "logback-classic", logback)
 
-  val jackson = "2.16.0"
+  val jackson = "2.16.1"
   implementation("com.fasterxml.jackson.core", "jackson-databind", jackson)
   implementation("com.fasterxml.jackson.datatype", "jackson-datatype-jsr310", jackson)
 
-  val enigma = "2.3.3"
-  implementation("cuchaz", "enigma", enigma)
+  // for updates check https://maven.minecraftforge.net/net/minecraftforge/ForgeAutoRenamingTool/maven-metadata.xml
+  val autoRenamingTool = "1.0.6"
+  implementation("net.minecraftforge", "ForgeAutoRenamingTool", autoRenamingTool)
 
   val argparse4j = "0.9.0"
   implementation("net.sourceforge.argparse4j", "argparse4j", argparse4j)
@@ -63,19 +64,13 @@ dependencies {
   val reflexion = "1.8.0"
   implementation("dev.derklaro.reflexion", "reflexion", reflexion)
 
-  val fastutil = "8.5.12" // needed internally for minecraft, do not remove
-  runtimeOnly("it.unimi.dsi", "fastutil", fastutil)
-
-  val joml = "1.10.5" // needed internally for minecraft, do not remove
-  runtimeOnly("org.joml", "joml", joml)
-
-  val netty = "4.1.104.Final" // needed internally for minecraft, do not remove
-  runtimeOnly("io.netty", "netty-buffer", netty)
-  runtimeOnly("io.netty", "netty-handler", netty)
-
   val lombok = "1.18.30"
   compileOnly("org.projectlombok", "lombok", lombok)
   annotationProcessor("org.projectlombok", "lombok", lombok)
+
+  val asm = "9.6"
+  implementation("org.ow2.asm", "asm", asm)
+  implementation("org.ow2.asm", "asm-tree", asm)
 }
 
 tasks.withType<JavaCompile>().configureEach {
@@ -84,12 +79,6 @@ tasks.withType<JavaCompile>().configureEach {
 
   options.encoding = "UTF-8"
   options.isIncremental = true
-}
-
-java {
-  sourceSets["main"].java {
-    srcDir("src/bridge/java")
-  }
 }
 
 tasks.shadowJar {

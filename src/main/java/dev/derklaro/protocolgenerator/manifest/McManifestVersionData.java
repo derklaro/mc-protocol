@@ -1,7 +1,7 @@
 /*
  * This file is part of mc-protocol-generator, licensed under the MIT License (MIT).
  *
- * Copyright (c) 2023 Pasqual K. and contributors
+ * Copyright (c) 2024 Pasqual K. and contributors
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -22,27 +22,41 @@
  * THE SOFTWARE.
  */
 
-package dev.derklaro.protocolgenerator.protocol;
+package dev.derklaro.protocolgenerator.manifest;
 
-import com.google.common.base.CaseFormat;
-import dev.derklaro.reflexion.MethodAccessor;
-import dev.derklaro.reflexion.Reflexion;
-import lombok.NonNull;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import java.time.OffsetDateTime;
+import java.util.List;
+import java.util.Map;
 
-final class EnumSupport {
+public record McManifestVersionData(
+  @JsonProperty("id") String id,
+  @JsonProperty("type") McManifestVersionType type,
+  @JsonProperty("libraries") List<Library> libraries,
+  @JsonProperty("releaseTime") OffsetDateTime releaseTime,
+  @JsonProperty("minimumLauncherVersion") int minLauncherVersion,
+  @JsonProperty("downloads") Map<String, FileDownload> fileDownloads
+) {
 
-  private static final MethodAccessor<?> ENUM_NAME_ACCESSOR = Reflexion.on(Enum.class).findMethod("name").orElseThrow();
+  public record Library(
+    @JsonProperty("name") String id,
+    @JsonProperty("downloads") Map<String, LibraryDownload> downloads
+  ) {
 
-  private EnumSupport() {
-    throw new UnsupportedOperationException();
   }
 
-  public static @NonNull String resolveEnumConstantName(@NonNull Object enumConstant) {
-    return ENUM_NAME_ACCESSOR.<String>invoke(enumConstant).getOrThrow();
+  public record LibraryDownload(
+    @JsonProperty("path") String pathName,
+    @JsonProperty("sha1") String sha1,
+    @JsonProperty("url") String downloadUrl
+  ) {
+
   }
 
-  public static @NonNull String normalizeEnumConstantName(@NonNull Object enumConstant) {
-    var enumConstantName = resolveEnumConstantName(enumConstant);
-    return CaseFormat.UPPER_UNDERSCORE.to(CaseFormat.UPPER_CAMEL, enumConstantName);
+  public record FileDownload(
+    @JsonProperty("sha1") String sha1,
+    @JsonProperty("url") String downloadUrl
+  ) {
+
   }
 }

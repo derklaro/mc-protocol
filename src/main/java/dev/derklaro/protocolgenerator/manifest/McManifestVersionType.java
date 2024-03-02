@@ -1,7 +1,7 @@
 /*
  * This file is part of mc-protocol-generator, licensed under the MIT License (MIT).
  *
- * Copyright (c) 2023 Pasqual K. and contributors
+ * Copyright (c) 2024 Pasqual K. and contributors
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -22,8 +22,22 @@
  * THE SOFTWARE.
  */
 
-package com.mojang.brigadier;
+package dev.derklaro.protocolgenerator.manifest;
 
-public interface Message {
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
+public enum McManifestVersionType {
+  /* internally used, not actually supplied by minecraft manifest */
+  @JsonIgnore
+  LATEST,
+
+  @JsonProperty("release")
+  RELEASE,
+  @JsonProperty("snapshot")
+  SNAPSHOT,
+  @JsonProperty("old_beta")
+  OLD_BETA,
+  @JsonProperty("old_alpha")
+  OLD_ALPHA
 }

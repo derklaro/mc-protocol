@@ -70,8 +70,9 @@ atlassian-ide-plugin.xml
 # delombok
 */src/main/lombok
 
-# temp test files
+# stuff for generation only
 *.tmp
+client_libs/
 
 # final protocol output
 *.md

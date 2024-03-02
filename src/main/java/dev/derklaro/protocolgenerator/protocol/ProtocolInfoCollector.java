@@ -26,73 +26,99 @@ package dev.derklaro.protocolgenerator.protocol;
 
 import com.google.common.collect.Table;
 import com.google.common.collect.Tables;
-import dev.derklaro.reflexion.Reflexion;
-import dev.derklaro.reflexion.matcher.MethodMatcher;
 import java.net.URL;
 import java.net.URLClassLoader;
 import java.nio.file.Path;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.LinkedHashMap;
+import java.util.LinkedList;
+import java.util.Locale;
+import java.util.Map;
+import java.util.Objects;
 import lombok.NonNull;
 
 public final class ProtocolInfoCollector {
 
-  private static final MethodMatcher OPPOSITE_FLOW_GETTER = MethodMatcher.newMatcher().hasName("getOpposite");
-
   private final Path remappedJarPath;
+  private final ClassLoader libraryClassLoader;
 
-  public ProtocolInfoCollector(@NonNull Path remappedJarPath) {
+  public ProtocolInfoCollector(@NonNull Path remappedJarPath, @NonNull ClassLoader libraryClassLoader) {
     this.remappedJarPath = remappedJarPath;
-  }
-
-  private static @NonNull Object resolveOppositeFlow(@NonNull Object packetFlow) {
-    // get the method to resolve the opposite
-    var oppositeAccessor = Reflexion.onBound(packetFlow)
-      .findMethod(OPPOSITE_FLOW_GETTER)
-      .orElseThrow(() -> new IllegalStateException("Unknown: PacketFlow#getOpposite: PacketFlow"));
-
-    // get the opposite flow
-    return oppositeAccessor.invoke().getOrThrow();
+    this.libraryClassLoader = libraryClassLoader;
   }
 
   public @NonNull Table<String, String, Collection<PacketClassInfo>> collectAllPacketInfos() throws Exception {
     // build a class loader which is aware of the remapped jar
     var remappedJarUrl = this.remappedJarPath.toUri().toURL();
-    var loader = new URLClassLoader(new URL[]{remappedJarUrl}, ClassLoader.getSystemClassLoader());
+    var loader = new URLClassLoader(new URL[]{remappedJarUrl}, this.libraryClassLoader);
 
-    // resolve the connection protocol and packet flow class
-    var packetFlowClass = Class.forName(McClassNames.PACKET_FLOW, true, loader);
-    var connectionProtocolClass = Class.forName(McClassNames.CONNECTION_PROTOCOL, true, loader);
-
-    // resolve all enum constants for later use
-    var packetFlows = packetFlowClass.getEnumConstants();
-    var connectionProtocols = connectionProtocolClass.getEnumConstants();
+    // important first step: initialize minecraft registries
+    var mcInitializer = new McInit(loader);
+    mcInitializer.init();
 
     // collect all packets for all protocols & flows
-    Table<String, String, Collection<PacketClassInfo>> packetClassInfos = Tables.newCustomTable(
-      new LinkedHashMap<>(),
-      LinkedHashMap::new);
-    for (var connectionProtocol : connectionProtocols) {
-      // construct the protocol scanner once for the protocol
-      var protocolName = EnumSupport.resolveEnumConstantName(connectionProtocol);
-      var protocolScanner = new ConnectionProtocolScanner(connectionProtocol);
+    // protocol -> flow -> info
+    Table<String, String, Collection<PacketClassInfo>> result
+      = Tables.newCustomTable(new LinkedHashMap<>(), LinkedHashMap::new);
+    for (var state : McProtocolStates.values()) {
+      // resolve packet information
+      var protocolsClass = Class.forName(state.protocolsClass(), true, loader);
+      var infoDecoder = new McProtocolsDecoder(protocolsClass, loader);
+      var typeToPacketClassPerFlow = infoDecoder.decodeAssociatedPackets();
+      var typeToPacketIdPerFlow = infoDecoder.resolvePacketIds();
 
-      for (var packetFlow : packetFlows) {
-        // get the original name and the normalized name of this flow
-        var flowName = EnumSupport.resolveEnumConstantName(packetFlow);
-        var normalizedFlowName = EnumSupport.normalizeEnumConstantName(packetFlow);
+      // register for each flow (if present)
+      for (var flow : McPacketFlow.values()) {
+        var idMapping = typeToPacketIdPerFlow.get(flow);
+        var classMapping = typeToPacketClassPerFlow.get(flow);
+        if (idMapping != null && classMapping != null) {
+          var idEntries = new ArrayList<>(idMapping.entrySet());
+          idEntries.sort(Map.Entry.comparingByValue());
 
-        // get the normalized name of the opposite flow
-        var oppositeFlow = resolveOppositeFlow(packetFlow);
-        var oppositeFlowName = EnumSupport.normalizeEnumConstantName(oppositeFlow);
+          for (var entry : idEntries) {
+            var packetId = entry.getValue();
+            var packetType = entry.getKey();
+            var packetClass = classMapping.get(packetType);
+            Objects.requireNonNull(packetClass, "class for packet type missing " + packetType);
 
-        // get all packets
-        var packets = protocolScanner.scanPackets(packetFlow, oppositeFlowName, normalizedFlowName);
-        packetClassInfos.put(protocolName, flowName, packets);
+            // construct the base packet info
+            var externalName = this.externalizePacketClassName(flow, packetClass.getSimpleName());
+            var baseInfo = new PacketClassInfo(packetId, externalName, flow.sender().name(), flow.name());
+            var fieldScanner = new PacketClassFieldScanner(packetClass, baseInfo);
+            fieldScanner.scanAndRegisterClassFields();
+
+            // register the packet
+            var packetInfos = result.get(state.displayName(), flow.name());
+            if (packetInfos == null) {
+              packetInfos = new LinkedList<>();
+              result.put(state.displayName(), flow.name(), packetInfos);
+            }
+            packetInfos.add(baseInfo);
+          }
+        }
       }
     }
 
-    // return the created table
-    return packetClassInfos;
+    return result;
+  }
+
+  /* example: ClientboundSetSimulationDistancePacket -> Set Simulation Distance */
+  private @NonNull String externalizePacketClassName(@NonNull McPacketFlow flow, @NonNull String packetName) {
+    // remove the flow name from the packet class name
+    var lowerName = packetName.toLowerCase(Locale.ROOT);
+    var lowerFlowName = flow.name().toLowerCase(Locale.ROOT);
+    if (lowerName.startsWith(lowerFlowName)) {
+      packetName = packetName.substring(lowerFlowName.length());
+    }
+
+    // remove the packet suffix
+    if (lowerName.endsWith("packet")) {
+      packetName = packetName.substring(0, packetName.length() - 6);
+    }
+
+    // insert space before each upper-camel char
+    var splitAtCamel = packetName.split("(?=\\p{Lu})");
+    return String.join(" ", splitAtCamel);
   }
 }
