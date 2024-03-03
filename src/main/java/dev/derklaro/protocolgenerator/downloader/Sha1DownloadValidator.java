@@ -22,40 +22,40 @@
  * THE SOFTWARE.
  */
 
-package dev.derklaro.protocolgenerator.http;
+package dev.derklaro.protocolgenerator.downloader;
 
-import dev.derklaro.protocolgenerator.util.CatchingFunction;
-import java.net.URI;
-import java.net.http.HttpRequest;
-import java.net.http.HttpResponse;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.StandardCopyOption;
-import java.util.concurrent.CompletableFuture;
+import java.security.DigestInputStream;
+import java.security.MessageDigest;
+import java.util.HexFormat;
 import lombok.NonNull;
 
-public final class HttpFileDownloader {
+final class Sha1DownloadValidator implements FileDownloadValidator {
 
-  private HttpFileDownloader() {
-    throw new UnsupportedOperationException();
+  private final String sha1Hex;
+
+  public Sha1DownloadValidator(@NonNull String sha1Hex) {
+    this.sha1Hex = sha1Hex;
   }
 
-  public static @NonNull CompletableFuture<Void> downloadFile(@NonNull String url, @NonNull Path filePath) {
-    try (var httpClient = HttpClientProvider.provideClient()) {
-      var request = HttpRequest.newBuilder(URI.create(url)).build();
-      return httpClient.sendAsync(request, HttpResponse.BodyHandlers.ofInputStream())
-        .thenApply(BodyParser.bodyExtractorIfOk())
-        .thenApply(CatchingFunction.asJavaUtil(stream -> {
-          var parent = filePath.getParent();
-          if (parent != null) {
-            Files.createDirectories(parent);
-          }
+  @Override
+  @SuppressWarnings("StatementWithEmptyBody")
+  public boolean validate(@NonNull Path downloadPath) throws Exception {
+    var sha1Digest = MessageDigest.getInstance("SHA-1");
+    try (
+      var fileStream = Files.newInputStream(downloadPath);
+      var digestStream = new DigestInputStream(fileStream, sha1Digest)
+    ) {
+      // read all bytes provided by the stream
+      var buffer = new byte[1024];
+      while (digestStream.read(buffer) != -1) {
+      }
 
-          try (stream) {
-            Files.copy(stream, filePath, StandardCopyOption.REPLACE_EXISTING);
-            return null;
-          }
-        }, "Unable to download file from " + url + " to " + filePath));
+      // compute the hex of the stream & validate it against the provided hex
+      var digest = sha1Digest.digest();
+      var hexDigest = HexFormat.of().formatHex(digest);
+      return this.sha1Hex.equals(hexDigest);
     }
   }
 }

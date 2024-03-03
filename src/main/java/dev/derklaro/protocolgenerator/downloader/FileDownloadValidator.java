@@ -22,24 +22,17 @@
  * THE SOFTWARE.
  */
 
-package dev.derklaro.protocolgenerator.util;
+package dev.derklaro.protocolgenerator.downloader;
 
-import java.io.IOException;
-import java.nio.file.Files;
 import java.nio.file.Path;
 import lombok.NonNull;
 
-public final class FileUtil {
+@FunctionalInterface
+public interface FileDownloadValidator {
 
-  private FileUtil() {
-    throw new UnsupportedOperationException();
+  static @NonNull FileDownloadValidator ofSha1(@NonNull String sha1) {
+    return new Sha1DownloadValidator(sha1);
   }
 
-  public static void deleteFileSilently(@NonNull Path path) {
-    try {
-      Files.deleteIfExists(path);
-    } catch (IOException ignored) {
-      // don't care about these
-    }
-  }
+  boolean validate(@NonNull Path downloadPath) throws Exception;
 }

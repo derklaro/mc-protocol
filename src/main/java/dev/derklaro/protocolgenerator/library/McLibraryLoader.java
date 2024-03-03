@@ -24,7 +24,8 @@
 
 package dev.derklaro.protocolgenerator.library;
 
-import dev.derklaro.protocolgenerator.http.HttpFileDownloader;
+import dev.derklaro.protocolgenerator.downloader.FileDownloadValidator;
+import dev.derklaro.protocolgenerator.downloader.FileDownloader;
 import dev.derklaro.protocolgenerator.manifest.McManifestVersionData;
 import java.io.IOException;
 import java.net.URL;
@@ -50,7 +51,10 @@ public final class McLibraryLoader {
     var download = library.downloads().get(LIB_ARTIFACT_DOWNLOAD_KEY);
     if (download != null) {
       var localPath = this.libraryDirectory.resolve(download.pathName());
-      return HttpFileDownloader.downloadFile(download.downloadUrl(), localPath).thenRun(() -> {
+      var libraryDownload = new FileDownloader(download.downloadUrl(), localPath)
+        .withValidator(FileDownloadValidator.ofSha1(download.sha1()))
+        .executeDownload();
+      return libraryDownload.thenRun(() -> {
         try {
           var url = localPath.toUri().toURL();
           this.libraries.add(url);

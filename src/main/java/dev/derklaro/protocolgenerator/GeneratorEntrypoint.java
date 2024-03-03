@@ -25,8 +25,9 @@
 package dev.derklaro.protocolgenerator;
 
 import dev.derklaro.protocolgenerator.cli.CliArgParser;
+import dev.derklaro.protocolgenerator.downloader.FileDownloadValidator;
+import dev.derklaro.protocolgenerator.downloader.FileDownloader;
 import dev.derklaro.protocolgenerator.gameversion.JarGameVersionParser;
-import dev.derklaro.protocolgenerator.http.HttpFileDownloader;
 import dev.derklaro.protocolgenerator.library.McLibraryLoader;
 import dev.derklaro.protocolgenerator.manifest.McManifestVersionFetcher;
 import dev.derklaro.protocolgenerator.manifest.McManifestVersionType;
@@ -36,7 +37,6 @@ import dev.derklaro.protocolgenerator.markdown.MarkdownGenerator;
 import dev.derklaro.protocolgenerator.protocol.ProtocolInfoCollector;
 import dev.derklaro.protocolgenerator.remap.JarRemapper;
 import dev.derklaro.protocolgenerator.util.CatchingFunction;
-import dev.derklaro.protocolgenerator.util.FileUtil;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.util.ArrayList;
@@ -85,8 +85,12 @@ public final class GeneratorEntrypoint {
 
       // no null check here as we just require the downloads to present
       // in all other cases we cannot proceed anyway
-      var clientDownload = HttpFileDownloader.downloadFile(clientDownloadInfo.downloadUrl(), CLIENT_JAR_PATH);
-      var clientMappingsDownload = HttpFileDownloader.downloadFile(mappingsDownloadInfo.downloadUrl(), MAPPING_PATH);
+      var clientDownload = new FileDownloader(clientDownloadInfo.downloadUrl(), CLIENT_JAR_PATH)
+        .withValidator(FileDownloadValidator.ofSha1(clientDownloadInfo.sha1()))
+        .executeDownload();
+      var clientMappingsDownload = new FileDownloader(mappingsDownloadInfo.downloadUrl(), MAPPING_PATH)
+        .withValidator(FileDownloadValidator.ofSha1(mappingsDownloadInfo.sha1()))
+        .executeDownload();
 
       // combine both futures
       return CompletableFuture.allOf(clientDownload, clientMappingsDownload);
@@ -149,10 +153,5 @@ public final class GeneratorEntrypoint {
       var versionDumper = new McVersionDumper(latestVersionOfType.join());
       versionDumper.writeTo(Path.of(versionFilePath));
     }
-
-    // remove unneeded temp files
-    FileUtil.deleteFileSilently(MAPPING_PATH);
-    FileUtil.deleteFileSilently(CLIENT_JAR_PATH);
-    FileUtil.deleteFileSilently(REMAPPED_JAR_PATH);
   }
 }
