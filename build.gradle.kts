@@ -48,7 +48,7 @@ dependencies {
   val slf4j = "2.0.12"
   implementation("org.slf4j", "slf4j-api", slf4j)
 
-  val logback = "1.5.2"
+  val logback = "1.5.3"
   runtimeOnly("ch.qos.logback", "logback-classic", logback)
 
   val jackson = "2.16.1"
