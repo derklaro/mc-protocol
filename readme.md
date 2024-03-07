@@ -1,7 +1,7 @@
-# 24w09a (Snapshot)
+# 24w10a (Snapshot)
 | Series | Java Runtime | Java Version | Protocol Version | World Version | Resource Pack Version | Data Pack Version | Build Timestamp (UTC) |
 | -------------| -------------| -------------| -------------| -------------| -------------| -------------| -------------|
-| main| java-runtime-gamma| 17| 1073742002| 3819| 28| 33| 28/02/2024 12:35:18|
+| main| java-runtime-gamma| 17| 1073742003| 3821| 28| 34| 06/03/2024 10:34:39|
 ## Handshake (Serverbound)
 #### 0x00 - Client Intention (C ➔ S)
 | Index | Type Index | Name | Raw Type | Full Type |
