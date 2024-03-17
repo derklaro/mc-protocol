@@ -51,7 +51,7 @@ dependencies {
   val logback = "1.5.3"
   runtimeOnly("ch.qos.logback", "logback-classic", logback)
 
-  val jackson = "2.16.1"
+  val jackson = "2.17.0"
   implementation("com.fasterxml.jackson.core", "jackson-databind", jackson)
   implementation("com.fasterxml.jackson.datatype", "jackson-datatype-jsr310", jackson)
 
