@@ -1,7 +1,7 @@
-# 1.20.5 Pre-Release 1 (Snapshot)
+# 1.20.5 Pre-Release 2 (Snapshot)
 | Series | Java Runtime | Java Version | Protocol Version | World Version | Resource Pack Version | Data Pack Version | Build Timestamp (UTC) |
 | -------------| -------------| -------------| -------------| -------------| -------------| -------------| -------------|
-| main| java-runtime-delta| 21| 1073742009| 3829| 31| 39| 10/04/2024 12:41:42|
+| main| java-runtime-delta| 21| 1073742010| 3830| 31| 40| 15/04/2024 12:33:23|
 ## Handshake (Serverbound)
 #### 0x00 - Client Intention (C ➔ S)
 | Index | Type Index | Name | Raw Type | Full Type |
@@ -1397,7 +1397,7 @@ Packet has no fields
 #### 0x32 - Set Creative Mode Slot (C ➔ S)
 | Index | Type Index | Name | Raw Type | Full Type |
 | -------------| -------------| -------------| -------------| -------------|
-| 0| 0| slotNum| int| int|
+| 0| 0| slotNum| short| short|
 | 1| 0| itemStack| ItemStack| ItemStack|
  
 #### 0x33 - Set Jigsaw Block (C ➔ S)
