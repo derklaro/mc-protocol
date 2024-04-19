@@ -1,7 +1,7 @@
-# 1.20.5 Pre-Release 4 (Snapshot)
+# 1.20.5 Release Candidate 1 (Snapshot)
 | Series | Java Runtime | Java Version | Protocol Version | World Version | Resource Pack Version | Data Pack Version | Build Timestamp (UTC) |
 | -------------| -------------| -------------| -------------| -------------| -------------| -------------| -------------|
-| main| java-runtime-delta| 21| 1073742012| 3832| 32| 41| 17/04/2024 11:52:58|
+| main| java-runtime-delta| 21| 1073742013| 3834| 32| 41| 18/04/2024 11:42:29|
 ## Handshake (Serverbound)
 #### 0x00 - Client Intention (C ➔ S)
 | Index | Type Index | Name | Raw Type | Full Type |
@@ -49,6 +49,7 @@ Packet has no fields
 | Index | Type Index | Name | Raw Type | Full Type |
 | -------------| -------------| -------------| -------------| -------------|
 | 0| 0| gameProfile| GameProfile| GameProfile|
+| 1| 0| strictErrorHandling| boolean| boolean|
  
 #### 0x03 - Login Compression (S ➔ C)
 | Index | Type Index | Name | Raw Type | Full Type |
