@@ -1,7 +1,7 @@
-# 24w18a (Snapshot)
+# 24w19b (Snapshot)
 | Series | Java Runtime | Java Version | Protocol Version | World Version | Resource Pack Version | Data Pack Version | Build Timestamp (UTC) |
 | -------------| -------------| -------------| -------------| -------------| -------------| -------------| -------------|
-| main| java-runtime-delta| 21| 1073742017| 3940| 33| 42| 03/05/2024 12:05:46|
+| main| java-runtime-delta| 21| 1073742019| 3942| 33| 43| 10/05/2024 14:30:02|
 ## Handshake (Serverbound)
 #### 0x00 - Client Intention (C ➔ S)
 | Index | Type Index | Name | Raw Type | Full Type |
@@ -1060,9 +1060,7 @@ Packet has no fields
 | Index | Type Index | Name | Raw Type | Full Type |
 | -------------| -------------| -------------| -------------| -------------|
 | 0| 0| id| int| int|
-| 1| 0| xPower| double| double|
-| 2| 1| yPower| double| double|
-| 3| 2| zPower| double| double|
+| 1| 0| accelerationPower| double| double|
  
 ## Game (Serverbound)
 #### 0x00 - Accept Teleportation (C ➔ S)
