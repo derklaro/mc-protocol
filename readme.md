@@ -1,7 +1,7 @@
-# 24w19b (Snapshot)
+# 24w20a (Snapshot)
 | Series | Java Runtime | Java Version | Protocol Version | World Version | Resource Pack Version | Data Pack Version | Build Timestamp (UTC) |
 | -------------| -------------| -------------| -------------| -------------| -------------| -------------| -------------|
-| main| java-runtime-delta| 21| 1073742019| 3942| 33| 43| 10/05/2024 14:30:02|
+| main| java-runtime-delta| 21| 1073742020| 3944| 33| 44| 15/05/2024 11:57:59|
 ## Handshake (Serverbound)
 #### 0x00 - Client Intention (C ➔ S)
 | Index | Type Index | Name | Raw Type | Full Type |
@@ -1458,4 +1458,6 @@ Packet has no fields
 | -------------| -------------| -------------| -------------| -------------|
 | 0| 0| hand| InteractionHand| InteractionHand|
 | 1| 0| sequence| int| int|
+| 2| 0| yRot| float| float|
+| 3| 1| xRot| float| float|
  
