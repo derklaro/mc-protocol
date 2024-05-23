@@ -1,7 +1,7 @@
-# 24w20a (Snapshot)
+# 24w21b (Snapshot)
 | Series | Java Runtime | Java Version | Protocol Version | World Version | Resource Pack Version | Data Pack Version | Build Timestamp (UTC) |
 | -------------| -------------| -------------| -------------| -------------| -------------| -------------| -------------|
-| main| java-runtime-delta| 21| 1073742020| 3944| 33| 44| 15/05/2024 11:57:59|
+| main| java-runtime-delta| 21| 1073742022| 3947| 34| 45| 22/05/2024 16:23:01|
 ## Handshake (Serverbound)
 #### 0x00 - Client Intention (C ➔ S)
 | Index | Type Index | Name | Raw Type | Full Type |
@@ -173,6 +173,16 @@ Packet has no fields
 | Index | Type Index | Name | Raw Type | Full Type |
 | -------------| -------------| -------------| -------------| -------------|
 | 0| 0| knownPacks| List| List&lt;KnownPack&gt;|
+ 
+#### 0x0F - Custom Report Details (S ➔ C)
+| Index | Type Index | Name | Raw Type | Full Type |
+| -------------| -------------| -------------| -------------| -------------|
+| 0| 0| details| Map| Map&lt;String, String&gt;|
+ 
+#### 0x10 - Server Links (S ➔ C)
+| Index | Type Index | Name | Raw Type | Full Type |
+| -------------| -------------| -------------| -------------| -------------|
+| 0| 0| links| ServerLinks| ServerLinks|
  
 ## Configuration (Serverbound)
 #### 0x00 - Client Information (C ➔ S)
@@ -1061,6 +1071,16 @@ Packet has no fields
 | -------------| -------------| -------------| -------------| -------------|
 | 0| 0| id| int| int|
 | 1| 0| accelerationPower| double| double|
+ 
+#### 0x7A - Custom Report Details (S ➔ C)
+| Index | Type Index | Name | Raw Type | Full Type |
+| -------------| -------------| -------------| -------------| -------------|
+| 0| 0| details| Map| Map&lt;String, String&gt;|
+ 
+#### 0x7B - Server Links (S ➔ C)
+| Index | Type Index | Name | Raw Type | Full Type |
+| -------------| -------------| -------------| -------------| -------------|
+| 0| 0| links| ServerLinks| ServerLinks|
  
 ## Game (Serverbound)
 #### 0x00 - Accept Teleportation (C ➔ S)
