@@ -1,7 +1,7 @@
-# 24w21b (Snapshot)
+# 1.21 Pre-Release 1 (Snapshot)
 | Series | Java Runtime | Java Version | Protocol Version | World Version | Resource Pack Version | Data Pack Version | Build Timestamp (UTC) |
 | -------------| -------------| -------------| -------------| -------------| -------------| -------------| -------------|
-| main| java-runtime-delta| 21| 1073742022| 3947| 34| 45| 22/05/2024 16:23:01|
+| main| java-runtime-delta| 21| 1073742023| 3948| 34| 46| 29/05/2024 12:02:00|
 ## Handshake (Serverbound)
 #### 0x00 - Client Intention (C ➔ S)
 | Index | Type Index | Name | Raw Type | Full Type |
@@ -11,17 +11,6 @@
 | 2| 1| port| int| int|
 | 3| 0| intention| ClientIntent| ClientIntent|
  
-## Status (Clientbound)
-#### 0x00 - Status Response (S ➔ C)
-| Index | Type Index | Name | Raw Type | Full Type |
-| -------------| -------------| -------------| -------------| -------------|
-| 0| 0| status| ServerStatus| ServerStatus|
- 
-#### 0x01 - Pong Response (S ➔ C)
-| Index | Type Index | Name | Raw Type | Full Type |
-| -------------| -------------| -------------| -------------| -------------|
-| 0| 0| time| long| long|
- 
 ## Status (Serverbound)
 #### 0x00 - Status Request (C ➔ S)
 Packet has no fields
@@ -30,42 +19,6 @@ Packet has no fields
 | Index | Type Index | Name | Raw Type | Full Type |
 | -------------| -------------| -------------| -------------| -------------|
 | 0| 0| time| long| long|
- 
-## Login (Clientbound)
-#### 0x00 - Login Disconnect (S ➔ C)
-| Index | Type Index | Name | Raw Type | Full Type |
-| -------------| -------------| -------------| -------------| -------------|
-| 0| 0| reason| Component| Component|
- 
-#### 0x01 - Hello (S ➔ C)
-| Index | Type Index | Name | Raw Type | Full Type |
-| -------------| -------------| -------------| -------------| -------------|
-| 0| 0| serverId| String| String|
-| 1| 0| publicKey| byte[]| byte[]|
-| 2| 1| challenge| byte[]| byte[]|
-| 3| 0| shouldAuthenticate| boolean| boolean|
- 
-#### 0x02 - Game Profile (S ➔ C)
-| Index | Type Index | Name | Raw Type | Full Type |
-| -------------| -------------| -------------| -------------| -------------|
-| 0| 0| gameProfile| GameProfile| GameProfile|
-| 1| 0| strictErrorHandling| boolean| boolean|
- 
-#### 0x03 - Login Compression (S ➔ C)
-| Index | Type Index | Name | Raw Type | Full Type |
-| -------------| -------------| -------------| -------------| -------------|
-| 0| 0| compressionThreshold| int| int|
- 
-#### 0x04 - Custom Query (S ➔ C)
-| Index | Type Index | Name | Raw Type | Full Type |
-| -------------| -------------| -------------| -------------| -------------|
-| 0| 0| transactionId| int| int|
-| 1| 0| payload| CustomQueryPayload| CustomQueryPayload|
- 
-#### 0x05 - Cookie Request (S ➔ C)
-| Index | Type Index | Name | Raw Type | Full Type |
-| -------------| -------------| -------------| -------------| -------------|
-| 0| 0| key| ResourceLocation| ResourceLocation|
  
 ## Login (Serverbound)
 #### 0x00 - Hello (C ➔ S)
@@ -94,95 +47,6 @@ Packet has no fields
 | -------------| -------------| -------------| -------------| -------------|
 | 0| 0| key| ResourceLocation| ResourceLocation|
 | 1| 0| payload| byte[]| byte[]|
- 
-## Configuration (Clientbound)
-#### 0x00 - Cookie Request (S ➔ C)
-| Index | Type Index | Name | Raw Type | Full Type |
-| -------------| -------------| -------------| -------------| -------------|
-| 0| 0| key| ResourceLocation| ResourceLocation|
- 
-#### 0x01 - Custom Payload (S ➔ C)
-| Index | Type Index | Name | Raw Type | Full Type |
-| -------------| -------------| -------------| -------------| -------------|
-| 0| 0| payload| CustomPacketPayload| CustomPacketPayload|
- 
-#### 0x02 - Disconnect (S ➔ C)
-| Index | Type Index | Name | Raw Type | Full Type |
-| -------------| -------------| -------------| -------------| -------------|
-| 0| 0| reason| Component| Component|
- 
-#### 0x03 - Finish Configuration (S ➔ C)
-Packet has no fields
- 
-#### 0x04 - Keep Alive (S ➔ C)
-| Index | Type Index | Name | Raw Type | Full Type |
-| -------------| -------------| -------------| -------------| -------------|
-| 0| 0| id| long| long|
- 
-#### 0x05 - Ping (S ➔ C)
-| Index | Type Index | Name | Raw Type | Full Type |
-| -------------| -------------| -------------| -------------| -------------|
-| 0| 0| id| int| int|
- 
-#### 0x06 - Reset Chat (S ➔ C)
-Packet has no fields
- 
-#### 0x07 - Registry Data (S ➔ C)
-| Index | Type Index | Name | Raw Type | Full Type |
-| -------------| -------------| -------------| -------------| -------------|
-| 0| 0| registry| ResourceKey| ResourceKey&lt;? extends Registry&lt;?&gt;&gt;|
-| 1| 0| entries| List| List&lt;RegistrySynchronization$PackedRegistryEntry&gt;|
- 
-#### 0x08 - Resource Pack Pop (S ➔ C)
-| Index | Type Index | Name | Raw Type | Full Type |
-| -------------| -------------| -------------| -------------| -------------|
-| 0| 0| id| Optional| Optional&lt;UUID&gt;|
- 
-#### 0x09 - Resource Pack Push (S ➔ C)
-| Index | Type Index | Name | Raw Type | Full Type |
-| -------------| -------------| -------------| -------------| -------------|
-| 0| 0| id| UUID| UUID|
-| 1| 0| url| String| String|
-| 2| 1| hash| String| String|
-| 3| 0| required| boolean| boolean|
-| 4| 0| prompt| Optional| Optional&lt;Component&gt;|
- 
-#### 0x0A - Store Cookie (S ➔ C)
-| Index | Type Index | Name | Raw Type | Full Type |
-| -------------| -------------| -------------| -------------| -------------|
-| 0| 0| key| ResourceLocation| ResourceLocation|
-| 1| 0| payload| byte[]| byte[]|
- 
-#### 0x0B - Transfer (S ➔ C)
-| Index | Type Index | Name | Raw Type | Full Type |
-| -------------| -------------| -------------| -------------| -------------|
-| 0| 0| host| String| String|
-| 1| 0| port| int| int|
- 
-#### 0x0C - Update Enabled Features (S ➔ C)
-| Index | Type Index | Name | Raw Type | Full Type |
-| -------------| -------------| -------------| -------------| -------------|
-| 0| 0| features| Set| Set&lt;ResourceLocation&gt;|
- 
-#### 0x0D - Update Tags (S ➔ C)
-| Index | Type Index | Name | Raw Type | Full Type |
-| -------------| -------------| -------------| -------------| -------------|
-| 0| 0| tags| Map| Map&lt;ResourceKey&lt;? extends Registry&lt;?&gt;&gt;, TagNetworkSerialization$NetworkPayload&gt;|
- 
-#### 0x0E - Select Known Packs (S ➔ C)
-| Index | Type Index | Name | Raw Type | Full Type |
-| -------------| -------------| -------------| -------------| -------------|
-| 0| 0| knownPacks| List| List&lt;KnownPack&gt;|
- 
-#### 0x0F - Custom Report Details (S ➔ C)
-| Index | Type Index | Name | Raw Type | Full Type |
-| -------------| -------------| -------------| -------------| -------------|
-| 0| 0| details| Map| Map&lt;String, String&gt;|
- 
-#### 0x10 - Server Links (S ➔ C)
-| Index | Type Index | Name | Raw Type | Full Type |
-| -------------| -------------| -------------| -------------| -------------|
-| 0| 0| links| ServerLinks| ServerLinks|
  
 ## Configuration (Serverbound)
 #### 0x00 - Client Information (C ➔ S)
@@ -461,7 +325,7 @@ Packet has no fields
 | Index | Type Index | Name | Raw Type | Full Type |
 | -------------| -------------| -------------| -------------| -------------|
 | 0| 0| containerId| int| int|
-| 1| 1| size| int| int|
+| 1| 1| inventoryColumns| int| int|
 | 2| 2| entityId| int| int|
  
 #### 0x24 - Hurt Animation (S ➔ C)
@@ -1080,7 +944,7 @@ Packet has no fields
 #### 0x7B - Server Links (S ➔ C)
 | Index | Type Index | Name | Raw Type | Full Type |
 | -------------| -------------| -------------| -------------| -------------|
-| 0| 0| links| ServerLinks| ServerLinks|
+| 0| 0| links| List| List&lt;ServerLinks$UntrustedEntry&gt;|
  
 ## Game (Serverbound)
 #### 0x00 - Accept Teleportation (C ➔ S)
