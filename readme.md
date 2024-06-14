@@ -1,7 +1,7 @@
-# 1.21 Release Candidate 1 (Snapshot)
+# 1.21 (Stable)
 | Series | Java Runtime | Java Version | Protocol Version | World Version | Resource Pack Version | Data Pack Version | Build Timestamp (UTC) |
 | -------------| -------------| -------------| -------------| -------------| -------------| -------------| -------------|
-| main| java-runtime-delta| 21| 1073742027| 3952| 34| 48| 10/06/2024 12:21:36|
+| main| java-runtime-delta| 21| 767| 3953| 34| 48| 13/06/2024 08:21:21|
 ## Handshake (Serverbound)
 #### 0x00 - Client Intention (C ➔ S)
 | Index | Type Index | Name | Raw Type | Full Type |
