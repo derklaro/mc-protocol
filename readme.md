@@ -1,7 +1,7 @@
-# 24w33a (Snapshot)
+# 24w34a (Snapshot)
 | Series | Java Runtime | Java Version | Protocol Version | World Version | Resource Pack Version | Data Pack Version | Build Timestamp (UTC) |
 | -------------| -------------| -------------| -------------| -------------| -------------| -------------| -------------|
-| main| java-runtime-delta| 21| 1073742029| 4058| 35| 49| 15/08/2024 12:36:38|
+| main| java-runtime-delta| 21| 1073742030| 4060| 36| 50| 21/08/2024 14:11:06|
 ## Handshake (Serverbound)
 #### 0x00 - Client Intention (C ➔ S)
 | Index | Type Index | Name | Raw Type | Full Type |
@@ -243,7 +243,7 @@ Packet has no fields
 #### 0x17 - Cooldown (S ➔ C)
 | Index | Type Index | Name | Raw Type | Full Type |
 | -------------| -------------| -------------| -------------| -------------|
-| 0| 0| item| Item| Item|
+| 0| 0| cooldownGroup| ResourceLocation| ResourceLocation|
 | 1| 0| duration| int| int|
  
 #### 0x18 - Custom Chat Completions (S ➔ C)
