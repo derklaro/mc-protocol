@@ -1,7 +1,7 @@
-# 24w35a (Snapshot)
+# 24w36a (Snapshot)
 | Series | Java Runtime | Java Version | Protocol Version | World Version | Resource Pack Version | Data Pack Version | Build Timestamp (UTC) |
 | -------------| -------------| -------------| -------------| -------------| -------------| -------------| -------------|
-| main| java-runtime-delta| 21| 1073742031| 4062| 36| 51| 28/08/2024 12:22:34|
+| main| java-runtime-delta| 21| 1073742032| 4063| 37| 52| 04/09/2024 12:41:03|
 ## Handshake (Serverbound)
 #### 0x00 - Client Intention (C ➔ S)
 | Index | Type Index | Name | Raw Type | Full Type |
@@ -562,13 +562,12 @@ Packet has no fields
 #### 0x41 - Player Position (S ➔ C)
 | Index | Type Index | Name | Raw Type | Full Type |
 | -------------| -------------| -------------| -------------| -------------|
-| 0| 0| x| double| double|
-| 1| 1| y| double| double|
-| 2| 2| z| double| double|
+| 0| 0| id| int| int|
+| 1| 0| position| Vec3| Vec3|
+| 2| 1| deltaMovement| Vec3| Vec3|
 | 3| 0| yRot| float| float|
 | 4| 1| xRot| float| float|
-| 5| 0| relativeArguments| Set| Set&lt;RelativeMovement&gt;|
-| 6| 0| id| int| int|
+| 5| 0| relativeArguments| Set| Set&lt;Relative&gt;|
  
 #### 0x42 - Recipe (S ➔ C)
 | Index | Type Index | Name | Raw Type | Full Type |
@@ -1227,10 +1226,7 @@ Packet has no fields
 #### 0x28 - Player Input (C ➔ S)
 | Index | Type Index | Name | Raw Type | Full Type |
 | -------------| -------------| -------------| -------------| -------------|
-| 0| 0| xxa| float| float|
-| 1| 1| zza| float| float|
-| 2| 0| isJumping| boolean| boolean|
-| 3| 1| isShiftKeyDown| boolean| boolean|
+| 0| 0| input| Input| Input|
  
 #### 0x29 - Pong (C ➔ S)
 | Index | Type Index | Name | Raw Type | Full Type |
