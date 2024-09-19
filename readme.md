@@ -1,7 +1,7 @@
-# 24w37a (Snapshot)
+# 24w38a (Snapshot)
 | Series | Java Runtime | Java Version | Protocol Version | World Version | Resource Pack Version | Data Pack Version | Build Timestamp (UTC) |
 | -------------| -------------| -------------| -------------| -------------| -------------| -------------| -------------|
-| main| java-runtime-delta| 21| 1073742033| 4065| 38| 53| 11/09/2024 12:58:47|
+| main| java-runtime-delta| 21| 1073742034| 4066| 39| 54| 18/09/2024 12:29:23|
 ## Handshake (Serverbound)
 #### 0x00 - Client Intention (C ➔ S)
 | Index | Type Index | Name | Raw Type | Full Type |
