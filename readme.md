@@ -1,7 +1,7 @@
-# 24w38a (Snapshot)
+# 24w39a (Snapshot)
 | Series | Java Runtime | Java Version | Protocol Version | World Version | Resource Pack Version | Data Pack Version | Build Timestamp (UTC) |
 | -------------| -------------| -------------| -------------| -------------| -------------| -------------| -------------|
-| main| java-runtime-delta| 21| 1073742034| 4066| 39| 54| 18/09/2024 12:29:23|
+| main| java-runtime-delta| 21| 1073742035| 4069| 39| 55| 25/09/2024 13:05:59|
 ## Handshake (Serverbound)
 #### 0x00 - Client Intention (C ➔ S)
 | Index | Type Index | Name | Raw Type | Full Type |
@@ -802,6 +802,7 @@ Packet has no fields
 | -------------| -------------| -------------| -------------| -------------|
 | 0| 0| gameTime| long| long|
 | 1| 1| dayTime| long| long|
+| 2| 0| tickDayTime| boolean| boolean|
  
 #### 0x68 - Set Title Text (S ➔ C)
 | Index | Type Index | Name | Raw Type | Full Type |
