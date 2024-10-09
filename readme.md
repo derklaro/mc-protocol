@@ -1,7 +1,7 @@
-# 24w40a (Snapshot)
+# 1.21.2 Pre-Release 1 (Snapshot)
 | Series | Java Runtime | Java Version | Protocol Version | World Version | Resource Pack Version | Data Pack Version | Build Timestamp (UTC) |
 | -------------| -------------| -------------| -------------| -------------| -------------| -------------| -------------|
-| main| java-runtime-delta| 21| 1073742036| 4072| 40| 56| 02/10/2024 13:12:44|
+| main| java-runtime-delta| 21| 1073742037| 4073| 41| 57| 08/10/2024 13:19:25|
 ## Handshake (Serverbound)
 #### 0x00 - Client Intention (C ➔ S)
 | Index | Type Index | Name | Raw Type | Full Type |
@@ -583,6 +583,7 @@ Packet has no fields
 | Index | Type Index | Name | Raw Type | Full Type |
 | -------------| -------------| -------------| -------------| -------------|
 | 0| 0| entries| List| List&lt;ClientboundRecipeBookAddPacket$Entry&gt;|
+| 1| 0| replace| boolean| boolean|
  
 #### 0x45 - Recipe Book Remove (S ➔ C)
 | Index | Type Index | Name | Raw Type | Full Type |
