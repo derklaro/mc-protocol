@@ -26,8 +26,8 @@ plugins {
   id("java")
   id("checkstyle")
   id("application")
-  id("com.diffplug.spotless") version "6.25.0"
-  id("com.github.johnrengelman.shadow") version "8.1.1"
+  id("com.gradleup.shadow") version "8.3.3"
+  id("com.diffplug.spotless") version "7.0.0.BETA3"
 }
 
 group = "dev.derklaro"
@@ -42,16 +42,16 @@ dependencies {
   val markdown4j = "1.0"
   implementation("fun.mingshan", "markdown4j", markdown4j)
 
-  val guava = "33.0.0-jre"
+  val guava = "33.3.1-jre"
   implementation("com.google.guava", "guava", guava)
 
-  val slf4j = "2.0.12"
+  val slf4j = "2.0.16"
   implementation("org.slf4j", "slf4j-api", slf4j)
 
-  val logback = "1.5.6"
+  val logback = "1.5.11"
   runtimeOnly("ch.qos.logback", "logback-classic", logback)
 
-  val jackson = "2.17.1"
+  val jackson = "2.18.0"
   implementation("com.fasterxml.jackson.core", "jackson-databind", jackson)
   implementation("com.fasterxml.jackson.datatype", "jackson-datatype-jsr310", jackson)
 
@@ -65,11 +65,11 @@ dependencies {
   val reflexion = "1.8.0"
   implementation("dev.derklaro.reflexion", "reflexion", reflexion)
 
-  val lombok = "1.18.30"
+  val lombok = "1.18.34"
   compileOnly("org.projectlombok", "lombok", lombok)
   annotationProcessor("org.projectlombok", "lombok", lombok)
 
-  val asm = "9.7"
+  val asm = "9.7.1"
   implementation("org.ow2.asm", "asm", asm)
   implementation("org.ow2.asm", "asm-tree", asm)
 }
@@ -99,14 +99,7 @@ tasks.withType<Checkstyle> {
 }
 
 extensions.configure<CheckstyleExtension> {
-  toolVersion = "10.14.0"
-}
-
-// see https://github.com/checkstyle/checkstyle/issues/14211
-configurations.named("checkstyle") {
-  resolutionStrategy.capabilitiesResolution.withCapability("com.google.collections:google-collections") {
-    select("com.google.guava:guava:0")
-  }
+  toolVersion = "10.18.2"
 }
 
 application {
