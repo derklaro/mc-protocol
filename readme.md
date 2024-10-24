@@ -1,7 +1,7 @@
-# 1.21.2 (Stable)
+# 1.21.3 (Stable)
 | Series | Java Runtime | Java Version | Protocol Version | World Version | Resource Pack Version | Data Pack Version | Build Timestamp (UTC) |
 | -------------| -------------| -------------| -------------| -------------| -------------| -------------| -------------|
-| main| java-runtime-delta| 21| 768| 4080| 42| 57| 22/10/2024 09:55:49|
+| main| java-runtime-delta| 21| 768| 4082| 42| 57| 23/10/2024 12:25:27|
 ## Handshake (Serverbound)
 #### 0x00 - Client Intention (C ➔ S)
 | Index | Type Index | Name | Raw Type | Full Type |
