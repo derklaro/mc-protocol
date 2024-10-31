@@ -26,8 +26,8 @@ plugins {
   id("java")
   id("checkstyle")
   id("application")
-  id("com.gradleup.shadow") version "8.3.3"
-  id("com.diffplug.spotless") version "7.0.0.BETA3"
+  id("com.gradleup.shadow") version "8.3.4"
+  id("com.diffplug.spotless") version "7.0.0.BETA4"
 }
 
 group = "dev.derklaro"
@@ -48,10 +48,10 @@ dependencies {
   val slf4j = "2.0.16"
   implementation("org.slf4j", "slf4j-api", slf4j)
 
-  val logback = "1.5.11"
+  val logback = "1.5.12"
   runtimeOnly("ch.qos.logback", "logback-classic", logback)
 
-  val jackson = "2.18.0"
+  val jackson = "2.18.1"
   implementation("com.fasterxml.jackson.core", "jackson-databind", jackson)
   implementation("com.fasterxml.jackson.datatype", "jackson-datatype-jsr310", jackson)
 
@@ -99,7 +99,7 @@ tasks.withType<Checkstyle> {
 }
 
 extensions.configure<CheckstyleExtension> {
-  toolVersion = "10.18.2"
+  toolVersion = "10.19.0"
 }
 
 application {
