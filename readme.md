@@ -1,7 +1,7 @@
-# 24w44a (Snapshot)
+# 24w45a (Snapshot)
 | Series | Java Runtime | Java Version | Protocol Version | World Version | Resource Pack Version | Data Pack Version | Build Timestamp (UTC) |
 | -------------| -------------| -------------| -------------| -------------| -------------| -------------| -------------|
-| main| java-runtime-delta| 21| 1073742044| 4174| 43| 58| 30/10/2024 12:51:10|
+| main| java-runtime-delta| 21| 1073742045| 4177| 44| 59| 06/11/2024 13:29:05|
 ## Handshake (Serverbound)
 #### 0x00 - Client Intention (C ➔ S)
 | Index | Type Index | Name | Raw Type | Full Type |
@@ -470,11 +470,9 @@ Packet has no fields
 #### 0x33 - Move Vehicle (S ➔ C)
 | Index | Type Index | Name | Raw Type | Full Type |
 | -------------| -------------| -------------| -------------| -------------|
-| 0| 0| x| double| double|
-| 1| 1| y| double| double|
-| 2| 2| z| double| double|
-| 3| 0| yRot| float| float|
-| 4| 1| xRot| float| float|
+| 0| 0| position| Vec3| Vec3|
+| 1| 0| yRot| float| float|
+| 2| 1| xRot| float| float|
  
 #### 0x34 - Open Book (S ➔ C)
 | Index | Type Index | Name | Raw Type | Full Type |
@@ -1192,11 +1190,10 @@ Packet has no fields
 #### 0x20 - Move Vehicle (C ➔ S)
 | Index | Type Index | Name | Raw Type | Full Type |
 | -------------| -------------| -------------| -------------| -------------|
-| 0| 0| x| double| double|
-| 1| 1| y| double| double|
-| 2| 2| z| double| double|
-| 3| 0| yRot| float| float|
-| 4| 1| xRot| float| float|
+| 0| 0| position| Vec3| Vec3|
+| 1| 0| yRot| float| float|
+| 2| 1| xRot| float| float|
+| 3| 0| onGround| boolean| boolean|
  
 #### 0x21 - Paddle Boat (C ➔ S)
 | Index | Type Index | Name | Raw Type | Full Type |
@@ -1253,57 +1250,60 @@ Packet has no fields
 | -------------| -------------| -------------| -------------| -------------|
 | 0| 0| input| Input| Input|
  
-#### 0x2A - Pong (C ➔ S)
+#### 0x2A - Player Loaded (C ➔ S)
+Packet has no fields
+ 
+#### 0x2B - Pong (C ➔ S)
 | Index | Type Index | Name | Raw Type | Full Type |
 | -------------| -------------| -------------| -------------| -------------|
 | 0| 0| id| int| int|
  
-#### 0x2B - Recipe Book Change Settings (C ➔ S)
+#### 0x2C - Recipe Book Change Settings (C ➔ S)
 | Index | Type Index | Name | Raw Type | Full Type |
 | -------------| -------------| -------------| -------------| -------------|
 | 0| 0| bookType| RecipeBookType| RecipeBookType|
 | 1| 0| isOpen| boolean| boolean|
 | 2| 1| isFiltering| boolean| boolean|
  
-#### 0x2C - Recipe Book Seen Recipe (C ➔ S)
+#### 0x2D - Recipe Book Seen Recipe (C ➔ S)
 | Index | Type Index | Name | Raw Type | Full Type |
 | -------------| -------------| -------------| -------------| -------------|
 | 0| 0| recipe| RecipeDisplayId| RecipeDisplayId|
  
-#### 0x2D - Rename Item (C ➔ S)
+#### 0x2E - Rename Item (C ➔ S)
 | Index | Type Index | Name | Raw Type | Full Type |
 | -------------| -------------| -------------| -------------| -------------|
 | 0| 0| name| String| String|
  
-#### 0x2E - Resource Pack (C ➔ S)
+#### 0x2F - Resource Pack (C ➔ S)
 | Index | Type Index | Name | Raw Type | Full Type |
 | -------------| -------------| -------------| -------------| -------------|
 | 0| 0| id| UUID| UUID|
 | 1| 0| action| ServerboundResourcePackPacket$Action| ServerboundResourcePackPacket$Action|
  
-#### 0x2F - Seen Advancements (C ➔ S)
+#### 0x30 - Seen Advancements (C ➔ S)
 | Index | Type Index | Name | Raw Type | Full Type |
 | -------------| -------------| -------------| -------------| -------------|
 | 0| 0| action| ServerboundSeenAdvancementsPacket$Action| ServerboundSeenAdvancementsPacket$Action|
 | 1| 0| tab| ResourceLocation| ResourceLocation|
  
-#### 0x30 - Select Trade (C ➔ S)
+#### 0x31 - Select Trade (C ➔ S)
 | Index | Type Index | Name | Raw Type | Full Type |
 | -------------| -------------| -------------| -------------| -------------|
 | 0| 0| item| int| int|
  
-#### 0x31 - Set Beacon (C ➔ S)
+#### 0x32 - Set Beacon (C ➔ S)
 | Index | Type Index | Name | Raw Type | Full Type |
 | -------------| -------------| -------------| -------------| -------------|
 | 0| 0| primary| Optional| Optional&lt;Holder&lt;MobEffect&gt;&gt;|
 | 1| 1| secondary| Optional| Optional&lt;Holder&lt;MobEffect&gt;&gt;|
  
-#### 0x32 - Set Carried Item (C ➔ S)
+#### 0x33 - Set Carried Item (C ➔ S)
 | Index | Type Index | Name | Raw Type | Full Type |
 | -------------| -------------| -------------| -------------| -------------|
 | 0| 0| slot| int| int|
  
-#### 0x33 - Set Command Block (C ➔ S)
+#### 0x34 - Set Command Block (C ➔ S)
 | Index | Type Index | Name | Raw Type | Full Type |
 | -------------| -------------| -------------| -------------| -------------|
 | 0| 0| pos| BlockPos| BlockPos|
@@ -1313,20 +1313,20 @@ Packet has no fields
 | 4| 2| automatic| boolean| boolean|
 | 5| 0| mode| CommandBlockEntity$Mode| CommandBlockEntity$Mode|
  
-#### 0x34 - Set Command Minecart (C ➔ S)
+#### 0x35 - Set Command Minecart (C ➔ S)
 | Index | Type Index | Name | Raw Type | Full Type |
 | -------------| -------------| -------------| -------------| -------------|
 | 0| 0| entity| int| int|
 | 1| 0| command| String| String|
 | 2| 0| trackOutput| boolean| boolean|
  
-#### 0x35 - Set Creative Mode Slot (C ➔ S)
+#### 0x36 - Set Creative Mode Slot (C ➔ S)
 | Index | Type Index | Name | Raw Type | Full Type |
 | -------------| -------------| -------------| -------------| -------------|
 | 0| 0| slotNum| short| short|
 | 1| 0| itemStack| ItemStack| ItemStack|
  
-#### 0x36 - Set Jigsaw Block (C ➔ S)
+#### 0x37 - Set Jigsaw Block (C ➔ S)
 | Index | Type Index | Name | Raw Type | Full Type |
 | -------------| -------------| -------------| -------------| -------------|
 | 0| 0| pos| BlockPos| BlockPos|
@@ -1338,7 +1338,7 @@ Packet has no fields
 | 6| 0| selectionPriority| int| int|
 | 7| 1| placementPriority| int| int|
  
-#### 0x37 - Set Structure Block (C ➔ S)
+#### 0x38 - Set Structure Block (C ➔ S)
 | Index | Type Index | Name | Raw Type | Full Type |
 | -------------| -------------| -------------| -------------| -------------|
 | 0| 0| pos| BlockPos| BlockPos|
@@ -1356,31 +1356,31 @@ Packet has no fields
 | 12| 0| integrity| float| float|
 | 13| 0| seed| long| long|
  
-#### 0x38 - Sign Update (C ➔ S)
+#### 0x39 - Sign Update (C ➔ S)
 | Index | Type Index | Name | Raw Type | Full Type |
 | -------------| -------------| -------------| -------------| -------------|
 | 0| 0| pos| BlockPos| BlockPos|
 | 1| 0| lines| String[]| String[]|
 | 2| 0| isFrontText| boolean| boolean|
  
-#### 0x39 - Swing (C ➔ S)
+#### 0x3A - Swing (C ➔ S)
 | Index | Type Index | Name | Raw Type | Full Type |
 | -------------| -------------| -------------| -------------| -------------|
 | 0| 0| hand| InteractionHand| InteractionHand|
  
-#### 0x3A - Teleport To Entity (C ➔ S)
+#### 0x3B - Teleport To Entity (C ➔ S)
 | Index | Type Index | Name | Raw Type | Full Type |
 | -------------| -------------| -------------| -------------| -------------|
 | 0| 0| uuid| UUID| UUID|
  
-#### 0x3B - Use Item On (C ➔ S)
+#### 0x3C - Use Item On (C ➔ S)
 | Index | Type Index | Name | Raw Type | Full Type |
 | -------------| -------------| -------------| -------------| -------------|
 | 0| 0| blockHit| BlockHitResult| BlockHitResult|
 | 1| 0| hand| InteractionHand| InteractionHand|
 | 2| 0| sequence| int| int|
  
-#### 0x3C - Use Item (C ➔ S)
+#### 0x3D - Use Item (C ➔ S)
 | Index | Type Index | Name | Raw Type | Full Type |
 | -------------| -------------| -------------| -------------| -------------|
 | 0| 0| hand| InteractionHand| InteractionHand|
