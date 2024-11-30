@@ -1,7 +1,7 @@
-# 1.21.4 Release Candidate 1 (Snapshot)
+# 1.21.4 Release Candidate 3 (Snapshot)
 | Series | Java Runtime | Java Version | Protocol Version | World Version | Resource Pack Version | Data Pack Version | Build Timestamp (UTC) |
 | -------------| -------------| -------------| -------------| -------------| -------------| -------------| -------------|
-| main| java-runtime-delta| 21| 1073742050| 4184| 46| 61| 28/11/2024 10:16:08|
+| main| java-runtime-delta| 21| 1073742052| 4188| 46| 61| 29/11/2024 17:00:11|
 ## Handshake (Serverbound)
 #### 0x00 - Client Intention (C ➔ S)
 | Index | Type Index | Name | Raw Type | Full Type |
