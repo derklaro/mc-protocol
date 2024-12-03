@@ -56,7 +56,7 @@ dependencies {
   implementation("com.fasterxml.jackson.datatype", "jackson-datatype-jsr310", jackson)
 
   // for updates check https://maven.minecraftforge.net/net/minecraftforge/ForgeAutoRenamingTool/maven-metadata.xml
-  val autoRenamingTool = "1.0.8"
+  val autoRenamingTool = "1.1.0"
   implementation("net.minecraftforge", "ForgeAutoRenamingTool", autoRenamingTool)
 
   val argparse4j = "0.9.0"
