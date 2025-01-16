@@ -1,7 +1,7 @@
-# 25w02a (Snapshot)
+# 25w03a (Snapshot)
 | Series | Java Runtime | Java Version | Protocol Version | World Version | Resource Pack Version | Data Pack Version | Build Timestamp (UTC) |
 | -------------| -------------| -------------| -------------| -------------| -------------| -------------| -------------|
-| main| java-runtime-delta| 21| 1073742053| 4298| 47| 62| 08/01/2025 13:39:30|
+| main| java-runtime-delta| 21| 1073742054| 4304| 48| 63| 15/01/2025 14:25:08|
 ## Handshake (Serverbound)
 #### 0x00 - Client Intention (C ➔ S)
 | Index | Type Index | Name | Raw Type | Full Type |
@@ -894,24 +894,30 @@ Packet has no fields
 | 2| 0| relatives| Set| Set&lt;Relative&gt;|
 | 3| 0| onGround| boolean| boolean|
  
-#### 0x77 - Ticking State (S ➔ C)
+#### 0x77 - Test Instance Block Status (S ➔ C)
+| Index | Type Index | Name | Raw Type | Full Type |
+| -------------| -------------| -------------| -------------| -------------|
+| 0| 0| status| Component| Component|
+| 1| 0| size| Optional| Optional&lt;Vec3i&gt;|
+ 
+#### 0x78 - Ticking State (S ➔ C)
 | Index | Type Index | Name | Raw Type | Full Type |
 | -------------| -------------| -------------| -------------| -------------|
 | 0| 0| tickRate| float| float|
 | 1| 0| isFrozen| boolean| boolean|
  
-#### 0x78 - Ticking Step (S ➔ C)
+#### 0x79 - Ticking Step (S ➔ C)
 | Index | Type Index | Name | Raw Type | Full Type |
 | -------------| -------------| -------------| -------------| -------------|
 | 0| 0| tickSteps| int| int|
  
-#### 0x79 - Transfer (S ➔ C)
+#### 0x7A - Transfer (S ➔ C)
 | Index | Type Index | Name | Raw Type | Full Type |
 | -------------| -------------| -------------| -------------| -------------|
 | 0| 0| host| String| String|
 | 1| 0| port| int| int|
  
-#### 0x7A - Update Advancements (S ➔ C)
+#### 0x7B - Update Advancements (S ➔ C)
 | Index | Type Index | Name | Raw Type | Full Type |
 | -------------| -------------| -------------| -------------| -------------|
 | 0| 0| reset| boolean| boolean|
@@ -920,13 +926,13 @@ Packet has no fields
 | 3| 0| progress| Map| Map&lt;ResourceLocation, AdvancementProgress&gt;|
 | 4| 1| showAdvancements| boolean| boolean|
  
-#### 0x7B - Update Attributes (S ➔ C)
+#### 0x7C - Update Attributes (S ➔ C)
 | Index | Type Index | Name | Raw Type | Full Type |
 | -------------| -------------| -------------| -------------| -------------|
 | 0| 0| entityId| int| int|
 | 1| 0| attributes| List| List&lt;ClientboundUpdateAttributesPacket$AttributeSnapshot&gt;|
  
-#### 0x7C - Update Mob Effect (S ➔ C)
+#### 0x7D - Update Mob Effect (S ➔ C)
 | Index | Type Index | Name | Raw Type | Full Type |
 | -------------| -------------| -------------| -------------| -------------|
 | 0| 0| entityId| int| int|
@@ -935,29 +941,29 @@ Packet has no fields
 | 3| 2| effectDurationTicks| int| int|
 | 4| 0| flags| byte| byte|
  
-#### 0x7D - Update Recipes (S ➔ C)
+#### 0x7E - Update Recipes (S ➔ C)
 | Index | Type Index | Name | Raw Type | Full Type |
 | -------------| -------------| -------------| -------------| -------------|
 | 0| 0| itemSets| Map| Map&lt;ResourceKey&lt;RecipePropertySet&gt;, RecipePropertySet&gt;|
 | 1| 0| stonecutterRecipes| SelectableRecipe$SingleInputSet| SelectableRecipe$SingleInputSet&lt;StonecutterRecipe&gt;|
  
-#### 0x7E - Update Tags (S ➔ C)
+#### 0x7F - Update Tags (S ➔ C)
 | Index | Type Index | Name | Raw Type | Full Type |
 | -------------| -------------| -------------| -------------| -------------|
 | 0| 0| tags| Map| Map&lt;ResourceKey&lt;? extends Registry&lt;?&gt;&gt;, TagNetworkSerialization$NetworkPayload&gt;|
  
-#### 0x7F - Projectile Power (S ➔ C)
+#### 0x80 - Projectile Power (S ➔ C)
 | Index | Type Index | Name | Raw Type | Full Type |
 | -------------| -------------| -------------| -------------| -------------|
 | 0| 0| id| int| int|
 | 1| 0| accelerationPower| double| double|
  
-#### 0x80 - Custom Report Details (S ➔ C)
+#### 0x81 - Custom Report Details (S ➔ C)
 | Index | Type Index | Name | Raw Type | Full Type |
 | -------------| -------------| -------------| -------------| -------------|
 | 0| 0| details| Map| Map&lt;String, String&gt;|
  
-#### 0x81 - Server Links (S ➔ C)
+#### 0x82 - Server Links (S ➔ C)
 | Index | Type Index | Name | Raw Type | Full Type |
 | -------------| -------------| -------------| -------------| -------------|
 | 0| 0| links| List| List&lt;ServerLinks$UntrustedEntry&gt;|
@@ -1349,31 +1355,45 @@ Packet has no fields
 | 13| 0| integrity| float| float|
 | 14| 0| seed| long| long|
  
-#### 0x39 - Sign Update (C ➔ S)
+#### 0x39 - Set Test Block (C ➔ S)
+| Index | Type Index | Name | Raw Type | Full Type |
+| -------------| -------------| -------------| -------------| -------------|
+| 0| 0| position| BlockPos| BlockPos|
+| 1| 0| mode| TestBlockMode| TestBlockMode|
+| 2| 0| message| String| String|
+ 
+#### 0x3A - Sign Update (C ➔ S)
 | Index | Type Index | Name | Raw Type | Full Type |
 | -------------| -------------| -------------| -------------| -------------|
 | 0| 0| pos| BlockPos| BlockPos|
 | 1| 0| lines| String[]| String[]|
 | 2| 0| isFrontText| boolean| boolean|
  
-#### 0x3A - Swing (C ➔ S)
+#### 0x3B - Swing (C ➔ S)
 | Index | Type Index | Name | Raw Type | Full Type |
 | -------------| -------------| -------------| -------------| -------------|
 | 0| 0| hand| InteractionHand| InteractionHand|
  
-#### 0x3B - Teleport To Entity (C ➔ S)
+#### 0x3C - Teleport To Entity (C ➔ S)
 | Index | Type Index | Name | Raw Type | Full Type |
 | -------------| -------------| -------------| -------------| -------------|
 | 0| 0| uuid| UUID| UUID|
  
-#### 0x3C - Use Item On (C ➔ S)
+#### 0x3D - Test Instance Block Action (C ➔ S)
+| Index | Type Index | Name | Raw Type | Full Type |
+| -------------| -------------| -------------| -------------| -------------|
+| 0| 0| pos| BlockPos| BlockPos|
+| 1| 0| action| ServerboundTestInstanceBlockActionPacket$Action| ServerboundTestInstanceBlockActionPacket$Action|
+| 2| 0| data| TestInstanceBlockEntity$Data| TestInstanceBlockEntity$Data|
+ 
+#### 0x3E - Use Item On (C ➔ S)
 | Index | Type Index | Name | Raw Type | Full Type |
 | -------------| -------------| -------------| -------------| -------------|
 | 0| 0| blockHit| BlockHitResult| BlockHitResult|
 | 1| 0| hand| InteractionHand| InteractionHand|
 | 2| 0| sequence| int| int|
  
-#### 0x3D - Use Item (C ➔ S)
+#### 0x3F - Use Item (C ➔ S)
 | Index | Type Index | Name | Raw Type | Full Type |
 | -------------| -------------| -------------| -------------| -------------|
 | 0| 0| hand| InteractionHand| InteractionHand|
