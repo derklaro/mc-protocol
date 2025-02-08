@@ -27,7 +27,7 @@ plugins {
   id("checkstyle")
   id("application")
   id("com.gradleup.shadow") version "8.3.4"
-  id("com.diffplug.spotless") version "7.0.0.BETA4"
+  id("com.diffplug.spotless") version "7.0.2"
 }
 
 group = "dev.derklaro"
