@@ -26,6 +26,7 @@ package dev.derklaro.protocolgenerator.protocol;
 
 import dev.derklaro.reflexion.Reflexion;
 import dev.derklaro.reflexion.matcher.FieldMatcher;
+import dev.derklaro.reflexion.matcher.MethodMatcher;
 import java.io.IOException;
 import java.lang.reflect.Modifier;
 import java.util.EnumMap;
@@ -34,10 +35,12 @@ import java.util.IdentityHashMap;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
+import java.util.function.Predicate;
 import javax.annotation.Nullable;
 import lombok.NonNull;
 import org.objectweb.asm.ClassReader;
 import org.objectweb.asm.Handle;
+import org.objectweb.asm.Type;
 import org.objectweb.asm.tree.AbstractInsnNode;
 import org.objectweb.asm.tree.ClassNode;
 import org.objectweb.asm.tree.FieldInsnNode;
@@ -47,12 +50,29 @@ import org.objectweb.asm.tree.MethodNode;
 
 final class McProtocolsDecoder {
 
+  // matcher for the UnboundProtocol constants in XXXProtocols classes
   private static final FieldMatcher PROTOCOL_INFO_MATCHER = FieldMatcher.newMatcher()
     .hasModifier(Modifier.STATIC)
     .and(field -> {
-      var name = field.getType().getCanonicalName();
-      return name.endsWith(".ProtocolInfo") || name.endsWith(".ProtocolInfo.Unbound");
+      var typeName = field.getType().getCanonicalName();
+      return typeName.endsWith(".UnboundProtocol") || typeName.endsWith(".SimpleUnboundProtocol");
     });
+
+  // matcher to find the listPackets(PacketVisitor) method in ProtocolInfo$Details
+  private static final MethodMatcher LIST_PACKETS_MATCHER = MethodMatcher.newMatcher()
+    .parameterCount(1)
+    .hasName("listPackets");
+
+  // matcher for InvokeDynamicInsnNode that constructs the info for a protocol
+  private static final Predicate<InvokeDynamicInsnNode> PROTOCOL_LAMBDA_BUILDER_FILTER = node -> {
+    var bsmArgs = node.bsmArgs;
+    return bsmArgs != null
+      && bsmArgs.length == 3
+      && bsmArgs[2] instanceof Type type
+      && type.getArgumentCount() == 1
+      && type.getReturnType() == Type.VOID_TYPE
+      && type.getArgumentTypes()[0].getClassName().endsWith(".ProtocolInfoBuilder");
+  };
 
   private static final String STREAM_CODEC_DESC = "Lnet/minecraft/network/codec/StreamCodec;";
   private static final String PACKET_TYPE_DESC = "Lnet/minecraft/network/protocol/PacketType;";
@@ -75,8 +95,16 @@ final class McProtocolsDecoder {
     }
 
     // there can be two calls: one for serverbound, one for clientbound
-    var firstInvokeDynamic = this.findNodeOfType(InvokeDynamicInsnNode.class, clinit, null);
-    var secondInvokeDynamic = this.findNodeOfType(InvokeDynamicInsnNode.class, clinit, firstInvokeDynamic);
+    var firstInvokeDynamic = this.findNodeOfType(
+      InvokeDynamicInsnNode.class,
+      clinit,
+      null,
+      PROTOCOL_LAMBDA_BUILDER_FILTER);
+    var secondInvokeDynamic = this.findNodeOfType(
+      InvokeDynamicInsnNode.class,
+      clinit,
+      firstInvokeDynamic,
+      PROTOCOL_LAMBDA_BUILDER_FILTER);
 
     // resolve the protocol info (ProtocolInfoBuilder type -> Invocation Target for configuration)
     var firstProtocolInfo = this.resolveProtocolInvocationInfo(clinit, firstInvokeDynamic);
@@ -90,36 +118,34 @@ final class McProtocolsDecoder {
     return result;
   }
 
-  public @NonNull Map<McPacketFlow, Map<Object, Integer>> resolvePacketIds() {
+  public @NonNull Map<McPacketFlow, Map<Object, Integer>> resolvePacketIds(@NonNull Class<?> packetVisitorClass) {
     Map<McPacketFlow, Map<Object, Integer>> result = new EnumMap<>(McPacketFlow.class);
 
     // resolve the packet ids from the constants in the given class
     var protocolInfoFields = Reflexion.on(this.targetClass).findFields(PROTOCOL_INFO_MATCHER);
     for (var protocolInfoField : protocolInfoFields) {
+      // get the details from the protocol info
       var protocolInfo = protocolInfoField.getValue().get();
-      if (McUnboundProtocolBinder.isUnbound(protocolInfo.getClass())) {
-        // need to bind protocol info first
-        var binder = new McUnboundProtocolBinder(protocolInfo, this.mcClassLoader);
-        protocolInfo = binder.bind();
-      }
-
-      // get codec and mc packet flow
-      var codec = Reflexion.onBound(protocolInfo)
-        .findMethod("codec")
+      var details = Reflexion.onBound(protocolInfo)
+        .findMethod("details")
         .flatMap(accessor -> accessor.invoke().asOptional())
         .orElseThrow();
-      var flow = Reflexion.onBound(protocolInfo)
+
+      // resolve the packet list debug method & flow method
+      var detailsReflexion = Reflexion.onBound(details);
+      var listPacketsMethod = detailsReflexion.findMethod(LIST_PACKETS_MATCHER).orElseThrow();
+      var flow = detailsReflexion
         .findMethod("flow")
         .flatMap(accessor -> accessor.invoke().asOptional())
         .orElseThrow();
 
-      // try to convert the packet flow
+      // convert the packet flow, register the packet type to id mapping for the flow
       var convertedFlow = this.resolveFlowFromBuilderType(flow.toString());
       if (convertedFlow != null) {
-        var typeToId = Reflexion.onBound(codec)
-          .findField("toId")
-          .flatMap(accessor -> accessor.<Map<Object, Integer>>getValue().asOptional())
-          .orElseThrow();
+        var typeToId = new HashMap<Object, Integer>();
+        var packetVisitorImplGenerator = new PacketVisitorImplGenerator(packetVisitorClass, typeToId);
+        var packetVisitorImpl = packetVisitorImplGenerator.generatePacketVisitor();
+        var ignored = listPacketsMethod.invokeWithArgs(packetVisitorImpl).getOrThrow();
         result.put(convertedFlow, typeToId);
       }
     }
@@ -301,6 +327,15 @@ final class McProtocolsDecoder {
     @NonNull MethodNode methodNode,
     @Nullable AbstractInsnNode after
   ) {
+    return this.findNodeOfType(type, methodNode, after, ignored -> true);
+  }
+
+  private @Nullable <T extends AbstractInsnNode> T findNodeOfType(
+    @NonNull Class<T> type,
+    @NonNull MethodNode methodNode,
+    @Nullable AbstractInsnNode after,
+    @NonNull Predicate<T> filter
+  ) {
     // either start from the top or from the next node of the insn we want to start after
     AbstractInsnNode start;
     if (after == null) {
@@ -317,7 +352,10 @@ final class McProtocolsDecoder {
       }
 
       if (current.getClass() == type) {
-        return type.cast(current);
+        var node = type.cast(current);
+        if (filter.test(node)) {
+          return node;
+        }
       }
 
       current = current.getNext();

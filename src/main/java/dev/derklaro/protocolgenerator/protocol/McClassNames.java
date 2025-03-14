@@ -29,8 +29,7 @@ final class McClassNames {
   public static final String BOOTSTRAP = "net.minecraft.server.Bootstrap";
   public static final String SHARED_CONSTANTS = "net.minecraft.SharedConstants";
 
-  public static final String REGISTRY_ACCESS = "net.minecraft.core.RegistryAccess";
-  public static final String REGISTRY_FRIENDLY_BB = "net.minecraft.network.RegistryFriendlyByteBuf";
+  public static final String PACKET_VISITOR = "net.minecraft.network.ProtocolInfo$Details$PacketVisitor";
 
   private McClassNames() {
     throw new UnsupportedOperationException();

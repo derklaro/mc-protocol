@@ -52,6 +52,7 @@ public final class ProtocolInfoCollector {
     // build a class loader which is aware of the remapped jar
     var remappedJarUrl = this.remappedJarPath.toUri().toURL();
     var loader = new URLClassLoader(new URL[]{remappedJarUrl}, this.libraryClassLoader);
+    var packetVisitorClass = Class.forName(McClassNames.PACKET_VISITOR, true, loader);
 
     // important first step: initialize minecraft registries
     var mcInitializer = new McInit(loader);
@@ -66,7 +67,7 @@ public final class ProtocolInfoCollector {
       var protocolsClass = Class.forName(state.protocolsClass(), true, loader);
       var infoDecoder = new McProtocolsDecoder(protocolsClass, loader);
       var typeToPacketClassPerFlow = infoDecoder.decodeAssociatedPackets();
-      var typeToPacketIdPerFlow = infoDecoder.resolvePacketIds();
+      var typeToPacketIdPerFlow = infoDecoder.resolvePacketIds(packetVisitorClass);
 
       // register for each flow (if present)
       for (var flow : McPacketFlow.values()) {
