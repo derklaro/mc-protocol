@@ -26,8 +26,8 @@ plugins {
   id("java")
   id("checkstyle")
   id("application")
-  id("com.gradleup.shadow") version "8.3.4"
-  id("com.diffplug.spotless") version "7.0.0.BETA4"
+  id("com.gradleup.shadow") version "8.3.6"
+  id("com.diffplug.spotless") version "7.0.2"
 }
 
 group = "dev.derklaro"
@@ -42,16 +42,16 @@ dependencies {
   val markdown4j = "1.0"
   implementation("fun.mingshan", "markdown4j", markdown4j)
 
-  val guava = "33.3.1-jre"
+  val guava = "33.4.0-jre"
   implementation("com.google.guava", "guava", guava)
 
-  val slf4j = "2.0.16"
+  val slf4j = "2.0.17"
   implementation("org.slf4j", "slf4j-api", slf4j)
 
-  val logback = "1.5.12"
+  val logback = "1.5.17"
   runtimeOnly("ch.qos.logback", "logback-classic", logback)
 
-  val jackson = "2.18.1"
+  val jackson = "2.18.3"
   implementation("com.fasterxml.jackson.core", "jackson-databind", jackson)
   implementation("com.fasterxml.jackson.datatype", "jackson-datatype-jsr310", jackson)
 
@@ -65,7 +65,7 @@ dependencies {
   val reflexion = "1.8.0"
   implementation("dev.derklaro.reflexion", "reflexion", reflexion)
 
-  val lombok = "1.18.34"
+  val lombok = "1.18.36"
   compileOnly("org.projectlombok", "lombok", lombok)
   annotationProcessor("org.projectlombok", "lombok", lombok)
 
