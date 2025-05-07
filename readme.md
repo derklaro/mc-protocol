@@ -1,7 +1,7 @@
-# 25w18a (Snapshot)
+# 25w19a (Snapshot)
 | Series | Java Runtime | Java Version | Protocol Version | World Version | Resource Pack Version | Data Pack Version | Build Timestamp (UTC) |
 | -------------| -------------| -------------| -------------| -------------| -------------| -------------| -------------|
-| main| java-runtime-delta| 21| 1073742072| 4426| 59| 75| 29/04/2025 12:18:03|
+| main| java-runtime-delta| 21| 1073742073| 4427| 60| 76| 06/05/2025 12:54:38|
 ## Handshake (Serverbound)
 #### 0x00 - Client Intention (C ➔ S)
 | Index | Type Index | Name | Raw Type | Full Type |
