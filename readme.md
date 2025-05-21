@@ -1,7 +1,7 @@
-# 25w20a (Snapshot)
+# 25w21a (Snapshot)
 | Series | Java Runtime | Java Version | Protocol Version | World Version | Resource Pack Version | Data Pack Version | Build Timestamp (UTC) |
 | -------------| -------------| -------------| -------------| -------------| -------------| -------------| -------------|
-| main| java-runtime-delta| 21| 1073742074| 4428| 61| 77| 13/05/2025 11:43:25|
+| main| java-runtime-delta| 21| 1073742075| 4429| 62| 78| 20/05/2025 12:06:08|
 ## Handshake (Serverbound)
 #### 0x00 - Client Intention (C ➔ S)
 | Index | Type Index | Name | Raw Type | Full Type |
@@ -231,6 +231,12 @@ Packet has no fields
 | Index | Type Index | Name | Raw Type | Full Type |
 | -------------| -------------| -------------| -------------| -------------|
 | 0| 0| knownPacks| List| List&lt;KnownPack&gt;|
+ 
+#### 0x08 - Custom Click Action (C ➔ S)
+| Index | Type Index | Name | Raw Type | Full Type |
+| -------------| -------------| -------------| -------------| -------------|
+| 0| 0| id| ResourceLocation| ResourceLocation|
+| 1| 0| payload| Optional| Optional&lt;String&gt;|
  
 ## Game (Clientbound)
 #### 0x00 - Bundle Delimiter (S ➔ C)
