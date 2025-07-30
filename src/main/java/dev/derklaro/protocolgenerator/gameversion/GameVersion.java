@@ -41,7 +41,19 @@ public record GameVersion(
   boolean stable
 ) {
 
-  public record PackVersion(int resource, int data) {
+  public record PackVersion(
+    @JsonProperty("resource_major") int resourcePackMajor,
+    @JsonProperty("resource_minor") int resourcePackMinor,
+    @JsonProperty("data_major") int dataPackMajor,
+    @JsonProperty("data_minor") int dataPackMinor
+  ) {
 
+    public @NonNull String formattedResourcePackVersion() {
+      return String.format("%d.%d", this.resourcePackMajor, this.resourcePackMinor);
+    }
+
+    public @NonNull String formattedDataPackVersion() {
+      return String.format("%d.%d", this.dataPackMajor, this.dataPackMinor);
+    }
   }
 }

@@ -89,8 +89,8 @@ public final class MarkdownGenerator {
       Integer.toString(gameVersion.javaVersion()),
       Integer.toString(gameVersion.protocolVersion()),
       Integer.toString(gameVersion.worldVersion()),
-      Integer.toString(gameVersion.packVersion().resource()),
-      Integer.toString(gameVersion.packVersion().data()),
+      gameVersion.packVersion().formattedResourcePackVersion(),
+      gameVersion.packVersion().formattedDataPackVersion(),
       DATE_TIME_FORMATTER.format(gameVersion.buildTime()));
 
     // build the row block
