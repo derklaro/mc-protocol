@@ -26,8 +26,8 @@ plugins {
   id("java")
   id("checkstyle")
   id("application")
-  id("com.gradleup.shadow") version "8.3.6"
-  id("com.diffplug.spotless") version "7.0.2"
+  id("com.gradleup.shadow") version "8.3.8"
+  id("com.diffplug.spotless") version "7.2.1"
 }
 
 group = "dev.derklaro"
@@ -42,16 +42,16 @@ dependencies {
   val markdown4j = "1.0"
   implementation("fun.mingshan", "markdown4j", markdown4j)
 
-  val guava = "33.4.0-jre"
+  val guava = "33.4.8-jre"
   implementation("com.google.guava", "guava", guava)
 
   val slf4j = "2.0.17"
   implementation("org.slf4j", "slf4j-api", slf4j)
 
-  val logback = "1.5.17"
+  val logback = "1.5.18"
   runtimeOnly("ch.qos.logback", "logback-classic", logback)
 
-  val jackson = "2.18.3"
+  val jackson = "2.19.2"
   implementation("com.fasterxml.jackson.core", "jackson-databind", jackson)
   implementation("com.fasterxml.jackson.datatype", "jackson-datatype-jsr310", jackson)
 
@@ -65,13 +65,16 @@ dependencies {
   val reflexion = "1.8.0"
   implementation("dev.derklaro.reflexion", "reflexion", reflexion)
 
-  val lombok = "1.18.36"
+  val lombok = "1.18.38"
   compileOnly("org.projectlombok", "lombok", lombok)
   annotationProcessor("org.projectlombok", "lombok", lombok)
 
-  val asm = "9.7.1"
+  val asm = "9.8"
   implementation("org.ow2.asm", "asm", asm)
   implementation("org.ow2.asm", "asm-tree", asm)
+
+  val jbAnnotations = "26.0.2"
+  implementation("org.jetbrains", "annotations", jbAnnotations)
 }
 
 tasks.withType<JavaCompile>().configureEach {
@@ -99,7 +102,7 @@ tasks.withType<Checkstyle> {
 }
 
 extensions.configure<CheckstyleExtension> {
-  toolVersion = "10.19.0"
+  toolVersion = "10.26.1"
 }
 
 application {

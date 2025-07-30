@@ -34,9 +34,9 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
 import java.util.concurrent.CompletableFuture;
-import javax.annotation.CheckReturnValue;
-import javax.annotation.Nullable;
 import lombok.NonNull;
+import org.jetbrains.annotations.CheckReturnValue;
+import org.jetbrains.annotations.Nullable;
 
 public final class FileDownloader {
 

@@ -25,8 +25,8 @@
 package dev.derklaro.protocolgenerator.util;
 
 import java.util.function.Function;
-import javax.annotation.Nullable;
 import lombok.NonNull;
+import org.jetbrains.annotations.Nullable;
 
 @FunctionalInterface
 public interface CatchingFunction<T, V> {
