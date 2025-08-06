@@ -1,7 +1,7 @@
-# 25w31a (Snapshot)
+# 25w32a (Snapshot)
 | Series | Java Runtime | Java Version | Protocol Version | World Version | Resource Pack Version | Data Pack Version | Build Timestamp (UTC) |
 | -------------| -------------| -------------| -------------| -------------| -------------| -------------| -------------|
-| main| java-runtime-delta| 21| 1073742084| 4534| 65.0| 82.0| 29/07/2025 11:26:21|
+| main| java-runtime-delta| 21| 1073742085| 4536| 65.1| 83.0| 05/08/2025 12:18:21|
 ## Handshake (Serverbound)
 #### 0x00 - Client Intention (C ➔ S)
 | Index | Type Index | Name | Raw Type | Full Type |
@@ -251,13 +251,11 @@ Packet has no fields
 | 3| 0| x| double| double|
 | 4| 1| y| double| double|
 | 5| 2| z| double| double|
-| 6| 1| xa| int| int|
-| 7| 2| ya| int| int|
-| 8| 3| za| int| int|
-| 9| 0| xRot| byte| byte|
-| 10| 1| yRot| byte| byte|
-| 11| 2| yHeadRot| byte| byte|
-| 12| 4| data| int| int|
+| 6| 0| movement| Vec3| Vec3|
+| 7| 0| xRot| byte| byte|
+| 8| 1| yRot| byte| byte|
+| 9| 2| yHeadRot| byte| byte|
+| 10| 1| data| int| int|
  
 #### 0x02 - Animate (S ➔ C)
 | Index | Type Index | Name | Raw Type | Full Type |
@@ -717,7 +715,9 @@ Packet has no fields
 | Index | Type Index | Name | Raw Type | Full Type |
 | -------------| -------------| -------------| -------------| -------------|
 | 0| 0| yRot| float| float|
-| 1| 1| xRot| float| float|
+| 1| 0| relativeY| boolean| boolean|
+| 2| 1| xRot| float| float|
+| 3| 1| relativeX| boolean| boolean|
  
 #### 0x43 - Recipe Book Add (S ➔ C)
 | Index | Type Index | Name | Raw Type | Full Type |
@@ -878,9 +878,7 @@ Packet has no fields
 | Index | Type Index | Name | Raw Type | Full Type |
 | -------------| -------------| -------------| -------------| -------------|
 | 0| 0| id| int| int|
-| 1| 1| xa| int| int|
-| 2| 2| ya| int| int|
-| 3| 3| za| int| int|
+| 1| 0| movement| Vec3| Vec3|
  
 #### 0x5F - Set Equipment (S ➔ C)
 | Index | Type Index | Name | Raw Type | Full Type |
