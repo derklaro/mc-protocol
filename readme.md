@@ -1,7 +1,7 @@
-# 25w32a (Snapshot)
+# 25w33a (Snapshot)
 | Series | Java Runtime | Java Version | Protocol Version | World Version | Resource Pack Version | Data Pack Version | Build Timestamp (UTC) |
 | -------------| -------------| -------------| -------------| -------------| -------------| -------------| -------------|
-| main| java-runtime-delta| 21| 1073742085| 4536| 65.1| 83.0| 05/08/2025 12:18:21|
+| main| java-runtime-delta| 21| 1073742086| 4538| 65.2| 83.1| 12/08/2025 11:42:22|
 ## Handshake (Serverbound)
 #### 0x00 - Client Intention (C ➔ S)
 | Index | Type Index | Name | Raw Type | Full Type |
@@ -443,9 +443,12 @@ Packet has no fields
 | Index | Type Index | Name | Raw Type | Full Type |
 | -------------| -------------| -------------| -------------| -------------|
 | 0| 0| center| Vec3| Vec3|
-| 1| 0| playerKnockback| Optional| Optional&lt;Vec3&gt;|
-| 2| 0| explosionParticle| ParticleOptions| ParticleOptions|
-| 3| 0| explosionSound| Holder| Holder&lt;SoundEvent&gt;|
+| 1| 0| radius| float| float|
+| 2| 0| blockCount| int| int|
+| 3| 0| playerKnockback| Optional| Optional&lt;Vec3&gt;|
+| 4| 0| explosionParticle| ParticleOptions| ParticleOptions|
+| 5| 0| explosionSound| Holder| Holder&lt;SoundEvent&gt;|
+| 6| 0| blockParticles| WeightedList| WeightedList&lt;ExplosionParticleInfo&gt;|
  
 #### 0x21 - Forget Level Chunk (S ➔ C)
 | Index | Type Index | Name | Raw Type | Full Type |
