@@ -1,7 +1,7 @@
-# 25w33a (Snapshot)
+# 25w34b (Snapshot)
 | Series | Java Runtime | Java Version | Protocol Version | World Version | Resource Pack Version | Data Pack Version | Build Timestamp (UTC) |
 | -------------| -------------| -------------| -------------| -------------| -------------| -------------| -------------|
-| main| java-runtime-delta| 21| 1073742086| 4538| 65.2| 83.1| 12/08/2025 11:42:22|
+| main| java-runtime-delta| 21| 1073742088| 4540| 66.0| 84.0| 19/08/2025 14:59:22|
 ## Handshake (Serverbound)
 #### 0x00 - Client Intention (C ➔ S)
 | Index | Type Index | Name | Raw Type | Full Type |
@@ -191,6 +191,11 @@ Packet has no fields
 | -------------| -------------| -------------| -------------| -------------|
 | 0| 0| dialog| Holder| Holder&lt;Dialog&gt;|
  
+#### 0x13 - Code Of Conduct (S ➔ C)
+| Index | Type Index | Name | Raw Type | Full Type |
+| -------------| -------------| -------------| -------------| -------------|
+| 0| 0| codeOfConduct| String| String|
+ 
 ## Configuration (Serverbound)
 #### 0x00 - Client Information (C ➔ S)
 | Index | Type Index | Name | Raw Type | Full Type |
@@ -237,6 +242,9 @@ Packet has no fields
 | -------------| -------------| -------------| -------------| -------------|
 | 0| 0| id| ResourceLocation| ResourceLocation|
 | 1| 0| payload| Optional| Optional&lt;Tag&gt;|
+ 
+#### 0x09 - Accept Code Of Conduct (C ➔ S)
+Packet has no fields
  
 ## Game (Clientbound)
 #### 0x00 - Bundle Delimiter (S ➔ C)
