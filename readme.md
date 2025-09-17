@@ -1,7 +1,7 @@
-# 25w37a (Snapshot)
+# 1.21.9 Pre-Release 1 (Snapshot)
 | Series | Java Runtime | Java Version | Protocol Version | World Version | Resource Pack Version | Data Pack Version | Build Timestamp (UTC) |
 | -------------| -------------| -------------| -------------| -------------| -------------| -------------| -------------|
-| main| java-runtime-delta| 21| 1073742092| 4547| 69.0| 87.0| 09/09/2025 13:20:49|
+| main| java-runtime-delta| 21| 1073742093| 4549| 69.0| 87.1| 16/09/2025 12:07:00|
 ## Handshake (Serverbound)
 #### 0x00 - Client Intention (C ➔ S)
 | Index | Type Index | Name | Raw Type | Full Type |
@@ -893,8 +893,7 @@ Packet has no fields
 #### 0x5F - Set Default Spawn Position (S ➔ C)
 | Index | Type Index | Name | Raw Type | Full Type |
 | -------------| -------------| -------------| -------------| -------------|
-| 0| 0| pos| BlockPos| BlockPos|
-| 1| 0| angle| float| float|
+| 0| 0| respawnData| LevelData$RespawnData| LevelData$RespawnData|
  
 #### 0x60 - Set Display Objective (S ➔ C)
 | Index | Type Index | Name | Raw Type | Full Type |
