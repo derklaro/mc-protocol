@@ -1,7 +1,7 @@
-# 1.21.10 (Stable)
+# 25w41a (Snapshot)
 | Series | Java Runtime | Java Version | Protocol Version | World Version | Resource Pack Version | Data Pack Version | Build Timestamp (UTC) |
 | -------------| -------------| -------------| -------------| -------------| -------------| -------------| -------------|
-| main| java-runtime-delta| 21| 773| 4556| 69.0| 88.0| 07/10/2025 09:14:11|
+| main| java-runtime-delta| 21| 1073742097| 4653| 70.0| 89.0| 09/10/2025 13:38:14|
 ## Handshake (Serverbound)
 #### 0x00 - Client Intention (C ➔ S)
 | Index | Type Index | Name | Raw Type | Full Type |
