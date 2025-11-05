@@ -1,7 +1,7 @@
-# 25w44a (Snapshot)
+# 25w45a (Snapshot)
 | Series | Java Runtime | Java Version | Protocol Version | World Version | Resource Pack Version | Data Pack Version | Build Timestamp (UTC) |
 | -------------| -------------| -------------| -------------| -------------| -------------| -------------| -------------|
-| main| java-runtime-delta| 21| 1073742100| 4659| 72.0| 92.0| 28/10/2025 13:59:13|
+| main| java-runtime-delta| 21| 1073742101| 4660| 73.0| 93.0| 04/11/2025 13:47:52|
 ## Handshake (Serverbound)
 #### 0x00 - Client Intention (C ➔ S)
 | Index | Type Index | Name | Raw Type | Full Type |
@@ -64,7 +64,7 @@ Packet has no fields
 #### 0x05 - Cookie Request (S ➔ C)
 | Index | Type Index | Name | Raw Type | Full Type |
 | -------------| -------------| -------------| -------------| -------------|
-| 0| 0| key| ResourceLocation| ResourceLocation|
+| 0| 0| key| Identifier| Identifier|
  
 ## Login (Serverbound)
 #### 0x00 - Hello (C ➔ S)
@@ -91,14 +91,14 @@ Packet has no fields
 #### 0x04 - Cookie Response (C ➔ S)
 | Index | Type Index | Name | Raw Type | Full Type |
 | -------------| -------------| -------------| -------------| -------------|
-| 0| 0| key| ResourceLocation| ResourceLocation|
+| 0| 0| key| Identifier| Identifier|
 | 1| 0| payload| byte[]| byte[]|
  
 ## Configuration (Clientbound)
 #### 0x00 - Cookie Request (S ➔ C)
 | Index | Type Index | Name | Raw Type | Full Type |
 | -------------| -------------| -------------| -------------| -------------|
-| 0| 0| key| ResourceLocation| ResourceLocation|
+| 0| 0| key| Identifier| Identifier|
  
 #### 0x01 - Custom Payload (S ➔ C)
 | Index | Type Index | Name | Raw Type | Full Type |
@@ -149,7 +149,7 @@ Packet has no fields
 #### 0x0A - Store Cookie (S ➔ C)
 | Index | Type Index | Name | Raw Type | Full Type |
 | -------------| -------------| -------------| -------------| -------------|
-| 0| 0| key| ResourceLocation| ResourceLocation|
+| 0| 0| key| Identifier| Identifier|
 | 1| 0| payload| byte[]| byte[]|
  
 #### 0x0B - Transfer (S ➔ C)
@@ -161,7 +161,7 @@ Packet has no fields
 #### 0x0C - Update Enabled Features (S ➔ C)
 | Index | Type Index | Name | Raw Type | Full Type |
 | -------------| -------------| -------------| -------------| -------------|
-| 0| 0| features| Set| Set&lt;ResourceLocation&gt;|
+| 0| 0| features| Set| Set&lt;Identifier&gt;|
  
 #### 0x0D - Update Tags (S ➔ C)
 | Index | Type Index | Name | Raw Type | Full Type |
@@ -205,7 +205,7 @@ Packet has no fields
 #### 0x01 - Cookie Response (C ➔ S)
 | Index | Type Index | Name | Raw Type | Full Type |
 | -------------| -------------| -------------| -------------| -------------|
-| 0| 0| key| ResourceLocation| ResourceLocation|
+| 0| 0| key| Identifier| Identifier|
 | 1| 0| payload| byte[]| byte[]|
  
 #### 0x02 - Custom Payload (C ➔ S)
@@ -240,7 +240,7 @@ Packet has no fields
 #### 0x08 - Custom Click Action (C ➔ S)
 | Index | Type Index | Name | Raw Type | Full Type |
 | -------------| -------------| -------------| -------------| -------------|
-| 0| 0| id| ResourceLocation| ResourceLocation|
+| 0| 0| id| Identifier| Identifier|
 | 1| 0| payload| Optional| Optional&lt;Tag&gt;|
  
 #### 0x09 - Accept Code Of Conduct (C ➔ S)
@@ -384,12 +384,12 @@ Packet has no fields
 #### 0x15 - Cookie Request (S ➔ C)
 | Index | Type Index | Name | Raw Type | Full Type |
 | -------------| -------------| -------------| -------------| -------------|
-| 0| 0| key| ResourceLocation| ResourceLocation|
+| 0| 0| key| Identifier| Identifier|
  
 #### 0x16 - Cooldown (S ➔ C)
 | Index | Type Index | Name | Raw Type | Full Type |
 | -------------| -------------| -------------| -------------| -------------|
-| 0| 0| cooldownGroup| ResourceLocation| ResourceLocation|
+| 0| 0| cooldownGroup| Identifier| Identifier|
 | 1| 0| duration| int| int|
  
 #### 0x17 - Custom Chat Completions (S ➔ C)
@@ -828,7 +828,7 @@ Packet has no fields
 #### 0x53 - Select Advancements Tab (S ➔ C)
 | Index | Type Index | Name | Raw Type | Full Type |
 | -------------| -------------| -------------| -------------| -------------|
-| 0| 0| tab| ResourceLocation| ResourceLocation|
+| 0| 0| tab| Identifier| Identifier|
  
 #### 0x54 - Server Data (S ➔ C)
 | Index | Type Index | Name | Raw Type | Full Type |
@@ -1039,13 +1039,13 @@ Packet has no fields
 #### 0x75 - Stop Sound (S ➔ C)
 | Index | Type Index | Name | Raw Type | Full Type |
 | -------------| -------------| -------------| -------------| -------------|
-| 0| 0| name| ResourceLocation| ResourceLocation|
+| 0| 0| name| Identifier| Identifier|
 | 1| 0| source| SoundSource| SoundSource|
  
 #### 0x76 - Store Cookie (S ➔ C)
 | Index | Type Index | Name | Raw Type | Full Type |
 | -------------| -------------| -------------| -------------| -------------|
-| 0| 0| key| ResourceLocation| ResourceLocation|
+| 0| 0| key| Identifier| Identifier|
 | 1| 0| payload| byte[]| byte[]|
  
 #### 0x77 - System Chat (S ➔ C)
@@ -1109,8 +1109,8 @@ Packet has no fields
 | -------------| -------------| -------------| -------------| -------------|
 | 0| 0| reset| boolean| boolean|
 | 1| 0| added| List| List&lt;AdvancementHolder&gt;|
-| 2| 0| removed| Set| Set&lt;ResourceLocation&gt;|
-| 3| 0| progress| Map| Map&lt;ResourceLocation, AdvancementProgress&gt;|
+| 2| 0| removed| Set| Set&lt;Identifier&gt;|
+| 3| 0| progress| Map| Map&lt;Identifier, AdvancementProgress&gt;|
 | 4| 1| showAdvancements| boolean| boolean|
  
 #### 0x81 - Update Attributes (S ➔ C)
@@ -1289,7 +1289,7 @@ Packet has no fields
 #### 0x14 - Cookie Response (C ➔ S)
 | Index | Type Index | Name | Raw Type | Full Type |
 | -------------| -------------| -------------| -------------| -------------|
-| 0| 0| key| ResourceLocation| ResourceLocation|
+| 0| 0| key| Identifier| Identifier|
 | 1| 0| payload| byte[]| byte[]|
  
 #### 0x15 - Custom Payload (C ➔ S)
@@ -1489,7 +1489,7 @@ Packet has no fields
 | Index | Type Index | Name | Raw Type | Full Type |
 | -------------| -------------| -------------| -------------| -------------|
 | 0| 0| action| ServerboundSeenAdvancementsPacket$Action| ServerboundSeenAdvancementsPacket$Action|
-| 1| 0| tab| ResourceLocation| ResourceLocation|
+| 1| 0| tab| Identifier| Identifier|
  
 #### 0x32 - Select Trade (C ➔ S)
 | Index | Type Index | Name | Raw Type | Full Type |
@@ -1534,9 +1534,9 @@ Packet has no fields
 | Index | Type Index | Name | Raw Type | Full Type |
 | -------------| -------------| -------------| -------------| -------------|
 | 0| 0| pos| BlockPos| BlockPos|
-| 1| 0| name| ResourceLocation| ResourceLocation|
-| 2| 1| target| ResourceLocation| ResourceLocation|
-| 3| 2| pool| ResourceLocation| ResourceLocation|
+| 1| 0| name| Identifier| Identifier|
+| 2| 1| target| Identifier| Identifier|
+| 3| 2| pool| Identifier| Identifier|
 | 4| 0| finalState| String| String|
 | 5| 0| joint| JigsawBlockEntity$JointType| JigsawBlockEntity$JointType|
 | 6| 0| selectionPriority| int| int|
@@ -1610,6 +1610,6 @@ Packet has no fields
 #### 0x41 - Custom Click Action (C ➔ S)
 | Index | Type Index | Name | Raw Type | Full Type |
 | -------------| -------------| -------------| -------------| -------------|
-| 0| 0| id| ResourceLocation| ResourceLocation|
+| 0| 0| id| Identifier| Identifier|
 | 1| 0| payload| Optional| Optional&lt;Tag&gt;|
  
