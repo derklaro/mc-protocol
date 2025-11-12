@@ -1,7 +1,7 @@
-# 25w45a (Snapshot)
+# 25w46a (Snapshot)
 | Series | Java Runtime | Java Version | Protocol Version | World Version | Resource Pack Version | Data Pack Version | Build Timestamp (UTC) |
 | -------------| -------------| -------------| -------------| -------------| -------------| -------------| -------------|
-| main| java-runtime-delta| 21| 1073742101| 4660| 73.0| 93.0| 04/11/2025 13:47:52|
+| main| java-runtime-delta| 21| 1073742102| 4662| 74.0| 93.1| 11/11/2025 13:01:47|
 ## Handshake (Serverbound)
 #### 0x00 - Client Intention (C ➔ S)
 | Index | Type Index | Name | Raw Type | Full Type |
@@ -498,7 +498,7 @@ Packet has no fields
 | 0| 0| absolutePos| BlockPos| BlockPos|
 | 1| 1| relativePos| BlockPos| BlockPos|
  
-#### 0x28 - Horse Screen Open (S ➔ C)
+#### 0x28 - Mount Screen Open (S ➔ C)
 | Index | Type Index | Name | Raw Type | Full Type |
 | -------------| -------------| -------------| -------------| -------------|
 | 0| 0| containerId| int| int|
