@@ -26,7 +26,7 @@ plugins {
   id("java")
   id("checkstyle")
   id("application")
-  id("com.gradleup.shadow") version "8.3.8"
+  id("com.gradleup.shadow") version "9.3.0"
   id("com.diffplug.spotless") version "7.2.1"
 }
 
