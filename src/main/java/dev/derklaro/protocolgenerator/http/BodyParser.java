@@ -24,7 +24,6 @@
 
 package dev.derklaro.protocolgenerator.http;
 
-import com.fasterxml.jackson.databind.JsonNode;
 import dev.derklaro.protocolgenerator.jackson.JacksonSupport;
 import java.io.IOException;
 import java.io.InputStream;
@@ -33,6 +32,7 @@ import java.net.http.HttpResponse;
 import java.nio.charset.StandardCharsets;
 import java.util.function.Function;
 import lombok.NonNull;
+import tools.jackson.databind.JsonNode;
 
 public final class BodyParser {
 

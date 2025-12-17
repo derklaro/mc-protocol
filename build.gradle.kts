@@ -26,8 +26,8 @@ plugins {
   id("java")
   id("checkstyle")
   id("application")
-  id("com.gradleup.shadow") version "8.3.8"
-  id("com.diffplug.spotless") version "7.2.1"
+  id("com.gradleup.shadow") version "9.3.0"
+  id("com.diffplug.spotless") version "8.1.0"
 }
 
 group = "dev.derklaro"
@@ -35,51 +35,45 @@ version = "1.0-SNAPSHOT"
 
 repositories {
   mavenCentral()
-  maven("https://maven.minecraftforge.net/")
 }
 
 dependencies {
   val markdown4j = "1.0"
-  implementation("fun.mingshan", "markdown4j", markdown4j)
+  implementation("fun.mingshan:markdown4j:$markdown4j")
 
-  val guava = "33.4.8-jre"
-  implementation("com.google.guava", "guava", guava)
+  val guava = "33.5.0-jre"
+  implementation("com.google.guava:guava:$guava")
 
   val slf4j = "2.0.17"
-  implementation("org.slf4j", "slf4j-api", slf4j)
+  implementation("org.slf4j:slf4j-api:$slf4j")
 
-  val logback = "1.5.18"
-  runtimeOnly("ch.qos.logback", "logback-classic", logback)
+  val logback = "1.5.22"
+  runtimeOnly("ch.qos.logback:logback-classic:$logback")
 
-  val jackson = "2.19.2"
-  implementation("com.fasterxml.jackson.core", "jackson-databind", jackson)
-  implementation("com.fasterxml.jackson.datatype", "jackson-datatype-jsr310", jackson)
-
-  // for updates check https://maven.minecraftforge.net/net/minecraftforge/ForgeAutoRenamingTool/maven-metadata.xml
-  val autoRenamingTool = "1.1.0"
-  implementation("net.minecraftforge", "ForgeAutoRenamingTool", autoRenamingTool)
+  val jackson = "3.0.3"
+  implementation("tools.jackson.core:jackson-databind:$jackson")
 
   val argparse4j = "0.9.0"
-  implementation("net.sourceforge.argparse4j", "argparse4j", argparse4j)
+  implementation("net.sourceforge.argparse4j:argparse4j:$argparse4j")
 
-  val reflexion = "1.8.0"
-  implementation("dev.derklaro.reflexion", "reflexion", reflexion)
+  val reflexion = "2.0.0"
+  implementation("dev.derklaro.reflexion:reflexion-core:$reflexion")
 
-  val lombok = "1.18.38"
-  compileOnly("org.projectlombok", "lombok", lombok)
-  annotationProcessor("org.projectlombok", "lombok", lombok)
+  val lombok = "1.18.42"
+  compileOnly("org.projectlombok:lombok:$lombok")
+  annotationProcessor("org.projectlombok:lombok:$lombok")
 
-  val asm = "9.8"
-  implementation("org.ow2.asm", "asm", asm)
-  implementation("org.ow2.asm", "asm-tree", asm)
+  val asm = "9.9.1"
+  implementation("org.ow2.asm:asm:$asm")
+  implementation("org.ow2.asm:asm-tree:$asm")
 
-  val jbAnnotations = "26.0.2"
+  val jbAnnotations = "26.0.2-1"
   implementation("org.jetbrains", "annotations", jbAnnotations)
 }
 
 tasks.withType<JavaCompile>().configureEach {
-  sourceCompatibility = JavaVersion.VERSION_21.toString()
-  targetCompatibility = JavaVersion.VERSION_21.toString()
+  sourceCompatibility = JavaVersion.VERSION_25.toString()
+  targetCompatibility = JavaVersion.VERSION_25.toString()
 
   options.encoding = "UTF-8"
   options.isIncremental = true
@@ -102,7 +96,7 @@ tasks.withType<Checkstyle> {
 }
 
 extensions.configure<CheckstyleExtension> {
-  toolVersion = "10.26.1"
+  toolVersion = "12.3.0"
 }
 
 application {

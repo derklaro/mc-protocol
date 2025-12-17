@@ -25,18 +25,17 @@
 package dev.derklaro.protocolgenerator.jackson;
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
-import com.fasterxml.jackson.annotation.PropertyAccessor;
-import com.fasterxml.jackson.databind.DeserializationFeature;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import tools.jackson.databind.DeserializationFeature;
+import tools.jackson.databind.json.JsonMapper;
 
 public final class JacksonSupport {
 
-  public static final ObjectMapper OBJECT_MAPPER = new ObjectMapper()
-    .findAndRegisterModules()
-    .enable(DeserializationFeature.FAIL_ON_NUMBERS_FOR_ENUMS)
+  public static final JsonMapper OBJECT_MAPPER = JsonMapper.builder()
+    .findAndAddModules()
     .enable(DeserializationFeature.FAIL_ON_NULL_FOR_PRIMITIVES)
     .disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES)
-    .setVisibility(PropertyAccessor.FIELD, JsonAutoDetect.Visibility.ANY);
+    .changeDefaultVisibility(checker -> checker.withFieldVisibility(JsonAutoDetect.Visibility.ANY))
+    .build();
 
   private JacksonSupport() {
     throw new UnsupportedOperationException();

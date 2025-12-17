@@ -24,8 +24,6 @@
 
 package dev.derklaro.protocolgenerator.manifest;
 
-import com.fasterxml.jackson.databind.JavaType;
-import com.fasterxml.jackson.databind.type.TypeFactory;
 import dev.derklaro.protocolgenerator.http.BodyParser;
 import dev.derklaro.protocolgenerator.http.HttpClientProvider;
 import dev.derklaro.protocolgenerator.jackson.JacksonSupport;
@@ -37,15 +35,16 @@ import java.util.Collection;
 import java.util.Set;
 import java.util.concurrent.CompletableFuture;
 import lombok.NonNull;
+import tools.jackson.databind.JavaType;
+import tools.jackson.databind.type.TypeFactory;
 
 public final class McManifestVersionFetcher {
 
-  private static final URI VERSION_MANIFEST_URI = URI.create(
-    "https://piston-meta.mojang.com/mc/game/version_manifest_v2.json");
+  private static final URI VERSION_MANIFEST_URI =
+    URI.create("https://piston-meta.mojang.com/mc/game/version_manifest_v2.json");
 
-  private static final JavaType COLLECTION_MC_VERSION = TypeFactory.defaultInstance().constructCollectionType(
-    Set.class,
-    McManifestVersion.class);
+  private static final JavaType COLLECTION_MC_VERSION =
+    TypeFactory.createDefaultInstance().constructCollectionType(Set.class, McManifestVersion.class);
 
   public @NonNull CompletableFuture<Collection<McManifestVersion>> resolveMcVersions() {
     try (var httpClient = HttpClientProvider.provideClient()) {

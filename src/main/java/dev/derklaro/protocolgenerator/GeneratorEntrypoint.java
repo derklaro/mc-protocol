@@ -35,7 +35,6 @@ import dev.derklaro.protocolgenerator.manifest.McVersionDumper;
 import dev.derklaro.protocolgenerator.markdown.MarkdownFormatter;
 import dev.derklaro.protocolgenerator.markdown.MarkdownGenerator;
 import dev.derklaro.protocolgenerator.protocol.ProtocolInfoCollector;
-import dev.derklaro.protocolgenerator.remap.JarRemapper;
 import dev.derklaro.protocolgenerator.util.CatchingFunction;
 import java.io.IOException;
 import java.nio.file.Path;
@@ -48,11 +47,9 @@ import lombok.NonNull;
 public final class GeneratorEntrypoint {
 
   private static final Path LIB_DIR_PATH = Path.of("client_libs");
-  private static final Path MAPPING_PATH = Path.of("mappings.tmp");
   private static final Path CLIENT_JAR_PATH = Path.of("client.tmp");
-  private static final Path REMAPPED_JAR_PATH = Path.of("client_remapped.tmp");
 
-  public static void main(@NonNull String[] args) throws IOException {
+  static void main(@NonNull String[] args) throws IOException {
     // parse the cli arguments
     var cliArgumentParser = new CliArgParser("ProtocolGenerator");
     GeneratorCLIArguments.registerDefaultArguments(cliArgumentParser);
@@ -80,20 +77,12 @@ public final class GeneratorEntrypoint {
 
     // download the client and client mappings of the version
     var versionTypeDownloads = versionData.thenCompose(data -> {
-      var clientDownloadInfo = data.fileDownloads().get("client");
-      var mappingsDownloadInfo = data.fileDownloads().get("client_mappings");
-
       // no null check here as we just require the downloads to present
       // in all other cases we cannot proceed anyway
-      var clientDownload = new FileDownloader(clientDownloadInfo.downloadUrl(), CLIENT_JAR_PATH)
+      var clientDownloadInfo = data.fileDownloads().get("client");
+      return new FileDownloader(clientDownloadInfo.downloadUrl(), CLIENT_JAR_PATH)
         .withValidator(FileDownloadValidator.ofSha1(clientDownloadInfo.sha1()))
         .executeDownload();
-      var clientMappingsDownload = new FileDownloader(mappingsDownloadInfo.downloadUrl(), MAPPING_PATH)
-        .withValidator(FileDownloadValidator.ofSha1(mappingsDownloadInfo.sha1()))
-        .executeDownload();
-
-      // combine both futures
-      return CompletableFuture.allOf(clientDownload, clientMappingsDownload);
     });
 
     // download all required client libraries
@@ -112,15 +101,8 @@ public final class GeneratorEntrypoint {
     // combine the loading of the client and the loading of the required libraries
     var downloadFuture = CompletableFuture.allOf(versionTypeDownloads, libraryLoading);
 
-    // remap the client jar
-    var remapper = new JarRemapper(CLIENT_JAR_PATH, MAPPING_PATH);
-    var remapOutput = downloadFuture.thenApply(CatchingFunction.asJavaUtil(ignored -> {
-      remapper.remap(REMAPPED_JAR_PATH);
-      return null;
-    }, "Unable to remap client"));
-
     // get the game version from the jar
-    var gameVersion = remapOutput
+    var gameVersion = downloadFuture
       .thenApply(CatchingFunction.asJavaUtil(ignored -> {
         var versionParser = new JarGameVersionParser(CLIENT_JAR_PATH);
         return versionParser.readGameVersion();
@@ -128,9 +110,9 @@ public final class GeneratorEntrypoint {
       .join();
 
     // collect the protocol information
-    var protocolInfos = remapOutput
+    var protocolInfos = downloadFuture
       .thenApply(CatchingFunction.asJavaUtil(ignored -> {
-        var protocolInfoGenerator = new ProtocolInfoCollector(REMAPPED_JAR_PATH, libraryLoader.provideClassLoader());
+        var protocolInfoGenerator = new ProtocolInfoCollector(CLIENT_JAR_PATH, libraryLoader.provideClassLoader());
         return protocolInfoGenerator.collectAllPacketInfos();
       }, "Unable to resolve packet information"))
       .join();

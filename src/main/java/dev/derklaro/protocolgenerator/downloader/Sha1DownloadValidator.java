@@ -24,6 +24,7 @@
 
 package dev.derklaro.protocolgenerator.downloader;
 
+import java.io.OutputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.security.DigestInputStream;
@@ -40,7 +41,6 @@ final class Sha1DownloadValidator implements FileDownloadValidator {
   }
 
   @Override
-  @SuppressWarnings("StatementWithEmptyBody")
   public boolean validate(@NonNull Path downloadPath) throws Exception {
     var sha1Digest = MessageDigest.getInstance("SHA-1");
     try (
@@ -48,9 +48,7 @@ final class Sha1DownloadValidator implements FileDownloadValidator {
       var digestStream = new DigestInputStream(fileStream, sha1Digest)
     ) {
       // read all bytes provided by the stream
-      var buffer = new byte[1024];
-      while (digestStream.read(buffer) != -1) {
-      }
+      digestStream.transferTo(OutputStream.nullOutputStream());
 
       // compute the hex of the stream & validate it against the provided hex
       var digest = sha1Digest.digest();
