@@ -67,7 +67,7 @@ dependencies {
   implementation("org.ow2.asm:asm:$asm")
   implementation("org.ow2.asm:asm-tree:$asm")
 
-  val jbAnnotations = "26.0.2-1"
+  val jbAnnotations = "26.1.0"
   implementation("org.jetbrains", "annotations", jbAnnotations)
 }
 
