@@ -1,7 +1,7 @@
-# 26.1.1 Release Candidate 1 (Snapshot)
+# 26w14a (Snapshot)
 | Series | Java Runtime | Java Version | Protocol Version | World Version | Resource Pack Version | Data Pack Version | Build Timestamp (UTC) |
 | -------------| -------------| -------------| -------------| -------------| -------------| -------------| -------------|
-| main| java-runtime-epsilon| 25| 1073742128| 4787| 84.0| 101.1| 31/03/2026 10:06:00|
+| april2026| java-runtime-epsilon| 25| 1073742129| 5000| 84.0| 101.1| 01/04/2026 12:12:09|
 ## Handshake (Serverbound)
 #### 0x00 - Client Intention (C ➔ S)
 | Index | Type Index | Name | Raw Type | Full Type |
@@ -1421,7 +1421,7 @@ Packet has no fields
 #### 0x24 - Pick Item From Block (C ➔ S)
 | Index | Type Index | Name | Raw Type | Full Type |
 | -------------| -------------| -------------| -------------| -------------|
-| 0| 0| pos| BlockPos| BlockPos|
+| 0| 0| hitResult| BlockHitResult| BlockHitResult|
 | 1| 0| includeData| boolean| boolean|
  
 #### 0x25 - Pick Item From Entity (C ➔ S)
