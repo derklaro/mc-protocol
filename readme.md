@@ -1,7 +1,7 @@
-# 26.2 Snapshot 6 (Snapshot)
+# 26.2 Snapshot 7 (Snapshot)
 | Series | Java Runtime | Java Version | Protocol Version | World Version | Resource Pack Version | Data Pack Version | Build Timestamp (UTC) |
 | -------------| -------------| -------------| -------------| -------------| -------------| -------------| -------------|
-| main| java-runtime-epsilon| 25| 1073742136| 4890| 86.2| 105.0| 05/05/2026 12:48:58|
+| main| java-runtime-epsilon| 25| 1073742137| 4891| 87.0| 105.1| 12/05/2026 12:22:21|
 ## Handshake (Serverbound)
 #### 0x00 - Client Intention (C ➔ S)
 | Index | Type Index | Name | Raw Type | Full Type |
@@ -584,7 +584,8 @@ Packet has no fields
 | 7| 2| showDeathScreen| boolean| boolean|
 | 8| 3| doLimitedCrafting| boolean| boolean|
 | 9| 0| commonPlayerSpawnInfo| CommonPlayerSpawnInfo| CommonPlayerSpawnInfo|
-| 10| 4| enforcesSecureChat| boolean| boolean|
+| 10| 4| onlineMode| boolean| boolean|
+| 11| 5| enforcesSecureChat| boolean| boolean|
  
 #### 0x32 - Low Disk Space Warning (S ➔ C)
 Packet has no fields
@@ -1593,10 +1594,10 @@ Packet has no fields
 | 1| 0| lines| String[]| String[]|
 | 2| 0| isFrontText| boolean| boolean|
  
-#### 0x3E - Spectate Entity (C ➔ S)
+#### 0x3E - Spectator Action (C ➔ S)
 | Index | Type Index | Name | Raw Type | Full Type |
 | -------------| -------------| -------------| -------------| -------------|
-| 0| 0| entityId| int| int|
+| 0| 0| spectateEntityId| OptionalInt| OptionalInt|
  
 #### 0x3F - Swing (C ➔ S)
 | Index | Type Index | Name | Raw Type | Full Type |
