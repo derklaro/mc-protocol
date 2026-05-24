@@ -63,7 +63,7 @@ dependencies {
   compileOnly("org.projectlombok:lombok:$lombok")
   annotationProcessor("org.projectlombok:lombok:$lombok")
 
-  val asm = "9.9.1"
+  val asm = "9.10.1"
   implementation("org.ow2.asm:asm:$asm")
   implementation("org.ow2.asm:asm-tree:$asm")
 
