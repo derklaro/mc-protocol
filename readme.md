@@ -1,7 +1,7 @@
-# 26.2 Snapshot 8 (Snapshot)
+# 26.2 Pre-Release 1 (Snapshot)
 | Series | Java Runtime | Java Version | Protocol Version | World Version | Resource Pack Version | Data Pack Version | Build Timestamp (UTC) |
 | -------------| -------------| -------------| -------------| -------------| -------------| -------------| -------------|
-| main| java-runtime-epsilon| 25| 1073742138| 4893| 87.0| 106.0| 19/05/2026 15:17:12|
+| main| java-runtime-epsilon| 25| 1073742139| 4894| 88.0| 106.1| 26/05/2026 13:46:27|
 ## Handshake (Serverbound)
 #### 0x00 - Client Intention (C ➔ S)
 | Index | Type Index | Name | Raw Type | Full Type |
@@ -49,6 +49,7 @@ Packet has no fields
 | Index | Type Index | Name | Raw Type | Full Type |
 | -------------| -------------| -------------| -------------| -------------|
 | 0| 0| gameProfile| GameProfile| GameProfile|
+| 1| 0| sessionId| UUID| UUID|
  
 #### 0x03 - Login Compression (S ➔ C)
 | Index | Type Index | Name | Raw Type | Full Type |
