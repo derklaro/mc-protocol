@@ -1,7 +1,7 @@
-# 26.2 Pre-Release 3 (Snapshot)
+# 26.2 Pre-Release 4 (Snapshot)
 | Series | Java Runtime | Java Version | Protocol Version | World Version | Resource Pack Version | Data Pack Version | Build Timestamp (UTC) |
 | -------------| -------------| -------------| -------------| -------------| -------------| -------------| -------------|
-| main| java-runtime-epsilon| 25| 1073742141| 4896| 88.0| 107.0| 02/06/2026 11:46:25|
+| main| java-runtime-epsilon| 25| 1073742142| 4897| 88.0| 107.1| 04/06/2026 12:36:42|
 ## Handshake (Serverbound)
 #### 0x00 - Client Intention (C ➔ S)
 | Index | Type Index | Name | Raw Type | Full Type |
