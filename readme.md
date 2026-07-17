@@ -1,7 +1,7 @@
-# 26.3 Snapshot 3 (Snapshot)
+# 26.3 Snapshot 4 (Snapshot)
 | Series | Java Runtime | Java Version | Protocol Version | World Version | Resource Pack Version | Data Pack Version | Build Timestamp (UTC) |
 | -------------| -------------| -------------| -------------| -------------| -------------| -------------| -------------|
-| main| java-runtime-epsilon| 25| 1073742149| 5001| 91.0| 110.0| 07/07/2026 12:00:55|
+| main| java-runtime-epsilon| 25| 1073742150| 5003| 92.0| 111.0| 16/07/2026 13:57:25|
 ## Handshake (Serverbound)
 #### 0x00 - Client Intention (C ➔ S)
 | Index | Type Index | Name | Raw Type | Full Type |
@@ -678,7 +678,7 @@ Packet has no fields
 | Index | Type Index | Name | Raw Type | Full Type |
 | -------------| -------------| -------------| -------------| -------------|
 | 0| 0| pos| BlockPos| BlockPos|
-| 1| 0| isFrontText| boolean| boolean|
+| 1| 0| slot| SignTextSlot| SignTextSlot|
  
 #### 0x3D - Ping (S ➔ C)
 | Index | Type Index | Name | Raw Type | Full Type |
@@ -1595,8 +1595,8 @@ Packet has no fields
 | Index | Type Index | Name | Raw Type | Full Type |
 | -------------| -------------| -------------| -------------| -------------|
 | 0| 0| pos| BlockPos| BlockPos|
-| 1| 0| lines| String[]| String[]|
-| 2| 0| isFrontText| boolean| boolean|
+| 1| 0| lines| List| List&lt;String&gt;|
+| 2| 0| slot| SignTextSlot| SignTextSlot|
  
 #### 0x3E - Spectator Action (C ➔ S)
 | Index | Type Index | Name | Raw Type | Full Type |
