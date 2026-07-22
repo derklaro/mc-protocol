@@ -1,7 +1,7 @@
-# 26.3 Snapshot 4 (Snapshot)
+# 26.3 Snapshot 5 (Snapshot)
 | Series | Java Runtime | Java Version | Protocol Version | World Version | Resource Pack Version | Data Pack Version | Build Timestamp (UTC) |
 | -------------| -------------| -------------| -------------| -------------| -------------| -------------| -------------|
-| main| java-runtime-epsilon| 25| 1073742150| 5003| 92.0| 111.0| 16/07/2026 13:57:25|
+| main| java-runtime-epsilon| 25| 1073742151| 5004| 93.0| 112.0| 21/07/2026 11:43:39|
 ## Handshake (Serverbound)
 #### 0x00 - Client Intention (C ➔ S)
 | Index | Type Index | Name | Raw Type | Full Type |
@@ -712,9 +712,9 @@ Packet has no fields
 | 0| 0| globalIndex| int| int|
 | 1| 0| sender| UUID| UUID|
 | 2| 1| index| int| int|
-| 3| 0| signature| MessageSignature| MessageSignature|
+| 3| 0| signature| Optional| Optional&lt;MessageSignature&gt;|
 | 4| 0| body| SignedMessageBody$Packed| SignedMessageBody$Packed|
-| 5| 0| unsignedContent| Component| Component|
+| 5| 1| unsignedContent| Optional| Optional&lt;Component&gt;|
 | 6| 0| filterMask| FilterMask| FilterMask|
 | 7| 0| chatType| ChatType$Bound| ChatType$Bound|
  
@@ -985,7 +985,7 @@ Packet has no fields
 | -------------| -------------| -------------| -------------| -------------|
 | 0| 0| method| int| int|
 | 1| 0| name| String| String|
-| 2| 0| players| Collection| Collection&lt;String&gt;|
+| 2| 0| players| List| List&lt;String&gt;|
 | 3| 0| parameters| Optional| Optional&lt;ClientboundSetPlayerTeamPacket$Parameters&gt;|
  
 #### 0x6F - Set Score (S ➔ C)
@@ -1121,7 +1121,7 @@ Packet has no fields
 #### 0x83 - Update Advancements (S ➔ C)
 | Index | Type Index | Name | Raw Type | Full Type |
 | -------------| -------------| -------------| -------------| -------------|
-| 0| 0| reset| boolean| boolean|
+| 0| 0| shouldReset| boolean| boolean|
 | 1| 0| added| List| List&lt;AdvancementHolder&gt;|
 | 2| 0| removed| Set| Set&lt;Identifier&gt;|
 | 3| 0| progress| Map| Map&lt;Identifier, AdvancementProgress&gt;|
@@ -1241,7 +1241,7 @@ Packet has no fields
 | 0| 0| message| String| String|
 | 1| 0| timeStamp| Instant| Instant|
 | 2| 0| salt| long| long|
-| 3| 0| signature| MessageSignature| MessageSignature|
+| 3| 0| signature| Optional| Optional&lt;MessageSignature&gt;|
 | 4| 0| lastSeenMessages| LastSeenMessages$Update| LastSeenMessages$Update|
  
 #### 0x0A - Chat Session Update (C ➔ S)
