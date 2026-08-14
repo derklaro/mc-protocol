@@ -50,7 +50,7 @@ dependencies {
   val logback = "1.5.22"
   runtimeOnly("ch.qos.logback:logback-classic:$logback")
 
-  val jackson = "3.0.3"
+  val jackson = "3.2.2"
   implementation("tools.jackson.core:jackson-databind:$jackson")
 
   val argparse4j = "0.9.0"
