@@ -1,7 +1,7 @@
-# 26.3 Snapshot 8 (Snapshot)
+# 26.3 Snapshot 9 (Snapshot)
 | Series | Java Runtime | Java Version | Protocol Version | World Version | Resource Pack Version | Data Pack Version | Build Timestamp (UTC) |
 | -------------| -------------| -------------| -------------| -------------| -------------| -------------| -------------|
-| main| java-runtime-epsilon| 25| 1073742154| 5010| 96.0| 116.0| 12/08/2026 09:37:25|
+| main| java-runtime-epsilon| 25| 1073742155| 5011| 96.0| 117.0| 17/08/2026 11:43:59|
 ## Handshake (Serverbound)
 #### 0x00 - Client Intention (C ➔ S)
 | Index | Type Index | Name | Raw Type | Full Type |
@@ -1129,7 +1129,7 @@ Packet has no fields
 | Index | Type Index | Name | Raw Type | Full Type |
 | -------------| -------------| -------------| -------------| -------------|
 | 0| 0| shouldReset| boolean| boolean|
-| 1| 0| added| List| List&lt;AdvancementHolder&gt;|
+| 1| 0| added| List| List&lt;ClientboundUpdateAdvancementsPacket$PositionedAdvancement&gt;|
 | 2| 0| removed| Set| Set&lt;Identifier&gt;|
 | 3| 0| progress| Map| Map&lt;Identifier, AdvancementProgress&gt;|
 | 4| 1| showAdvancements| boolean| boolean|
@@ -1628,8 +1628,8 @@ Packet has no fields
 #### 0x42 - Use Item On (C ➔ S)
 | Index | Type Index | Name | Raw Type | Full Type |
 | -------------| -------------| -------------| -------------| -------------|
-| 0| 0| blockHit| BlockHitResult| BlockHitResult|
-| 1| 0| hand| InteractionHand| InteractionHand|
+| 0| 0| hand| InteractionHand| InteractionHand|
+| 1| 0| hitResult| BlockHitResult| BlockHitResult|
 | 2| 0| sequence| int| int|
  
 #### 0x43 - Use Item (C ➔ S)
