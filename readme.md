@@ -1,7 +1,7 @@
-# 26.3 Snapshot 9 (Snapshot)
+# 26.3 Snapshot 10 (Snapshot)
 | Series | Java Runtime | Java Version | Protocol Version | World Version | Resource Pack Version | Data Pack Version | Build Timestamp (UTC) |
 | -------------| -------------| -------------| -------------| -------------| -------------| -------------| -------------|
-| main| java-runtime-epsilon| 25| 1073742155| 5011| 96.0| 117.0| 17/08/2026 11:43:59|
+| main| java-runtime-epsilon| 25| 1073742156| 5015| 97.0| 118.0| 25/08/2026 12:51:34|
 ## Handshake (Serverbound)
 #### 0x00 - Client Intention (C ➔ S)
 | Index | Type Index | Name | Raw Type | Full Type |
@@ -1195,6 +1195,11 @@ Packet has no fields
 | Index | Type Index | Name | Raw Type | Full Type |
 | -------------| -------------| -------------| -------------| -------------|
 | 0| 0| id| int| int|
+| 1| 0| x| double| double|
+| 2| 1| y| double| double|
+| 3| 2| z| double| double|
+| 4| 0| yRot| float| float|
+| 5| 1| xRot| float| float|
  
 #### 0x01 - Attack (C ➔ S)
 | Index | Type Index | Name | Raw Type | Full Type |
