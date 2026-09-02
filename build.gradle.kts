@@ -59,7 +59,7 @@ dependencies {
   val reflexion = "2.0.0"
   implementation("dev.derklaro.reflexion:reflexion-core:$reflexion")
 
-  val lombok = "1.18.42"
+  val lombok = "1.18.48"
   compileOnly("org.projectlombok:lombok:$lombok")
   annotationProcessor("org.projectlombok:lombok:$lombok")
 
