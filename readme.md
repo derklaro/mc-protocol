@@ -1,7 +1,7 @@
-# 26.3 Pre-Release 1 (Snapshot)
+# 26.3 Pre-Release 2 (Snapshot)
 | Series | Java Runtime | Java Version | Protocol Version | World Version | Resource Pack Version | Data Pack Version | Build Timestamp (UTC) |
 | -------------| -------------| -------------| -------------| -------------| -------------| -------------| -------------|
-| main| java-runtime-epsilon| 25| 1073742157| 5017| 97.1| 119.0| 01/09/2026 11:26:48|
+| main| java-runtime-epsilon| 25| 1073742158| 5018| 97.1| 120.0| 04/09/2026 11:52:33|
 ## Handshake (Serverbound)
 #### 0x00 - Client Intention (C ➔ S)
 | Index | Type Index | Name | Raw Type | Full Type |
@@ -561,17 +561,20 @@ Packet has no fields
 #### 0x2F - Level Particles (S ➔ C)
 | Index | Type Index | Name | Raw Type | Full Type |
 | -------------| -------------| -------------| -------------| -------------|
-| 0| 0| x| double| double|
-| 1| 1| y| double| double|
-| 2| 2| z| double| double|
-| 3| 0| xDist| float| float|
-| 4| 1| yDist| float| float|
-| 5| 2| zDist| float| float|
-| 6| 3| maxSpeed| float| float|
-| 7| 0| count| int| int|
-| 8| 0| overrideLimiter| boolean| boolean|
-| 9| 1| alwaysShow| boolean| boolean|
-| 10| 0| particle| ParticleOptions| ParticleOptions|
+| 0| 0| particle| ParticleOptions| ParticleOptions|
+| 1| 0| overrideLimiter| boolean| boolean|
+| 2| 1| alwaysShow| boolean| boolean|
+| 3| 0| x| double| double|
+| 4| 1| y| double| double|
+| 5| 2| z| double| double|
+| 6| 0| xDist| float| float|
+| 7| 1| yDist| float| float|
+| 8| 2| zDist| float| float|
+| 9| 3| xMaxSpeed| float| float|
+| 10| 4| yMaxSpeed| float| float|
+| 11| 5| zMaxSpeed| float| float|
+| 12| 0| count| int| int|
+| 13| 0| randomizationType| ClientboundLevelParticlesPacket$RandomizationType| ClientboundLevelParticlesPacket$RandomizationType|
  
 #### 0x30 - Light Update (S ➔ C)
 | Index | Type Index | Name | Raw Type | Full Type |
