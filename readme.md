@@ -1,7 +1,7 @@
-# 26.4 Snapshot 3 (Snapshot)
+# 26.4 Snapshot 4 (Snapshot)
 | Series | Java Runtime | Java Version | Protocol Version | World Version | Resource Pack Version | Data Pack Version | Build Timestamp (UTC) |
 | -------------| -------------| -------------| -------------| -------------| -------------| -------------| -------------|
-| main| java-runtime-epsilon| 25| 1073742165| 5122| 100.0| 123.0| 06/10/2026 12:52:17|
+| main| java-runtime-epsilon| 25| 1073742166| 5124| 100.1| 124.0| 13/10/2026 12:03:38|
 ## Handshake (Serverbound)
 #### 0x00 - Client Intention (C ➔ S)
 | Index | Type Index | Name | Raw Type | Full Type |
@@ -486,10 +486,9 @@ Packet has no fields
 | 1| 0| radius| float| float|
 | 2| 0| blockCount| int| int|
 | 3| 0| playerKnockback| Optional| Optional&lt;Vec3&gt;|
-| 4| 0| explosionParticle| ParticleOptions| ParticleOptions|
-| 5| 0| explosionSound| Holder| Holder&lt;SoundEvent&gt;|
+| 4| 1| explosionParticle| Optional| Optional&lt;ParticleOptions&gt;|
+| 5| 2| explosionSound| Optional| Optional&lt;Holder&lt;SoundEvent&gt;&gt;|
 | 6| 0| blockParticles| WeightedList| WeightedList&lt;ExplosionParticleInfo&gt;|
-| 7| 0| playSound| boolean| boolean|
  
 #### 0x25 - Add Transient Block (S ➔ C)
 | Index | Type Index | Name | Raw Type | Full Type |
