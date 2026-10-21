@@ -1,7 +1,7 @@
-# 26.4 Snapshot 4 (Snapshot)
+# 26.4 Snapshot 5 (Snapshot)
 | Series | Java Runtime | Java Version | Protocol Version | World Version | Resource Pack Version | Data Pack Version | Build Timestamp (UTC) |
 | -------------| -------------| -------------| -------------| -------------| -------------| -------------| -------------|
-| main| java-runtime-epsilon| 25| 1073742166| 5124| 100.1| 124.0| 13/10/2026 12:03:38|
+| main| java-runtime-epsilon| 25| 1073742167| 5125| 100.2| 125.0| 20/10/2026 12:13:02|
 ## Handshake (Serverbound)
 #### 0x00 - Client Intention (C ➔ S)
 | Index | Type Index | Name | Raw Type | Full Type |
@@ -37,7 +37,7 @@ Packet has no fields
 | -------------| -------------| -------------| -------------| -------------|
 | 0| 0| reason| Component| Component|
  
-#### 0x01 - Hello (S ➔ C)
+#### 0x01 - Key (S ➔ C)
 | Index | Type Index | Name | Raw Type | Full Type |
 | -------------| -------------| -------------| -------------| -------------|
 | 0| 0| serverId| String| String|
@@ -50,8 +50,9 @@ Packet has no fields
 | -------------| -------------| -------------| -------------| -------------|
 | 0| 0| gameProfile| GameProfile| GameProfile|
 | 1| 0| sessionId| UUID| UUID|
+| 2| 0| options| byte| byte|
  
-#### 0x03 - Login Compression (S ➔ C)
+#### 0x03 - Setup Compression (S ➔ C)
 | Index | Type Index | Name | Raw Type | Full Type |
 | -------------| -------------| -------------| -------------| -------------|
 | 0| 0| compressionThreshold| int| int|
@@ -67,6 +68,11 @@ Packet has no fields
 | -------------| -------------| -------------| -------------| -------------|
 | 0| 0| key| Identifier| Identifier|
  
+#### 0x06 - Apply Options (S ➔ C)
+| Index | Type Index | Name | Raw Type | Full Type |
+| -------------| -------------| -------------| -------------| -------------|
+| 0| 0| options| byte| byte|
+ 
 ## Login (Serverbound)
 #### 0x00 - Hello (C ➔ S)
 | Index | Type Index | Name | Raw Type | Full Type |
@@ -77,7 +83,7 @@ Packet has no fields
 #### 0x01 - Key (C ➔ S)
 | Index | Type Index | Name | Raw Type | Full Type |
 | -------------| -------------| -------------| -------------| -------------|
-| 0| 0| keybytes| byte[]| byte[]|
+| 0| 0| encryptedSecretKey| byte[]| byte[]|
 | 1| 1| encryptedChallenge| byte[]| byte[]|
  
 #### 0x02 - Custom Query Answer (C ➔ S)
@@ -94,6 +100,9 @@ Packet has no fields
 | -------------| -------------| -------------| -------------| -------------|
 | 0| 0| key| Identifier| Identifier|
 | 1| 0| payload| byte[]| byte[]|
+ 
+#### 0x05 - Options Applied (C ➔ S)
+Packet has no fields
  
 ## Configuration (Clientbound)
 #### 0x00 - Cookie Request (S ➔ C)
