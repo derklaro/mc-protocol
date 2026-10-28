@@ -1,7 +1,7 @@
-# 26.4 Snapshot 5 (Snapshot)
+# 26.4 Snapshot 6 (Snapshot)
 | Series | Java Runtime | Java Version | Protocol Version | World Version | Resource Pack Version | Data Pack Version | Build Timestamp (UTC) |
 | -------------| -------------| -------------| -------------| -------------| -------------| -------------| -------------|
-| main| java-runtime-epsilon| 25| 1073742167| 5125| 100.2| 125.0| 20/10/2026 12:13:02|
+| main| java-runtime-epsilon| 25| 1073742168| 5126| 101.0| 125.1| 27/10/2026 13:38:21|
 ## Handshake (Serverbound)
 #### 0x00 - Client Intention (C ➔ S)
 | Index | Type Index | Name | Raw Type | Full Type |
