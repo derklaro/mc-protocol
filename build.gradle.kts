@@ -41,7 +41,7 @@ dependencies {
   val markdown4j = "1.0"
   implementation("fun.mingshan:markdown4j:$markdown4j")
 
-  val guava = "33.5.0-jre"
+  val guava = "33.8.0-jre"
   implementation("com.google.guava:guava:$guava")
 
   val slf4j = "2.0.17"
