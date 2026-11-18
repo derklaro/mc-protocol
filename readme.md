@@ -1,7 +1,7 @@
-# 26.4 Snapshot 8 (Snapshot)
+# 26.4 Snapshot 10 (Snapshot)
 | Series | Java Runtime | Java Version | Protocol Version | World Version | Resource Pack Version | Data Pack Version | Build Timestamp (UTC) |
 | -------------| -------------| -------------| -------------| -------------| -------------| -------------| -------------|
-| main| java-runtime-epsilon| 25| 1073742170| 5128| 103.0| 127.0| 10/11/2026 14:17:55|
+| main| java-runtime-epsilon| 25| 1073742172| 5130| 104.0| 128.0| 17/11/2026 15:59:58|
 ## Handshake (Serverbound)
 #### 0x00 - Client Intention (C ➔ S)
 | Index | Type Index | Name | Raw Type | Full Type |
@@ -40,9 +40,9 @@ Packet has no fields
 #### 0x01 - Key (S ➔ C)
 | Index | Type Index | Name | Raw Type | Full Type |
 | -------------| -------------| -------------| -------------| -------------|
-| 0| 0| serverId| String| String|
-| 1| 0| publicKey| byte[]| byte[]|
-| 2| 1| challenge| byte[]| byte[]|
+| 0| 0| salt| long| long|
+| 1| 0| serverId| String| String|
+| 2| 0| serverKey| PublicKey| PublicKey|
 | 3| 0| shouldAuthenticate| boolean| boolean|
  
 #### 0x02 - Login Finished (S ➔ C)
@@ -83,8 +83,8 @@ Packet has no fields
 #### 0x01 - Key (C ➔ S)
 | Index | Type Index | Name | Raw Type | Full Type |
 | -------------| -------------| -------------| -------------| -------------|
-| 0| 0| encryptedSecretKey| byte[]| byte[]|
-| 1| 1| encryptedChallenge| byte[]| byte[]|
+| 0| 0| clientKey| PublicKey| PublicKey|
+| 1| 0| signature| byte[]| byte[]|
  
 #### 0x02 - Custom Query Answer (C ➔ S)
 | Index | Type Index | Name | Raw Type | Full Type |
